@@ -1,0 +1,73 @@
+
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:gifting_app/presentation/screens/auth_screen/login_screen.dart';
+
+import '../presentation/screens/auth_screen/forget_password.dart';
+import '../presentation/screens/auth_screen/new_password.dart';
+import '../presentation/screens/auth_screen/otp_verification_screen.dart';
+import '../presentation/screens/auth_screen/sign_up_screen.dart';
+import '../presentation/screens/buttomNabBar_screen/bottom_nab_bar_screen.dart';
+import '../presentation/screens/onboarding_screen/onboarding_screen.dart';
+import '../presentation/screens/splash_screen/splash_screen.dart';
+
+class RoutePages {
+  static String splashScreen = '/';
+
+  static String onboardingScreen = '/OnboardingScreen';
+  static String loginScreen = '/loginScreen';
+  static String signUpScreen = '/SignUpScreen';
+  static String forgetPassword = '/ForgetPassword';
+  static String otpVerificationScreen = '/OtpVerificationScreen';
+  static String newPassword = '/NewPassword';
+  static String bottomNabBarScreen = '/BottomNabBarScreen';
+
+
+}
+
+final pages = [
+  GetPage(
+    name: RoutePages.splashScreen,
+    page: () => SplashScreen(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.onboardingScreen,
+    page: () => OnboardingScreen(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.loginScreen,
+    page: () => LoginScreen(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.signUpScreen,
+    page: () => SignUpScreen(),///
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.forgetPassword,
+    page: () => ForgetPassword(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.otpVerificationScreen,
+    page: () => OtpVerificationScreen(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.newPassword,
+    page: () => NewPassword(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.bottomNabBarScreen,
+    page: () => BottomNabBarScreen(),
+    // transition: Transition.noTransition,
+  ),
+
+
+
+
+];
