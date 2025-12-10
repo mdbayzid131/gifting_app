@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         //   Get.offAllNamed(RoutePages.bottomNabBarScreen);
                         // }
                         // Get.offAllNamed(RoutePages.bottomNabBarScreen);
-                        Get.toNamed(RoutePages.bottomNabBarScreen);
+                        Get.offAllNamed(RoutePages.bottomNabBarScreen);
                       },
                     ),
                     SizedBox(height: 10),

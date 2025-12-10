@@ -8,7 +8,10 @@ import '../presentation/screens/auth_screen/new_password.dart';
 import '../presentation/screens/auth_screen/otp_verification_screen.dart';
 import '../presentation/screens/auth_screen/sign_up_screen.dart';
 import '../presentation/screens/buttomNabBar_screen/bottom_nab_bar_screen.dart';
+import '../presentation/screens/create_user/create_child_profile.dart';
+import '../presentation/screens/home/notification_screen.dart';
 import '../presentation/screens/onboarding_screen/onboarding_screen.dart';
+import '../presentation/screens/setting/supportFAQ.dart';
 import '../presentation/screens/splash_screen/splash_screen.dart';
 
 class RoutePages {
@@ -21,6 +24,11 @@ class RoutePages {
   static String otpVerificationScreen = '/OtpVerificationScreen';
   static String newPassword = '/NewPassword';
   static String bottomNabBarScreen = '/BottomNabBarScreen';
+
+  static String supportFQA = '/SupportFQA';
+  static String notificationScreen = '/NotificationScreen';
+  static String createChildProfile = '/CreateChildProfile';
+
 
 
 }
@@ -66,8 +74,21 @@ final pages = [
     page: () => BottomNabBarScreen(),
     // transition: Transition.noTransition,
   ),
-
-
+  GetPage(
+    name: RoutePages.supportFQA,
+    page: () => SupportFaq(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.notificationScreen,
+    page: () => NotificationScreen(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.createChildProfile,
+    page: () => CreateChildProfile(),
+    // transition: Transition.noTransition,
+  ),
 
 
 ];
