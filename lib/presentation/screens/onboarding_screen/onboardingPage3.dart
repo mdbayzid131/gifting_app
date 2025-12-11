@@ -6,13 +6,12 @@ import '../../../core/constants/image_paths.dart';
 class OnboardingPage3 extends StatelessWidget {
   const OnboardingPage3({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 104),
+        SizedBox(height: 90.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Image.asset(ImagePaths.giftZees)],

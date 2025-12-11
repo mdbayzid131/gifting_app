@@ -11,14 +11,14 @@ class OnboardingPage1 extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 104),
+        SizedBox(height: 90.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Image.asset(ImagePaths.giftZees)],
         ),
-        SizedBox(height: 24),
+        SizedBox(height: 24.h),
         Image.asset(ImagePaths.onboarding1),
-        SizedBox(height: 24),
+        SizedBox(height: 24.h),
         Text(
           'Empower your child to reach\ntheir goals with rewards that\nturn into meaningful gifts and\nexperiences.',
           style: TextStyle(

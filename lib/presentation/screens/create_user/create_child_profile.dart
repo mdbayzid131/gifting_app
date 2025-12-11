@@ -3,6 +3,7 @@ import 'package:gifting_app/presentation/widgets/custom_elevated_button.dart';
 import 'package:gifting_app/presentation/widgets/custom_text_field.dart';
 
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/uplode_picture_popup.dart';
 
 class CreateChildProfile extends StatefulWidget {
   const CreateChildProfile({super.key});
@@ -33,7 +34,12 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
                 crossAxisAlignment: .center,
                 children: [
                   GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+                      showDialog(
+                        context: context,
+                        builder: (context) => UploadPicturePopup(),
+                      );
+                    },
                     child: Container(
                       height: 60,
                       width: 60,

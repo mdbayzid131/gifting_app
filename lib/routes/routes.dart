@@ -9,6 +9,8 @@ import '../presentation/screens/auth_screen/otp_verification_screen.dart';
 import '../presentation/screens/auth_screen/sign_up_screen.dart';
 import '../presentation/screens/buttomNabBar_screen/bottom_nab_bar_screen.dart';
 import '../presentation/screens/create_user/create_child_profile.dart';
+import '../presentation/screens/create_user/edit_child_profile.dart';
+import '../presentation/screens/create_user/subscription_plan.dart';
 import '../presentation/screens/home/notification_screen.dart';
 import '../presentation/screens/onboarding_screen/onboarding_screen.dart';
 import '../presentation/screens/setting/supportFAQ.dart';
@@ -28,6 +30,8 @@ class RoutePages {
   static String supportFQA = '/SupportFQA';
   static String notificationScreen = '/NotificationScreen';
   static String createChildProfile = '/CreateChildProfile';
+  static String editChildProfile = '/EditChildProfile';
+  static String subscriptionPlan = '/SubscriptionPlan';
 
 
 
@@ -87,6 +91,15 @@ final pages = [
   GetPage(
     name: RoutePages.createChildProfile,
     page: () => CreateChildProfile(),
+    // transition: Transition.noTransition,
+  ),
+  GetPage(
+    name: RoutePages.editChildProfile,
+    page: () => EditChildProfile(),
+    // transition: Transition.noTransition,
+  ), GetPage(
+    name: RoutePages.subscriptionPlan,
+    page: () => SubscriptionPlan(),
     // transition: Transition.noTransition,
   ),
 

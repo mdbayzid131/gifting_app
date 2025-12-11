@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:gifting_app/core/constants/image_paths.dart';
@@ -28,14 +29,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Center(
-              child: Image.asset(ImagePaths.splashImage),
-          )
-        ],
+      body: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 20.r),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+                child: Image.asset(ImagePaths.splashImage),
+            )
+          ],
+        ),
       ),
     );
   }

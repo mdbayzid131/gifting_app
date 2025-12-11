@@ -120,6 +120,9 @@ class _CreateUserState extends State<CreateUser> {
               ),
             ),
             SizedBox(height: 10),
+            TextButton(onPressed: () {
+              Get.toNamed(RoutePages.subscriptionPlan);
+            }, child: Text('Subscription plan')),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -134,7 +137,12 @@ class _CreateUserState extends State<CreateUser> {
                     ),
                     child: Center(
                       child: Text(
-                        'Notice : You can create one child profile for free. For any additional profiles you’ll need to make a payment.',style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500, color: Colors.white)
+                        'Notice : You can create one child profile for free. For any additional profiles you’ll need to make a payment.',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
@@ -207,7 +215,9 @@ class _CreateUserState extends State<CreateUser> {
                   bottom: -1,
                   right: 0,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(RoutePages.editChildProfile);
+                    },
 
                     ///=======================
                     child: Container(
