@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:gifting_app/presentation/widgets/custom_elevated_button.dart';
 
@@ -31,10 +32,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SafeArea(
           child: Column(
-          
+
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
@@ -61,9 +62,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         3,
                         (index) => AnimatedContainer(
                           duration: Duration(milliseconds: 300),
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          width: 12,
-                          height: 12,
+                          margin: EdgeInsets.symmetric(horizontal: 5.w),
+                          width: 12.w,
+                          height: 12.h,
                           decoration: BoxDecoration(
                             color: _currentPage == index
                                 ? AppColors.primary
@@ -78,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     _currentPage == 1
                         ? Row(
                             children: [
@@ -102,19 +103,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: Size(double.infinity, 48),
-                                    backgroundColor: Color(0xffFDFCFA),
+                                    backgroundColor: const Color(0xffFDFCFA),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
+                                      borderRadius: BorderRadius.circular(10.r),
                                       side: BorderSide(
                                         color: AppColors.primary,
-                                        width: 2,
+                                        width: 2.w,
                                       ),
                                     ),
-                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.h),
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: 10.w),
                               Expanded(
                                 child: CustomElevatedButton(
                                   label: 'Next',
@@ -150,8 +152,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             },
                             label: _currentPage < 2 ? "Get Started" : "Get Started",
                           ),
-          
-                    SizedBox(height: 22),
+
+                    SizedBox(height: 22.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -161,9 +163,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             children: [
                               Text(
                                 "Skip",
-                                style: TextStyle(color: Color(0xff333333), fontSize: 14),
+                                style: TextStyle(
+                                    color: Color(0xff333333), fontSize: 14.sp),
                               ),
-                              SizedBox(width: 6),
+                              SizedBox(width: 6.w),
                               Icon(Icons.arrow_forward_ios_outlined),
                             ],
                           ),

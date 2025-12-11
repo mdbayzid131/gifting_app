@@ -22,6 +22,13 @@ class ImagePaths {
   static final String settingPp = 'assets/images/settingPP.png';
   static final String profileIcon = 'assets/images/profileIcon.png';
 
+  static final String avatarProfile1 = 'assets/images/Image (Avatar 1)-1.png';
+  static final String avatarProfile2 = 'assets/images/Image (Avatar 1)-2.png';
+  static final String avatarProfile3 = 'assets/images/Image (Avatar 1)-3.png';
+  static final String avatarProfile4 = 'assets/images/Image (Avatar 1)-4.png';
+
+  static final String king = 'assets/images/king.png';
+
 
 
 
