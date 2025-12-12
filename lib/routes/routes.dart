@@ -1,6 +1,4 @@
-
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:gifting_app/presentation/screens/auth_screen/login_screen.dart';
 
 import '../presentation/screens/auth_screen/forget_password.dart';
@@ -12,6 +10,10 @@ import '../presentation/screens/create_user/create_child_profile.dart';
 import '../presentation/screens/create_user/edit_child_profile.dart';
 import '../presentation/screens/create_user/subscription_plan.dart';
 import '../presentation/screens/home/notification_screen.dart';
+import '../presentation/screens/home/rewarrd_fund_view.dart';
+import '../presentation/screens/home/support_fund.dart';
+import '../presentation/screens/home/user_profile_screen.dart';
+import '../presentation/screens/home/wish_list_view.dart';
 import '../presentation/screens/onboarding_screen/onboarding_screen.dart';
 import '../presentation/screens/setting/supportFAQ.dart';
 import '../presentation/screens/splash_screen/splash_screen.dart';
@@ -32,9 +34,10 @@ class RoutePages {
   static String createChildProfile = '/CreateChildProfile';
   static String editChildProfile = '/EditChildProfile';
   static String subscriptionPlan = '/SubscriptionPlan';
-
-
-
+  static String userProfileScreen = '/UserProfileScreen';
+  static String wishListView = '/WishListView';
+  static String rewardFundView = '/RewardFundView';
+  static String supportFund = '/SupportFund';
 }
 
 final pages = [
@@ -55,7 +58,9 @@ final pages = [
   ),
   GetPage(
     name: RoutePages.signUpScreen,
-    page: () => SignUpScreen(),///
+    page: () => SignUpScreen(),
+
+    ///
     // transition: Transition.noTransition,
   ),
   GetPage(
@@ -97,11 +102,27 @@ final pages = [
     name: RoutePages.editChildProfile,
     page: () => EditChildProfile(),
     // transition: Transition.noTransition,
-  ), GetPage(
+  ),
+  GetPage(
     name: RoutePages.subscriptionPlan,
     page: () => SubscriptionPlan(),
     // transition: Transition.noTransition,
+  ),  GetPage(
+    name: RoutePages.userProfileScreen,
+    page: () => UserProfileScreen(),
+    // transition: Transition.noTransition,
+  ),GetPage(
+    name: RoutePages.wishListView,
+    page: () => WishListView(),
+    // transition: Transition.noTransition,
+  ),GetPage(
+    name: RoutePages.rewardFundView,
+    page: () => RewardFundView(),
+    // transition: Transition.noTransition,
+  ),GetPage(
+    name: RoutePages.supportFund,
+    page: () => SupportFund(),
+    // transition: Transition.noTransition,
   ),
-
 
 ];
