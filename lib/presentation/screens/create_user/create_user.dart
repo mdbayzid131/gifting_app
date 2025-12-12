@@ -39,7 +39,7 @@ class _CreateUserState extends State<CreateUser> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Center(
               child: Container(
                 height: 90,
@@ -120,9 +120,6 @@ class _CreateUserState extends State<CreateUser> {
               ),
             ),
             SizedBox(height: 10),
-            TextButton(onPressed: () {
-              Get.toNamed(RoutePages.subscriptionPlan);
-            }, child: Text('Subscription plan')),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

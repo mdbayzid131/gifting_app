@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'contribute_popUp.dart';
+
 class WishListItemCard extends StatelessWidget {
   final String cardImage;
   final String description;
   final int price;
-  final VoidCallback contributeOnPressed;
   final bool? isBalanceShow;
 
   const WishListItemCard({
     super.key,
     required this.cardImage,
     required this.description,
-    required this.price,
-    required this.contributeOnPressed, this.isBalanceShow=true,
+    required this.price, this.isBalanceShow=true,
   });
 
   @override
@@ -56,7 +56,12 @@ class WishListItemCard extends StatelessWidget {
               SizedBox(height: 6.h),
 
               ElevatedButton(
-                onPressed: contributeOnPressed,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => ContributePopup(),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffFFEC54),
                   foregroundColor: Colors.black,

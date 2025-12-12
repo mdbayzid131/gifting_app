@@ -11,6 +11,7 @@ class ImagePaths {
   static final String voice = 'assets/images/voice.svg';
   static final String editImage = 'assets/logos/editImage.svg';
   static final String notificationIcon = 'assets/images/nottifecationIcon.svg';
+  static final String selectImage = 'assets/images/select_image.svg';
 
 
   ///<======================ImageIcon =======================>

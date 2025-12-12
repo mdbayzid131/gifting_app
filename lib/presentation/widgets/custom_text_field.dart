@@ -11,6 +11,8 @@ class CustomTextField extends StatelessWidget {
   final bool?  isLabelVisible;
   final int?  maxLines;
   final bool?  readOnly;
+  final TextInputType? keyboardType;
+
 
   const CustomTextField({
     super.key,
@@ -18,7 +20,7 @@ class CustomTextField extends StatelessWidget {
     required this.label,
     this.controller,
     this.obscureText,
-    this.validator, this.prefixIcon, this.suffixIcon, this.isLabelVisible=true, this.maxLines, this.readOnly,
+    this.validator, this.prefixIcon, this.suffixIcon, this.isLabelVisible=true, this.maxLines, this.readOnly, this.keyboardType,
   });
 
   @override
@@ -37,6 +39,7 @@ class CustomTextField extends StatelessWidget {
           ),
         SizedBox(height: 6),
         TextFormField(
+          keyboardType: keyboardType,
           readOnly: readOnly ?? false,
           maxLines: maxLines ?? 1,
           controller: controller,

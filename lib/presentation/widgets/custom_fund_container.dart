@@ -40,6 +40,7 @@ class CustomFundContainer extends StatelessWidget {
               fontWeight: FontWeight.w600,
               color: Color(0xff101828),
             ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 15),
           Expanded(child: image),
