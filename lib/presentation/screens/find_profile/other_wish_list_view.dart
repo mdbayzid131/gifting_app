@@ -4,16 +4,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_wishList_card.dart';
-import 'add_item_popUp.dart';
 
-class SupportFund extends StatefulWidget {
-  const SupportFund({super.key});
+class OtherWishListView extends StatefulWidget {
+  const OtherWishListView({super.key});
 
   @override
-  State<SupportFund> createState() => _SupportFundState();
+  State<OtherWishListView> createState() => _OtherWishListViewState();
 }
 
-class _SupportFundState extends State<SupportFund> {
+class _OtherWishListViewState extends State<OtherWishListView> {
   List<Map<String, Object>> itemList = [
     {
       "image": ImagePaths.otpVerify,
@@ -34,7 +33,7 @@ class _SupportFundState extends State<SupportFund> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomWidgets.customAppBar(title: "Support Fund"),
+      appBar: CustomWidgets.customAppBar(title: "Wish List Fund"),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
@@ -81,15 +80,20 @@ class _SupportFundState extends State<SupportFund> {
 
             SizedBox(height: 24.h),
 
+
             /// ------------------- Decoration images -------------------
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(ImagePaths.supportFundBg, height: 88, width: 335),
+                Image.asset(ImagePaths.wishListBg,height: 88,width: 335,),
               ],
             ),
 
-            Image.asset(ImagePaths.rewardFund, width: 46.w, height: 46.h),
+            Image.asset(
+              ImagePaths.wishListFund,
+              width: 46.w,
+              height: 46.h,
+            ),
 
             SizedBox(height: 24.h),
 
@@ -104,42 +108,17 @@ class _SupportFundState extends State<SupportFund> {
                 return Padding(
                   padding: EdgeInsets.only(bottom: 12.h),
 
-                  child: WishListItemCard(
-                    cardImage: item["image"],
-                    description: item["description"],
-                    price: item["price"],
-                    isBalanceShow: false,
-                  ),
+                  child: WishListItemCard(cardImage: item["image"], description: item["description"], price: item["price"],),
+
                 );
               },
             ),
 
             SizedBox(height: 16.h),
-
-            /// Add Button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  WishlistPopup.show(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffE2C1F3),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                ),
-                child: Text(
-                  "+ Add Item",
-                  style: TextStyle(fontSize: 16.sp, color: Colors.black),
-                ),
-              ),
-            ),
-
-            SizedBox(height: 30.h),
           ],
         ),
       ),
+
     );
   }
 }

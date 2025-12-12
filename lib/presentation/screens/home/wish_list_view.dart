@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_wishList_card.dart';
+import 'add_item_popUp.dart';
 class WishListView extends StatefulWidget {
   const WishListView({super.key});
 
@@ -109,7 +110,7 @@ class _WishListViewState extends State<WishListView> {
                 return Padding(
                   padding: EdgeInsets.only(bottom: 12.h),
 
-                  child: WishListItemCard(cardImage: item["image"], description: item["description"], price: item["price"], contributeOnPressed: () {  },),
+                  child: WishListItemCard(cardImage: item["image"], description: item["description"], price: item["price"],),
 
                 );
               },
@@ -121,7 +122,9 @@ class _WishListViewState extends State<WishListView> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+                  WishlistPopup.show(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffE2C1F3),
                   shape: RoundedRectangleBorder(

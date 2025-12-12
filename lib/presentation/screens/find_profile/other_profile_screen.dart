@@ -2,24 +2,22 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:gifting_app/presentation/widgets/custom_appbar.dart';
 
 import '../../../core/constants/image_paths.dart';
 import '../../../routes/routes.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_fund_container.dart';
-import 'add_item_popUp.dart';
 
-class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+class OtherProfileScreen extends StatefulWidget {
+  const OtherProfileScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  State<OtherProfileScreen> createState() => _OtherProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class _OtherProfileScreenState extends State<OtherProfileScreen> {
   final List activities = [
     'Auntie Cherise bought you your Hello Kitty toy! Say thanks with a video or voice note!',
     'Mum & Dad gave you \$10 for your good grades! Say thanks with a video or voice note!',
@@ -42,9 +40,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomWidgets.customAppBar(title: "User Profile"),
+      appBar: CustomWidgets.customAppBar(title: "Profile"),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -87,30 +85,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
             ),
             const SizedBox(height: 24),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(RoutePages.totalSubmit);
-              },
-              child: Container(
-                height: 54.h,
-                width: 335.w,
-                decoration: BoxDecoration(
-                  color: Color(0xff07BDFF),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    'Money earnt so far:\$85.00',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -118,28 +92,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   title: 'Wish List',
                   image: Image.asset(ImagePaths.wishListFund),
                   viewOnPressed: () {
-                    Get.toNamed(RoutePages.wishListView);
-
+                    Get.toNamed(RoutePages.otherWishListView);
                   },
-                  addOnPressed: () {
-                    WishlistPopup.show(context);
-                  },
+                  isMyProfile: false,
                 ),
                 CustomFundContainer(
                   title: 'Reward Fund',
                   image: Image.asset(ImagePaths.rewardFund),
                   viewOnPressed: () {
-                    Get.toNamed(RoutePages.rewardFundView);
+                    Get.toNamed(RoutePages.otherRewardFund);
                   },
-                  addOnPressed: () {WishlistPopup.show(context);},
+                  isMyProfile: false,
                 ),
                 CustomFundContainer(
                   title: 'Dream & Support Fund',
                   image: Image.asset(ImagePaths.dremFund),
                   viewOnPressed: () {
-                    Get.toNamed(RoutePages.supportFund);
+                    Get.toNamed(RoutePages.otherDreamAndSupportFund);
                   },
-                  addOnPressed: () {WishlistPopup.show(context);},
+                  isMyProfile: false,
                 ),
               ],
             ),
@@ -192,9 +163,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               child: Container(
                                 width: 8,
                                 height: 8,
-                                margin: const EdgeInsets.only(top: 7,),
+                                margin: const EdgeInsets.only(top: 7),
                                 decoration: BoxDecoration(
-                                  color:getRandomColor(),
+                                  color: getRandomColor(),
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -203,7 +174,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Expanded(
                               child: Text(
                                 item,
-                                style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
                           ],
