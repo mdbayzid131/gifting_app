@@ -10,6 +10,8 @@ class ImagePaths {
   static final String logOut = 'assets/logos/log out.svg';
   static final String voice = 'assets/images/voice.svg';
   static final String editImage = 'assets/logos/editImage.svg';
+  static final String notificationIcon = 'assets/images/nottifecationIcon.svg';
+
 
   ///<======================ImageIcon =======================>
   static final String splashImage = 'assets/images/Primary Logo 1.png';
@@ -28,6 +30,14 @@ class ImagePaths {
   static final String avatarProfile4 = 'assets/images/Image (Avatar 1)-4.png';
 
   static final String king = 'assets/images/king.png';
+  static final String homeRight = 'assets/images/home_right.svg';
+  static final String homeLeft = 'assets/images/home_left.svg';
+  static final String wishListFund = 'assets/images/Wish List.png';
+  static final String rewardFund = 'assets/images/Reward Fund.png';
+  static final String dremFund = 'assets/images/Dream & Support Fund.png';
+  static final String wishListBg = 'assets/images/wishListFundBg.png';
+  static final String supportFundBg = 'assets/images/supportFundBg.png';
+  static final String rewardFundBg = 'assets/images/rewardFundBg.png';
 
 
 

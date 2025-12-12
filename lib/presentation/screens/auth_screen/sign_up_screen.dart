@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../core/constants/image_paths.dart';
-import '../../../data/helper/custom_snackbar.dart';
-import '../../../routes/routes.dart';
 import '../../controllers/auth_controller.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_field.dart';
