@@ -1,90 +1,122 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:record/record.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:get/get.dart';
+import '../controllers/voice_record_controller.dart';
 
-class SendVoicePopup extends StatefulWidget {
-  const SendVoicePopup({super.key});
-
-  @override
-  State<SendVoicePopup> createState() => _SendVoicePopupState();
+class SendVoicePopup {
+  static Future<String?> show() {
+    return Get.dialog(
+      const _PopupBody(),
+      barrierDismissible: false,
+    );
+  }
 }
 
-class _SendVoicePopupState extends State<SendVoicePopup> {
-  final record = AudioRecorder();
-  String? filePath;
-
-  Future<void> startRecording() async {
-    if (await record.hasPermission()) {
-      final directory = await getApplicationDocumentsDirectory();
-      filePath =
-          '${directory.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
-
-      await record.start(const RecordConfig(), path: filePath.toString());
-      setState(() {});
-    }
-  }
-
-  Future<void> stopRecording() async {
-    await record.stop();
-    Navigator.pop(context, filePath); // return file path
-  }
+class _PopupBody extends StatelessWidget {
+  const _PopupBody();
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(VoiceRecordController());
+
     return Stack(
       children: [
+        /// Blur
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(color: Colors.black.withOpacity(0.4)),
+          child: Container(color: Colors.black45),
         ),
-        Center(
-          child: Container(
-            width: 320,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  "Send a Voice Note 🎤",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "Press the microphone to start recording",
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
 
-                InkWell(
-                  onTap: () async {
-                    await startRecording();
-                    await Future.delayed(
-                      const Duration(seconds: 4),
-                    ); // auto stop
-                    await stopRecording();
-                  },
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.orange,
-                    child: const Icon(Icons.mic, size: 40, color: Colors.white),
-                  ),
-                ),
+        Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Container(
+              width: 320,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Obx(() {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      "Send a Voice Note",
+                      style:
+                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
 
-                const SizedBox(height: 25),
-                ElevatedButton(
-                  onPressed: () => stopRecording(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.yellow,
-                    foregroundColor: Colors.black,
-                  ),
-                  child: const Text("Send"),
-                ),
-              ],
+                    const SizedBox(height: 8),
+
+                    Text(
+                      controller.isRecording.value
+                          ? "Recording... ${controller.formattedTime}"
+                          : "Tap mic to start recording",
+                      style: TextStyle(
+                        color: controller.isRecording.value
+                            ? Colors.red
+                            : Colors.grey,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    /// MIC
+                    GestureDetector(
+                      onTap: controller.isRecording.value
+                          ? null
+                          : controller.startRecording,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: controller.isRecording.value
+                              ? Colors.red
+                              : Colors.orange,
+                        ),
+                        child: const Icon(
+                          Icons.mic,
+                          color: Colors.white,
+                          size: 36,
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    /// Buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {
+                              controller.stopRecording();
+                              Get.back();
+                            },
+                            child: const Text("Cancel"),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: controller.isRecording.value
+                                ? () {
+                                  controller.stopRecording(send: true);
+                                  print(controller.filePath);
+                                  print('================================================================');
+                                }
+                                : null,
+                            child: const Text("Send"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
           ),
         ),

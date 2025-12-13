@@ -9,6 +9,7 @@ import 'package:gifting_app/presentation/widgets/custom_appbar.dart';
 
 import '../../../core/constants/image_paths.dart';
 import '../../../routes/routes.dart';
+import '../../widgets/VoiceRecordDialog.dart';
 import '../../widgets/custom_fund_container.dart';
 import 'add_item_popUp.dart';
 
@@ -119,7 +120,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   image: Image.asset(ImagePaths.wishListFund),
                   viewOnPressed: () {
                     Get.toNamed(RoutePages.wishListView);
-
                   },
                   addOnPressed: () {
                     WishlistPopup.show(context);
@@ -131,7 +131,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   viewOnPressed: () {
                     Get.toNamed(RoutePages.rewardFundView);
                   },
-                  addOnPressed: () {WishlistPopup.show(context);},
+                  addOnPressed: () {
+                    WishlistPopup.show(context);
+                  },
                 ),
                 CustomFundContainer(
                   title: 'Dream & Support Fund',
@@ -139,7 +141,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   viewOnPressed: () {
                     Get.toNamed(RoutePages.supportFund);
                   },
-                  addOnPressed: () {WishlistPopup.show(context);},
+                  addOnPressed: () {
+                    WishlistPopup.show(context);
+                  },
                 ),
               ],
             ),
@@ -192,18 +196,33 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               child: Container(
                                 width: 8,
                                 height: 8,
-                                margin: const EdgeInsets.only(top: 7,),
+                                margin: const EdgeInsets.only(top: 7),
                                 decoration: BoxDecoration(
-                                  color:getRandomColor(),
+                                  color: getRandomColor(),
                                   shape: BoxShape.circle,
                                 ),
                               ),
                             ),
                             const SizedBox(width: 8),
                             Expanded(
-                              child: Text(
-                                item,
-                                style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.w400),
+                              child: GestureDetector(
+                                onTap: () {
+                                 /* showDialog(
+                                    context: context,
+                                    builder: (context) => SendVoicePopup(
+                                    ),
+                                  );*/
+                                  SendVoicePopup.show();
+                                },
+
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                               ),
                             ),
                           ],

@@ -140,14 +140,12 @@ class _HomeScreenState extends State<HomeScreen> {
           // MAIN BODY
           // -------------------------
           SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 20),
 
-                  Row(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
                     children: [
                       InkWell(
                         onTap: () {
@@ -228,116 +226,209 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        //
+                        // Row(
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {
+                        //         Get.toNamed(RoutePages.userProfileScreen);
+                        //       },
+                        //       child: Container(
+                        //         width: 50,
+                        //         height: 50,
+                        //         decoration: BoxDecoration(
+                        //           shape: BoxShape.circle,
+                        //           border: Border.all(
+                        //             color: Colors
+                        //                 .white, //
+                        //             width: 2, // border thickness
+                        //           ),
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.black.withValues(alpha: 0.2),
+                        //               spreadRadius: 5,
+                        //               blurRadius: 7,
+                        //               offset: Offset(
+                        //                 0,
+                        //                 3,
+                        //               ), // changes position of shadow
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: ClipOval(
+                        //           child: Image.asset(
+                        //             ImagePaths.avatarProfile1,
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     Spacer(),
+                        //     Text(
+                        //       "Hello!",
+                        //       style: TextStyle(
+                        //         fontSize: 32,
+                        //         fontWeight: FontWeight.w700,
+                        //         color: Color(0xffFD7839),
+                        //       ),
+                        //     ),
+                        //     Spacer(),
+                        //     IconButton(
+                        //       onPressed: () {
+                        //         Get.toNamed(RoutePages.notificationScreen);
+                        //       },
+                        //       icon: Container(
+                        //         width: 40,
+                        //         height: 40,
+                        //         decoration: BoxDecoration(
+                        //           shape: BoxShape.circle,
+                        //           border: Border.all(
+                        //             color: Color(0xffFD7839),
+                        //             width: 2, // border thickness
+                        //           ),
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.black.withValues(alpha: 0.2),
+                        //               spreadRadius: 5,
+                        //               blurRadius: 7,
+                        //               offset: Offset(
+                        //                 0,
+                        //                 3,
+                        //               ), // changes position of shadow
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: ClipOval(
+                        //           child: SvgPicture.asset(
+                        //             ImagePaths.notificationIcon,
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        //
+                        // const SizedBox(height: 50),
 
-                  const SizedBox(height: 50),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: profiles.length,
+                          itemBuilder: (context, index) {
+                            final profile = profiles[index];
 
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: profiles.length,
-                    itemBuilder: (context, index) {
-                      final profile = profiles[index];
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // 🔵 Profile Header (image + name)
-                          Row(
-                            children: [
-                              Container(
-                                width: 57.w, // avatar size
-                                height: 57.h,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white, // outline color
-                                    width: 3, // outline thickness
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.2,
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 🔵 Profile Header (image + name)
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 57.w, // avatar size
+                                      height: 57.h,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white, // outline color
+                                          width: 3, // outline thickness
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withValues(
+                                              alpha: 0.2,
+                                            ),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                       ),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                        0,
-                                        3,
-                                      ), // changes position of shadow
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                          ImagePaths.avatarProfile3,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 14),
+                                    Text(
+                                      "${profile["name"]}'s Latest Activity",
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xff101828),
+                                      ),
                                     ),
                                   ],
                                 ),
-                                child: ClipOval(
-                                  child: Image.asset(
-                                    ImagePaths.avatarProfile3,
-                                    fit: BoxFit.cover,
+
+                                const SizedBox(height: 16),
+
+                                // 🟠 Activity Card
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFBEACB),
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                ),
-                              ),
-                              const SizedBox(width: 14),
-                              Text(
-                                "${profile["name"]}'s Latest Activity",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xff101828),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 16),
-
-                          // 🟠 Activity Card
-                          Container(
-                            padding: const EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFFBEACB),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics:
-                                  const NeverScrollableScrollPhysics(),
-                              itemCount: profile["activities"].length,
-                              itemBuilder: (context, i) {
-                                final act = profile["activities"][i];
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 18),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        act["icon"],
-                                        style: const TextStyle(fontSize: 26),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Expanded(
-                                        child: Text(
-                                          act["text"],
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            height: 1.3,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: profile["activities"].length,
+                                    itemBuilder: (context, i) {
+                                      final act = profile["activities"][i];
+                                      return Padding(
+                                        padding: const EdgeInsets.only(bottom: 18),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              act["icon"],
+                                              style: const TextStyle(fontSize: 26),
+                                            ),
+                                            const SizedBox(width: 16),
+                                            Expanded(
+                                              child: Text(
+                                                act["text"],
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  height: 1.3,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                        ],
+                                ),
+                                const SizedBox(height: 20),
+                              ],
 
 
-                      );
-                    },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
