@@ -14,7 +14,7 @@ class HomePageController extends GetxController{
       category: 'voice_note',
       timestamp: '2h Ago',
       imagePath : ImagePaths.settingPp, name: 'Sabbir',
-      voicePath: 'assets/audio/voice.m4a',
+      voicePath: '/data/user/0/com.example.gifting_app/app_flutter/voice_1765588225384.m4a',
 
     ),
     NotificationItem(
