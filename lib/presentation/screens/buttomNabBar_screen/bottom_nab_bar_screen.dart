@@ -26,11 +26,13 @@ class _BottomNabBarScreenState extends State<BottomNabBarScreen> {
       body: Obx(() => _controller.pages[_controller.currentIndex.value]),
 
       bottomNavigationBar: Obx(
-        () => CustomBottomNavBar(
-          currentIndex: _controller.currentIndex.value,
-          onTap: (index) {
-              _controller.currentIndex.value = index;
-          },
+        () => SafeArea(
+          child: CustomBottomNavBar(
+            currentIndex: _controller.currentIndex.value,
+            onTap: (index) {
+                _controller.currentIndex.value = index;
+            },
+          ),
         ),
       ),
     );

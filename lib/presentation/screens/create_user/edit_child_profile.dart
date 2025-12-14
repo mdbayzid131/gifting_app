@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gifting_app/presentation/widgets/custom_elevated_button.dart';
 import 'package:gifting_app/presentation/widgets/custom_text_field.dart';
@@ -75,9 +76,7 @@ class _EditChildProfileState extends State<EditChildProfile> {
                                   color: const Color(0xffEBE9E9),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
-                                child: SvgPicture.asset(
-                                  ImagePaths.editImage,
-                                  fit: BoxFit.scaleDown,
+                                child: Icon(Icons.camera_alt_outlined,color: Colors.black,size: 17.sp
                                 ),
                               ),
                             ),

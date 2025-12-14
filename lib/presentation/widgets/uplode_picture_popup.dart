@@ -1,86 +1,95 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
 import '../controllers/creat_profile_controller.dart';
 import 'avatar_profile_popup.dart';
 
 class UploadPicturePopup extends StatelessWidget {
   UploadPicturePopup({super.key});
+
+  ///<================= CONTROLLER =========================>///
   final CreateProfileController controller =
-      Get.find<CreateProfileController>();
+  Get.find<CreateProfileController>();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// 🔥 Blur Background
+        ///<================= BLUR BACKGROUND =========================>///
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(color: Colors.black.withOpacity(0.4)),
+          child: Container(
+            color: Colors.black.withOpacity(0.4),
+          ),
         ),
 
-        /// 🔥 Popup Card
-        Center(
-          child: Container(
-            width: 320,
-            height: 200,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Color(0xffFFFAF8),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Upload Picture',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                        decoration: TextDecoration.none,
+        ///<================= POPUP CARD =========================>///
+        Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Container(
+              width: 320.w,
+              padding: EdgeInsets.all(20.w),
+              decoration: BoxDecoration(
+                color: const Color(0xffFFFAF8),
+                borderRadius: BorderRadius.circular(15.r),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ///<================= HEADER =========================>///
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Upload Picture',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          decoration: TextDecoration.none,
+                        ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(
-                        Icons.close,
-                        size: 20,
-                        color: Colors.red,
+                      InkWell(
+                        onTap: () => Get.back(),
+                        child: Icon(
+                          Icons.close,
+                          size: 20.sp,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
-                const SizedBox(height: 10),
+                  SizedBox(height: 16.h),
 
-                buildElevatedButton(
-                  context,
-                  label: 'Upload from Gallery',
-                  onPressed: () {
-                    Navigator.pop(context);
-                    controller.pickFromGallery();
-                  },
-                ),
-                const SizedBox(height: 10),
-                buildElevatedButton(
-                  context,
-                  label: 'Choose Avatar',
-                  onPressed: () {
-                    Navigator.pop(context);
-                    showDialog(
-                      context: context,
-                      builder: (context) => AvatarProfilePopup(),
-                    );
-                  },
-                ),
-              ],
+                  ///<================= GALLERY BUTTON =========================>///
+                  buildActionButton(
+                    label: 'Upload from Gallery',
+                    onPressed: () {
+                      Get.back();
+                      controller.pickFromGallery();
+                    },
+                  ),
+
+                  SizedBox(height: 12.h),
+
+                  ///<================= AVATAR BUTTON =========================>///
+                  buildActionButton(
+                    label: 'Choose Avatar',
+                    onPressed: () {
+                      Get.back();
+                      showDialog(
+                        context: context,
+                        builder: (_) => AvatarProfilePopup(),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -88,25 +97,31 @@ class UploadPicturePopup extends StatelessWidget {
     );
   }
 
-  ElevatedButton buildElevatedButton(
-    BuildContext context, {
+  ///<================= COMMON BUTTON =========================>///
+  Widget buildActionButton({
     required String label,
-    required Function() onPressed,
+    required VoidCallback onPressed,
   }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size(double.infinity, 50),
-
-        backgroundColor: Color(0xffEDE8FC),
-        foregroundColor: Colors.black,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        elevation: 0,
-      ),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    return SizedBox(
+      width: double.infinity,
+      height: 50.h,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xffEDE8FC),
+          foregroundColor: Colors.black,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }

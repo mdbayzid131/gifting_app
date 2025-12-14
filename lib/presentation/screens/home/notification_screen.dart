@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../controllers/homepgeController.dart';
 import '../../widgets/NotificationCardWidget.dart';
@@ -20,19 +20,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomWidgets.customAppBar(title: "Notification"),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: _controller.notifications.length,
-              itemBuilder: (context, index) {
-                return NotificationCard(item: _controller.notifications[index]);
-              },
-            ),
-          ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          itemCount: _controller.notifications.length,
+          itemBuilder: (context, index) {
+            ///=================== Notification Item ===================///
+            return Padding(
+              padding: EdgeInsets.only(bottom: 12.h),
+              child: NotificationCard(item: _controller.notifications[index]),
+            );
+          },
         ),
       ),
     );

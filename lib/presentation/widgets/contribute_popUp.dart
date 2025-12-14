@@ -1,49 +1,47 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:gifting_app/presentation/widgets/custom_text_field.dart';
+import 'package:get/get.dart';
 
 import '../controllers/contribute_controller.dart';
 import 'custom_elevated_button.dart';
+import 'custom_text_field.dart';
 
+///<===================Contribute Popup=========================>///
 class ContributePopup extends StatelessWidget {
   ContributePopup({super.key});
+
   final ContributeController _controller = Get.find<ContributeController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _relationController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// 🔥 Blur Background
+        ///<===================Blur Background=========================>///
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
           child: Container(color: Colors.black.withOpacity(0.4)),
         ),
 
-        /// 🔥 Popup Card
+        ///<===================Popup Card=========================>///
         Material(
           color: Colors.transparent,
           child: Center(
             child: Container(
               width: 320.w,
-              height: 320.h,
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.all(15.w),
               decoration: BoxDecoration(
-                color: Color(0xffFFFAF8),
-                borderRadius: BorderRadius.circular(15),
+                color: const Color(0xffFFFAF8),
+                borderRadius: BorderRadius.circular(15.r),
               ),
               child: Form(
                 key: _formKey,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    ///<===================Header=========================>///
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -57,41 +55,38 @@ class ContributePopup extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(
+                          onTap: () => Navigator.pop(context),
+                          child:  Icon(
                             Icons.close,
-                            size: 20,
-                            color: Colors.red,
+                            size: 20.sp,
+                            color: Colors.black,
                           ),
                         ),
                       ],
                     ),
 
-                     SizedBox(height: 10.sp),
+                    SizedBox(height: 15.h),
 
-                    // -------------------------------
-                    // Relation DROPDOWN
-                    // -------------------------------
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Relation',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.sp,
-                            color: Color(0xff333333),
-                            height: 1.6.h,
-                          ),
+                    ///<===================Relation Dropdown Label=========================>///
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Relation',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.sp,
+                          color: const Color(0xff333333),
+                          height: 1.6,
                         ),
-                      ],
+                      ),
                     ),
+
                     SizedBox(height: 8.h),
+
+                    ///<===================Relation Dropdown=========================>///
                     Obx(
-                      () => DropdownButtonFormField<String>(
-                        initialValue: _controller.selectedRelation.value.isEmpty
+                          () => DropdownButtonFormField<String>(
+                        value: _controller.selectedRelation.value.isEmpty
                             ? null
                             : _controller.selectedRelation.value,
                         decoration: InputDecoration(
@@ -99,7 +94,7 @@ class ContributePopup extends StatelessWidget {
                           fillColor: const Color(0xffEDE8FC),
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 12.w,
-                            vertical: 16.h,
+                            vertical: 14.h,
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
@@ -108,49 +103,55 @@ class ContributePopup extends StatelessWidget {
                         ),
                         icon: Icon(
                           Icons.keyboard_arrow_down_outlined,
-                          color: Color(0xff333333),
+                          color: const Color(0xff333333),
                         ),
                         hint: Text(
-                          "Select Relation with child ",
+                          "Select Relation with child",
                           style: TextStyle(
-                            color: Color(0xff333333),
+                            color: const Color(0xff333333),
                             fontSize: 12.sp,
-                            height: 1.6.h,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         style: TextStyle(
-                          color: Color(0xff333333),
+                          color: const Color(0xff333333),
                           fontSize: 12.sp,
-                          height: 1.6.sp,
                           fontWeight: FontWeight.w400,
                         ),
-                        items: _controller.relations.map((relation) {
-                          return DropdownMenuItem(
-                            value: relation,
-                            child: Text(relation),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          _controller.selectedRelation.value = value!;
-                        },
+                        items: _controller.relations
+                            .map((relation) => DropdownMenuItem(
+                          value: relation,
+                          child: Text(relation),
+                        ))
+                            .toList(),
+                        onChanged: (value) =>
+                        _controller.selectedRelation.value = value!,
                         validator: (value) =>
-                            value == null ? "Please select a relation" : null,
+                        value == null ? "Please select a relation" : null,
                       ),
                     ),
 
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 12.h),
+
+                    ///<===================Amount Text Field=========================>///
                     CustomTextField(
                       hintText: "Enter Contribution Amount in \$",
                       label: 'Amount',
                       validator: _controller.amountValidate,
+                      controller: _amountController,
                     ),
-                    SizedBox(height: 10.h),
-                    CustomElevatedButton(label: 'Contribute', onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pop(context);
-                      }
-                    }),
+
+                    SizedBox(height: 15.h),
+
+                    ///<===================Contribute Button=========================>///
+                    CustomElevatedButton(
+                      label: 'Contribute',
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),

@@ -6,6 +6,7 @@ import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_wishList_card.dart';
 import 'add_item_popUp.dart';
 
+///<===================Support Fund View=========================>///
 class SupportFund extends StatefulWidget {
   const SupportFund({super.key});
 
@@ -31,6 +32,7 @@ class _SupportFundState extends State<SupportFund> {
       "price": 45,
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +43,7 @@ class _SupportFundState extends State<SupportFund> {
           children: [
             SizedBox(height: 20.h),
 
-            /// Avatar
+            ///<===================Avatar=========================>///
             Center(
               child: Container(
                 width: 102.w,
@@ -51,7 +53,7 @@ class _SupportFundState extends State<SupportFund> {
                   border: Border.all(color: Colors.white, width: 3.w),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
+                      color: Colors.black.withOpacity(0.2),
                       spreadRadius: 5.r,
                       blurRadius: 7.r,
                       offset: Offset(0, 3.h),
@@ -69,7 +71,7 @@ class _SupportFundState extends State<SupportFund> {
 
             SizedBox(height: 20.h),
 
-            /// Greeting
+            ///<===================Greeting=========================>///
             Text(
               'John Deu',
               style: TextStyle(
@@ -79,21 +81,32 @@ class _SupportFundState extends State<SupportFund> {
               ),
             ),
 
-            SizedBox(height: 24.h),
+            SizedBox(height: 20.h),
 
-            /// ------------------- Decoration images -------------------
+            ///<===================Decoration Images=========================>///
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(ImagePaths.supportFundBg, height: 88, width: 335),
+                Image.asset(
+                  ImagePaths.supportFundBg,
+                  height: 88.h,
+                  width: 335.w,
+                  fit: BoxFit.cover,
+                ),
               ],
             ),
 
-            Image.asset(ImagePaths.rewardFund, width: 46.w, height: 46.h),
+
+            Image.asset(
+              ImagePaths.dremFund,
+              width: 46.w,
+              height: 46.h,
+              fit: BoxFit.contain,
+            ),
 
             SizedBox(height: 24.h),
 
-            /// Wish List Items
+            ///<===================Fund Items=========================>///
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -103,7 +116,6 @@ class _SupportFundState extends State<SupportFund> {
 
                 return Padding(
                   padding: EdgeInsets.only(bottom: 12.h),
-
                   child: WishListItemCard(
                     cardImage: item["image"],
                     description: item["description"],
@@ -116,7 +128,7 @@ class _SupportFundState extends State<SupportFund> {
 
             SizedBox(height: 16.h),
 
-            /// Add Button
+            ///<===================Add Button=========================>///
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -128,6 +140,7 @@ class _SupportFundState extends State<SupportFund> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
                 ),
                 child: Text(
                   "+ Add Item",

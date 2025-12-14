@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomRejectUserPopup extends StatelessWidget {
   final String name;
@@ -19,53 +20,64 @@ class CustomRejectUserPopup extends StatelessWidget {
         /// 🔥 Popup Card
         Center(
           child: Container(
-            width: 320,
-            height: 190,
-            padding: const EdgeInsets.all(20),
+            width: 320.w,
+            padding: EdgeInsets.all(20.w),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
+                // Close Button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    GestureDetector(onTap: (){Navigator.pop(context);}, child: const Icon(Icons.close, size: 20, color: Colors.red)),
-                  ],),
-                const SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.close, size: 22.sp, color: Colors.black),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.h),
+
+                // Message
                 Text(
-                  "Are You Want To Make Sure That\nYou Want To Add $name ?",
+                  "Are you sure you want to reject\n$name?",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 17,
+                  style: TextStyle(
+                    fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
+                    height: 1.4,
+                    color: Colors.black87,
                   ),
                 ),
+                SizedBox(height: 20.h),
 
-                const SizedBox(height: 10),
-
-                /// 🟡 Accept Button
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-
-                    backgroundColor: Color(0xffCC4343),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                // Reject Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffE74C3C), // friendly red
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 14.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      elevation: 0,
                     ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    "Reject",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                    child: Text(
+                      "Reject",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

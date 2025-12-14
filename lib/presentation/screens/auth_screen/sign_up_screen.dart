@@ -14,9 +14,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  // -------------------------------
-  // FORM & TEXT CONTROLLERS
-  // -------------------------------
+  ///<================= FORM & TEXT CONTROLLERS =========================>///
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -24,16 +22,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController countryController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
 
-  // -------------------------------
-  // GETX AUTH CONTROLLER
-  // -------------------------------
+  ///<================= GETX AUTH CONTROLLER =========================>///
   final AuthController _authController = Get.find<AuthController>();
 
   @override
   void dispose() {
-    // Prevent memory leaks
     nameController.dispose();
     emailController.dispose();
     phoneController.dispose();
@@ -46,243 +41,226 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // -------------------------------
-              // TOP LOGO
-              // -------------------------------
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Image.asset(ImagePaths.giftZees)],
-              ),
+      appBar: AppBar(elevation: 0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 10.h),
 
-              SizedBox(height: 24.h),
+                ///<================= TOP LOGO =========================>///
+                Center(
+                  child: Image.asset(
+                    ImagePaths.giftZees,
+                    width: 218.h,
+                    fit: BoxFit.contain,
+                  ),
+                ),
 
-              // -------------------------------
-              // MAIN FORM
-              // -------------------------------
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    // NAME
-                    CustomTextField(
-                      validator: _authController.validName,
-                      controller: nameController,
-                      hintText: 'Enter your Name',
-                      label: 'Name',
-                    ),
-                    SizedBox(height: 10.h),
+                SizedBox(height: 24.h),
 
-                    // EMAIL
-                    CustomTextField(
-                      validator: _authController.validEmail,
-                      hintText: 'Enter your email',
-                      label: 'Email',
-                      controller: emailController,
-                    ),
-                    SizedBox(height: 10.h),
+                ///<================= SIGN UP FORM =========================>///
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      ///<================= NAME FIELD =========================>///
+                      CustomTextField(
+                        validator: _authController.validName,
+                        controller: nameController,
+                        hintText: 'Enter your name',
+                        label: 'Name',
+                      ),
+                      SizedBox(height: 10.h),
 
-                    // PHONE
-                    CustomTextField(
-                      validator: _authController.validPhone,
-                      hintText: 'Enter your Number',
-                      label: 'Phone Number',
-                      controller: phoneController,
-                    ),
-                    SizedBox(height: 10.h),
+                      ///<================= EMAIL FIELD =========================>///
+                      CustomTextField(
+                        validator: _authController.validEmail,
+                        controller: emailController,
+                        hintText: 'Enter your email',
+                        label: 'Email',
+                      ),
+                      SizedBox(height: 10.h),
 
-                    // -------------------------------
-                    // COUNTRY DROPDOWN
-                    // -------------------------------
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
+                      ///<================= PHONE FIELD =========================>///
+                      CustomTextField(
+                        validator: _authController.validPhone,
+                        controller: phoneController,
+                        hintText: 'Enter your number',
+                        label: 'Phone Number',
+                      ),
+                      SizedBox(height: 10.h),
+
+                      ///<================= COUNTRY DROPDOWN =========================>///
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
                           'Country',
                           style: TextStyle(
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xff333333),
-                            height: 1.6.h,
+                            color: const Color(0xff333333),
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 8.h),
-
-                    Obx(
-                      () => DropdownButtonFormField<String>(
-                        initialValue:
-                            _authController.selectedCountry.value.isEmpty
-                            ? null
-                            : _authController.selectedCountry.value,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: const Color(0xffEDE8FC),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 12.w,
-                            vertical: 16.h,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                        icon: Icon(
-                          Icons.keyboard_arrow_down_outlined,
-                          color: Color(0xff333333),
-                        ),
-                        hint: Text(
-                          "Select Your Country",
-                          style: TextStyle(
-                            color: Color(0xff333333),
-                            fontSize: 12.sp,
-                            height: 1.6.h,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        style: const TextStyle(
-                          color: Color(0xff333333),
-                          fontSize: 12,
-                          height: 1.6,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        items: _authController.countries.map((country) {
-                          return DropdownMenuItem(
-                            value: country,
-                            child: Text(country),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          _authController.selectedCountry.value = value!;
-                        },
-                        validator: (value) =>
-                            value == null ? "Please select a country" : null,
                       ),
-                    ),
+                      SizedBox(height: 8.h),
 
-                    SizedBox(height: 10.h),
-
-                    // -------------------------------
-                    // PASSWORD FIELD
-                    // -------------------------------
-                    Obx(
-                      () => CustomTextField(
-                        validator: _authController.validPassword,
-                        obscureText: _authController.isNewPasswordVisible.value,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            _authController.toggle(
-                              _authController.isNewPasswordVisible,
-                            );
-                          },
-                          icon: Icon(
-                            _authController.isNewPasswordVisible.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: const Color(0xff909090),
-                            size: 18.sp,
+                      Obx(
+                            () => DropdownButtonFormField<String>(
+                          initialValue:
+                          _authController.selectedCountry.value.isEmpty
+                              ? null
+                              : _authController.selectedCountry.value,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: const Color(0xffEDE8FC),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 14.h,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
-                        ),
-                        hintText: 'Enter your password',
-                        label: 'Password',
-                        controller: newPasswordController,
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-
-                    // -------------------------------
-                    // CONFIRM PASSWORD FIELD
-                    // -------------------------------
-                    Obx(
-                      () => CustomTextField(
-                        validator: _authController.validPassword,
-                        obscureText:
-                            _authController.isConfirmPasswordVisible.value,
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            _authController.toggle(
-                              _authController.isConfirmPasswordVisible,
-                            );
-                          },
-                          icon: Icon(
-                            _authController.isConfirmPasswordVisible.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: const Color(0xff909090),
-                            size: 18.sp,
-                          ),
-                        ),
-                        hintText: 'Enter your confirm password',
-                        label: 'Confirm password',
-                        controller: confirmPasswordController,
-                      ),
-                    ),
-
-                    SizedBox(height: 24.h),
-
-                    // -------------------------------
-                    // SIGNUP BUTTON
-                    // -------------------------------
-                    CustomElevatedButton(
-                      label: 'Sign Up',
-                      onPressed: () {
-                        if (!_formKey.currentState!.validate()) return;
-
-                        if (newPasswordController.text.trim() !=
-                            confirmPasswordController.text.trim()) {
-                          // CustomSnackBar.error("Passwords do not match");
-                          return;
-                        }
-
-                        // _authController.signUp(
-                        //   name: nameController.text.trim(),
-                        //   email: emailController.text.trim(),
-                        //   phone: phoneController.text.trim(),
-                        //   country: _authController.selectedCountry.value,
-                        //   password: newPasswordController.text.trim(),
-                        // );
-                      },
-                    ),
-
-                    SizedBox(height: 10.h),
-
-                    // -------------------------------
-                    // LOGIN REDIRECT
-                    // -------------------------------
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account? ",
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_outlined,
                             color: Color(0xff333333),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () => Get.back(),
-                          child: Text(
-                            " Login ",
+                          hint: Text(
+                            "Select your country",
                             style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xffFD7839),
+                              fontSize: 12.sp,
+                              color: const Color(0xff333333),
+                            ),
+                          ),
+                          items: _authController.countries.map((country) {
+                            return DropdownMenuItem(
+                              value: country,
+                              child: Text(country),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            _authController.selectedCountry.value = value!;
+                          },
+                          validator: (value) =>
+                          value == null ? "Please select a country" : null,
+                        ),
+                      ),
+
+                      SizedBox(height: 10.h),
+
+                      ///<================= PASSWORD FIELD =========================>///
+                      Obx(
+                            () => CustomTextField(
+                          validator: _authController.validPassword,
+                          controller: newPasswordController,
+                          label: 'Password',
+                          hintText: 'Enter your password',
+                          obscureText:
+                          _authController.isNewPasswordVisible.value,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              _authController.toggle(
+                                _authController.isNewPasswordVisible,
+                              );
+                            },
+                            icon: Icon(
+                              _authController.isNewPasswordVisible.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              size: 18.sp,
+                              color: const Color(0xff909090),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+
+                      SizedBox(height: 10.h),
+
+                      ///<================= CONFIRM PASSWORD FIELD =========================>///
+                      Obx(
+                            () => CustomTextField(
+                          validator: _authController.validPassword,
+                          controller: confirmPasswordController,
+                          label: 'Confirm Password',
+                          hintText: 'Re-enter your password',
+                          obscureText:
+                          _authController.isConfirmPasswordVisible.value,
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              _authController.toggle(
+                                _authController.isConfirmPasswordVisible,
+                              );
+                            },
+                            icon: Icon(
+                              _authController.isConfirmPasswordVisible.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              size: 18.sp,
+                              color: const Color(0xff909090),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 24.h),
+
+                      ///<================= SIGN UP BUTTON =========================>///
+                      CustomElevatedButton(
+                        label: 'Sign Up',
+                        onPressed: () {
+                          if (!_formKey.currentState!.validate()) return;
+
+                          if (newPasswordController.text.trim() !=
+                              confirmPasswordController.text.trim()) {
+                            return;
+                          }
+
+                          // API CALL HERE
+                        },
+                      ),
+
+                      SizedBox(height: 12.h),
+
+                      ///<================= LOGIN REDIRECT =========================>///
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have an account?",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: const Color(0xff333333),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => Get.back(),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 4.w),
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xffFD7839),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 20.h),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

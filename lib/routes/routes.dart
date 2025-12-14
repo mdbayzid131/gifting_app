@@ -9,6 +9,7 @@ import '../presentation/screens/auth_screen/sign_up_screen.dart';
 import '../presentation/screens/buttomNabBar_screen/bottom_nab_bar_screen.dart';
 import '../presentation/screens/create_user/create_child_profile.dart';
 import '../presentation/screens/create_user/edit_child_profile.dart';
+import '../presentation/screens/create_user/edit_parent_profile.dart';
 import '../presentation/screens/create_user/subscription_plan.dart';
 import '../presentation/screens/find_profile/other_dream_and_support_fund.dart';
 import '../presentation/screens/find_profile/other_profile_screen.dart';
@@ -49,6 +50,7 @@ class RoutePages {
   static String otherRewardFund = '/OtherRewardFund';
   static String otherDreamAndSupportFund = '/OtherDreamAndSupportFund';
   static String totalSubmit = '/TotalSubmit';
+  static String editParentProfile = '/EditParentProfile';
 }
 
 final pages = [
@@ -156,6 +158,10 @@ final pages = [
   ), GetPage(
     name: RoutePages.totalSubmit,
     page: () => TotalSubmitPage(),
+     transition: Transition.native,
+  ),GetPage(
+    name: RoutePages.editParentProfile,
+    page: () => EditParentProfile(),
      transition: Transition.native,
   ),
 
