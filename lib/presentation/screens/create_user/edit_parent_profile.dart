@@ -1,38 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
 import '../../../core/constants/image_paths.dart';
-import '../../../routes/routes.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/uplode_picture_popup.dart';
 
-class CreateChildProfile extends StatefulWidget {
-  const CreateChildProfile({super.key});
+class EditParentProfile extends StatefulWidget {
+  const EditParentProfile({super.key});
 
   @override
-  State<CreateChildProfile> createState() => _CreateChildProfileState();
+  State<EditParentProfile> createState() => _EditParentProfileState();
 }
 
-class _CreateChildProfileState extends State<CreateChildProfile> {
+class _EditParentProfileState extends State<EditParentProfile> {
   ///<================= CONTROLLERS =========================>///
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
 
   ///<================= FORM KEY =========================>///
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  ///<================= CONSTANT COLOR =========================>///
-  static const Color primaryColor = Color(0xffFD7839);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomWidgets.customAppBar(title: 'Create Profile'),
+      appBar: CustomWidgets.customAppBar(title: 'Edit Parent Profile'),
 
+      ///<================= BODY =========================>///
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -43,46 +37,36 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
               children: [
                 SizedBox(height: 24.h),
 
-                ///<================= PROFILE IMAGE SECTION =========================>///
+                ///<================= PROFILE IMAGE =========================>///
                 Column(
                   children: [
                     Container(
                       height: 90.w,
                       width: 90.w,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
                         border: Border.all(
-                          color: primaryColor,
+                          color: const Color(0xffFD7839),
                           width: 1.5,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 6,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
+                        shape: BoxShape.circle,
                       ),
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          /// PROFILE IMAGE
                           Center(
                             child: CircleAvatar(
                               radius: 50.r,
-                              backgroundColor: Colors.grey.shade200,
-                              backgroundImage: AssetImage(
-                                ImagePaths.avatarProfile3,
-                              ),
+                              backgroundImage:
+                              AssetImage(ImagePaths.settingPp),
                             ),
                           ),
 
-                          /// EDIT ICON
+                          ///<================= CAMERA BUTTON =========================>///
                           Positioned(
-                            bottom: -2,
-                            right: -2,
+                            bottom: -2.h,
+                            right: -2.w,
                             child: InkWell(
-                              borderRadius: BorderRadius.circular(50),
+                              borderRadius: BorderRadius.circular(50.r),
                               onTap: () {
                                 showDialog(
                                   context: context,
@@ -93,19 +77,17 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
                                 height: 30.w,
                                 width: 30.w,
                                 decoration: BoxDecoration(
+                                  color: const Color(0xffEBE9E9),
                                   shape: BoxShape.circle,
-                                  color: const Color(0xffF2F2F2),
                                   border: Border.all(
-                                    color: primaryColor,
-                                    width: 1.2,
+                                    color: const Color(0xffFD7839),
+                                    width: 1.4,
                                   ),
                                 ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.black,
-                                    size: 17.sp,
-                                  ),
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 17.sp,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -114,10 +96,11 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
                       ),
                     ),
 
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 12.h),
 
+                    ///<================= USER NAME =========================>///
                     Text(
-                      'Add profile picture',
+                      'Jhon Doe',
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -127,33 +110,23 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
                   ],
                 ),
 
-                SizedBox(height: 30.h),
+                SizedBox(height: 32.h),
 
                 ///<================= NAME FIELD =========================>///
                 CustomTextField(
+                  hintText: 'Update your name',
                   label: 'Name',
-                  hintText: 'Enter your child name',
                   controller: nameController,
                 ),
 
-                SizedBox(height: 20.h),
+                SizedBox(height: 40.h),
 
-                ///<================= AGE FIELD =========================>///
-                CustomTextField(
-                  label: 'Age',
-                  hintText: 'Enter your child age',
-                  controller: ageController,
-                ),
-
-                SizedBox(height: 30.h),
-
-                ///<================= CREATE BUTTON =========================>///
+                ///<================= SAVE BUTTON =========================>///
                 CustomElevatedButton(
-                  label: "Create",
+                  label: "Save Changes",
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      /// TODO: Save profile data
-                      Get.back();
+                      Navigator.pop(context);
                     }
                   },
                 ),
@@ -165,12 +138,5 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    ageController.dispose();
-    super.dispose();
   }
 }

@@ -1,11 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
+import '../../../core/constants/app_color.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/contribute_controller.dart';
@@ -13,6 +12,7 @@ import '../../widgets/add_confirm_pop_up.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_field.dart';
 
+///<===================Wishlist Popup=========================>///
 class WishlistPopup {
   static Future show(BuildContext context) {
     return showDialog(
@@ -65,26 +65,26 @@ class _PopupBodyState extends State<_PopupBody>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        /// Blur background
+        ///<===================Blur Background=========================>///
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
           child: Container(color: Colors.black45),
         ),
 
+        ///<===================Popup Card=========================>///
         Material(
           color: Colors.transparent,
           child: Center(
             child: Container(
               width: 320.w,
               height: 580.h,
+              padding: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 15.h),
               decoration: BoxDecoration(
                 color: const Color(0xffFFFAF8),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(16.r),
               ),
-              padding: EdgeInsets.fromLTRB(10.w, 5.h, 10.w, 10.w),
               child: Column(
                 children: [
-                  _closeButton(),
                   _tabBar(),
                   SizedBox(height: 16.h),
                   Expanded(child: _tabView()),
@@ -97,30 +97,32 @@ class _PopupBodyState extends State<_PopupBody>
     );
   }
 
+  ///<===================Close Button=========================>///
   Widget _closeButton() {
     return Align(
       alignment: Alignment.topRight,
       child: GestureDetector(
         onTap: () => Navigator.pop(context),
-        child: const Icon(Icons.close, color: Colors.red),
+        child: const Icon(Icons.close, color: Colors.black),
       ),
     );
   }
 
+  ///<===================Tab Bar=========================>///
   Widget _tabBar() {
     return Container(
       height: 40.h,
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: TabBar(
         controller: _tabController,
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         indicator: BoxDecoration(
-          color: Color(0xffFFEC54),
-          borderRadius: BorderRadius.circular(12),
+          color: const Color(0xffFFEC54),
+          borderRadius: BorderRadius.circular(12.r),
         ),
         labelColor: Colors.black,
         tabs: const [
@@ -131,6 +133,7 @@ class _PopupBodyState extends State<_PopupBody>
     );
   }
 
+  ///<===================Tab View=========================>///
   Widget _tabView() {
     return TabBarView(
       controller: _tabController,
@@ -141,14 +144,14 @@ class _PopupBodyState extends State<_PopupBody>
     );
   }
 
-  /// ---------------- Manual ----------------
+  ///<===================Manual Form=========================>///
   Widget _manualForm() {
     return Form(
       key: _manualFormKey,
       child: Column(
         children: [
           _imagePicker(),
-          SizedBox(height: 10),
+          SizedBox(height: 10.h),
 
           CustomTextField(
             label: 'Name',
@@ -175,23 +178,52 @@ class _PopupBodyState extends State<_PopupBody>
 
           const Spacer(),
 
-          CustomElevatedButton(
-            label: 'Confirm',
-            onPressed: () {
-              if (_manualFormKey.currentState!.validate()) {
-                Navigator.pop(context);
-                showDialog(
-                    context: context,
-                    builder: (context) => AddConfirmPopUp()
-                );
-              }
-            },
+          Row(
+            children: [
+              Expanded(
+                child: CustomElevatedButton(
+                  label: 'Cancel',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 48),
+                    backgroundColor: const Color(0xffFDFCFA),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                      side: BorderSide(
+                        color: AppColors.primary,
+                        width: 2.w,
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10.h,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: CustomElevatedButton(
+                  label: 'Confirm',
+                  onPressed: () {
+                    if (_manualFormKey.currentState!.validate()) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AddConfirmPopUp(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
+  ///<===================Image Picker=========================>///
   Widget _imagePicker() {
     return GestureDetector(
       onTap: () {},
@@ -200,13 +232,13 @@ class _PopupBodyState extends State<_PopupBody>
         width: 240.w,
         decoration: BoxDecoration(
           color: const Color(0xffFD7839),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(ImagePaths.selectImage),
-            const SizedBox(height: 6),
+            SizedBox(height: 6.h),
             const Text(
               'Select File',
               style: TextStyle(color: Colors.white),
@@ -217,7 +249,7 @@ class _PopupBodyState extends State<_PopupBody>
     );
   }
 
-  /// ---------------- Automatic ----------------
+  ///<===================Automatic Form=========================>///
   Widget _automaticForm() {
     return Form(
       key: _autoFormKey,
@@ -226,23 +258,52 @@ class _PopupBodyState extends State<_PopupBody>
           CustomTextField(
             hintText: 'Provide your link',
             controller: _linkController,
-            validator: _contributeController.validLink, label: '',isLabelVisible: false,
+            validator: _contributeController.validLink,
+            label: '',
+            isLabelVisible: false,
           ),
 
           const Spacer(),
 
-          CustomElevatedButton(
-            label: 'Confirm',
-            onPressed: () {
-              if (_autoFormKey.currentState!.validate()) {
-                Navigator.pop(context);
-                  showDialog(
-                    context: context,
-                    builder: (context) => AddConfirmPopUp()
-                  );
-
-              }
-            },
+          Row(
+            children: [
+              Expanded(
+                child: CustomElevatedButton(
+                  label: 'Cancel',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 48),
+                    backgroundColor: const Color(0xffFDFCFA),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                      side: BorderSide(
+                        color: AppColors.primary,
+                        width: 2.w,
+                      ),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10.h,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10.w),
+              Expanded(
+                child: CustomElevatedButton(
+                  label: 'Confirm',
+                  onPressed: () {
+                    if (_autoFormKey.currentState!.validate()) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AddConfirmPopUp(),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),

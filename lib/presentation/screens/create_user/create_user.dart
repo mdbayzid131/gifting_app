@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:gifting_app/presentation/widgets/custom_appbar.dart';
+import 'package:get/get.dart';
 
 import '../../../core/constants/image_paths.dart';
 import '../../../routes/routes.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/uplode_picture_popup.dart';
 
 class CreateUser extends StatefulWidget {
   const CreateUser({super.key});
@@ -18,6 +16,7 @@ class CreateUser extends StatefulWidget {
 }
 
 class _CreateUserState extends State<CreateUser> {
+  ///<================= PROFILE LIST =========================>///
   List profiles = [
     {"name": "Zoe", "image": "assets/zoe.png"},
   ];
@@ -33,51 +32,67 @@ class _CreateUserState extends State<CreateUser> {
 
   @override
   Widget build(BuildContext context) {
+    const Color primaryColor = Color(0xffFD7839);
     return Scaffold(
       appBar: CustomWidgets.customAppBar(title: 'Create Profile'),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            Center(
-              child: Container(
-                height: 90,
-                width: 90,
+
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              SizedBox(height: 20.h),
+
+              ///<================= MAIN PROFILE AVATAR =========================>///
+              Container(
+                height: 90.w,
+                width: 90.w,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffFD7839), width: 1.5),
-                  borderRadius: BorderRadius.circular(50),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: primaryColor, width: 1.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
+                    /// PROFILE IMAGE
                     Center(
                       child: CircleAvatar(
-                        radius: 50,
+                        radius: 50.r,
+                        backgroundColor: Colors.grey.shade200,
                         backgroundImage: AssetImage(ImagePaths.settingPp),
                       ),
                     ),
-                    Positioned(
-                      bottom: -1,
-                      right: 0,
-                      child: InkWell(
-                        onTap: () {},
 
-                        ///=======================
+                    /// EDIT ICON
+                    Positioned(
+                      bottom: -2,
+                      right: -2,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(50),
+                        onTap: () {
+                          Get.toNamed(RoutePages.editParentProfile);
+                        },
                         child: Container(
-                          height: 30,
-                          width: 30,
+                          height: 30.w,
+                          width: 30.w,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffFD7839),
-                              width: 1.5,
-                            ),
-                            color: const Color(0xffEBE9E9),
-                            borderRadius: BorderRadius.circular(50),
+                            shape: BoxShape.circle,
+                            color: const Color(0xffF2F2F2),
+                            border: Border.all(color: primaryColor, width: 1.2),
                           ),
-                          child: SvgPicture.asset(
-                            ImagePaths.editImage,
-                            fit: BoxFit.scaleDown,
+                          child: Center(
+                            child: SvgPicture.asset(
+                              ImagePaths.editImage,
+                              height: 17.h,
+                              width: 17.w,
+                            ),
                           ),
                         ),
                       ),
@@ -85,74 +100,72 @@ class _CreateUserState extends State<CreateUser> {
                   ],
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            Center(
-              child: Text(
+
+              SizedBox(height: 10.h),
+
+              ///<================= USER NAME =========================>///
+              Text(
                 'john doe',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xff444444),
+                  color: const Color(0xff444444),
                 ),
               ),
-            ),
-            SizedBox(height: 38),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 0,
-                  crossAxisSpacing: 0,
-                  childAspectRatio: 0.85,
-                ),
-                itemCount: profiles.length + 1, // last item = add button
-                itemBuilder: (context, index) {
-                  // If last index → Add Profile Button
-                  if (index == profiles.length) {
-                    return addProfileButton();
-                  }
-                  // Otherwise Profile Item
-                  final p = profiles[index];
-                  return profileItem(p["name"], p["image"]);
-                },
-              ),
-            ),
-            SizedBox(height: 10),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    height: 77,
-                    width: 332,
-                    decoration: BoxDecoration(
-                      color: Color(0xffFD7839),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Notice : You can create one child profile for free. For any additional profiles you’ll need to make a payment.',
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+
+              SizedBox(height: 30.h),
+
+              ///<================= PROFILE GRID =========================>///
+              Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 10.h,
+                    crossAxisSpacing: 10.w,
+                    childAspectRatio: 0.85,
                   ),
-                ],
+                  itemCount: profiles.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == profiles.length) {
+                      return addProfileButton();
+                    }
+                    final p = profiles[index];
+                    return profileItem(p["name"], p["image"]);
+                  },
+                ),
               ),
-            ),
-          ],
+
+              SizedBox(height: 10.h),
+
+              ///<================= NOTICE BOX =========================>///
+              Container(
+                padding: EdgeInsets.all(12.w),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color(0xfffd8e56),
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: Text(
+                  'Notice : You can create one child profile for free. For any additional profiles you’ll need to make a payment.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 16.h),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  /// 🔵 Create Profile Button
+  ///<================= ADD PROFILE BUTTON =========================>///
   Widget addProfileButton() {
     return GestureDetector(
       onTap: () {
@@ -162,23 +175,21 @@ class _CreateUserState extends State<CreateUser> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 60,
-            width: 60,
+            height: 60.w,
+            width: 60.w,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: Color(0xffFD7839), width: 2),
+              shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xffFD7839), width: 2),
             ),
-            child: Center(
-              child: Icon(Icons.add, color: Color(0xffFD7839), size: 30),
-            ),
+            child: const Icon(Icons.add, color: Color(0xffFD7839), size: 30),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 8.h),
           Text(
             'Create Profile',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 14.sp,
               fontWeight: FontWeight.w500,
-              color: Color(0xff444444),
+              color: const Color(0xff444444),
             ),
           ),
         ],
@@ -186,68 +197,85 @@ class _CreateUserState extends State<CreateUser> {
     );
   }
 
-  /// 🔴 Profile Item Widget
+  ///<================= PROFILE ITEM =========================>///
   Widget profileItem(String name, String image) {
+    const Color primaryColor = Color(0xffFD7839);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
-          child: Container(
-            height: 60,
-            width: 60,
-            decoration: BoxDecoration(
-              border: Border.all(color: Color(0xffFD7839), width: 1.5),
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Center(
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage(ImagePaths.settingPp),
+        /// ================= PROFILE AVATAR =================
+        Container(
+          height: 60.w,
+          width: 60.w,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: primaryColor, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 6,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              /// PROFILE IMAGE
+              Center(
+                child: CircleAvatar(
+                  radius: 30.r,
+                  backgroundColor: Colors.grey.shade200,
+                  backgroundImage: AssetImage(
+                    image.isEmpty ? image : ImagePaths.avatarProfile3,
                   ),
                 ),
-                Positioned(
-                  bottom: -1,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(RoutePages.editChildProfile);
-                    },
+              ),
 
-                    ///=======================
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xffFD7839),
-                          width: 1.5,
-                        ),
-                        color: const Color(0xffEBE9E9),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+              /// EDIT ICON
+              Positioned(
+                bottom: -2,
+                right: -2,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(50),
+                  onTap: () {
+                    Get.toNamed(RoutePages.editChildProfile);
+                  },
+                  child: Container(
+                    height: 22.w,
+                    width: 22.w,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xffF2F2F2),
+                      border: Border.all(color: primaryColor, width: 1.2),
+                    ),
+                    child: Center(
                       child: SvgPicture.asset(
                         ImagePaths.editImage,
-                        fit: BoxFit.scaleDown,
+                        height: 13.h,
+                        width: 13.w,
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-        SizedBox(height: 10),
-        Center(
-          child: Text(
-            'john doe',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Color(0xff444444),
-            ),
+
+        SizedBox(height: 8.h),
+
+        /// ================= PROFILE NAME =================
+        Text(
+          name,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xff444444),
           ),
         ),
       ],

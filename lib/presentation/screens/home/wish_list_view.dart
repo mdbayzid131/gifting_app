@@ -5,6 +5,8 @@ import '../../../core/constants/image_paths.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_wishList_card.dart';
 import 'add_item_popUp.dart';
+
+///<===================Wish List View=========================>///
 class WishListView extends StatefulWidget {
   const WishListView({super.key});
 
@@ -13,24 +15,23 @@ class WishListView extends StatefulWidget {
 }
 
 class _WishListViewState extends State<WishListView> {
-
-    List<Map<String, Object>> itemList = [
-      {
-        "image": ImagePaths.otpVerify,
-        "description": "Barbie Deluxe Style Fashion Doll",
-        "price": 100,
-      },
-      {
-        "image": ImagePaths.otpVerify,
-        "description": "Lego Star Wars Mini Pack",
-        "price": 45,
-      },
-      {
-        "image": ImagePaths.otpVerify,
-        "description": "Lego Star Wars Mini Pack",
-        "price": 45,
-      },
-    ];
+  List<Map<String, Object>> itemList = [
+    {
+      "image": ImagePaths.otpVerify,
+      "description": "Barbie Deluxe Style Fashion Doll",
+      "price": 100,
+    },
+    {
+      "image": ImagePaths.otpVerify,
+      "description": "Lego Star Wars Mini Pack",
+      "price": 45,
+    },
+    {
+      "image": ImagePaths.otpVerify,
+      "description": "Lego Star Wars Mini Pack",
+      "price": 45,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _WishListViewState extends State<WishListView> {
           children: [
             SizedBox(height: 20.h),
 
-            /// Avatar
+            ///<===================Avatar=========================>///
             Center(
               child: Container(
                 width: 102.w,
@@ -52,7 +53,7 @@ class _WishListViewState extends State<WishListView> {
                   border: Border.all(color: Colors.white, width: 3.w),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
+                      color: Colors.black.withOpacity(0.2),
                       spreadRadius: 5.r,
                       blurRadius: 7.r,
                       offset: Offset(0, 3.h),
@@ -70,7 +71,7 @@ class _WishListViewState extends State<WishListView> {
 
             SizedBox(height: 20.h),
 
-            /// Greeting
+            ///<===================Greeting=========================>///
             Text(
               'John Deu',
               style: TextStyle(
@@ -80,26 +81,32 @@ class _WishListViewState extends State<WishListView> {
               ),
             ),
 
-            SizedBox(height: 24.h),
+            SizedBox(height: 20.h),
 
-
-            /// ------------------- Decoration images -------------------
+            ///<===================Decoration images=========================>///
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(ImagePaths.wishListBg,height: 88,width: 335,),
+                Image.asset(
+                  ImagePaths.wishListBg,
+                  height: 88.h,
+                  width: 335.w,
+                  fit: BoxFit.cover,
+                ),
               ],
             ),
 
+
             Image.asset(
-              ImagePaths.rewardFund,
+              ImagePaths.wishListFund,
               width: 46.w,
               height: 46.h,
+              fit: BoxFit.contain,
             ),
 
             SizedBox(height: 24.h),
 
-            /// Wish List Items
+            ///<===================Wish List Items=========================>///
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -109,20 +116,22 @@ class _WishListViewState extends State<WishListView> {
 
                 return Padding(
                   padding: EdgeInsets.only(bottom: 12.h),
-
-                  child: WishListItemCard(cardImage: item["image"], description: item["description"], price: item["price"],),
-
+                  child: WishListItemCard(
+                    cardImage: item["image"],
+                    description: item["description"],
+                    price: item["price"],
+                  ),
                 );
               },
             ),
 
             SizedBox(height: 16.h),
 
-            /// Add Button
+            ///<===================Add Button=========================>///
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                   WishlistPopup.show(context);
                 },
                 style: ElevatedButton.styleFrom(
@@ -130,6 +139,7 @@ class _WishListViewState extends State<WishListView> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
                 ),
                 child: Text(
                   "+ Add Item",
@@ -143,6 +153,5 @@ class _WishListViewState extends State<WishListView> {
         ),
       ),
     );
-
   }
 }

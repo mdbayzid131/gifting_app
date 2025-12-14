@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'contribute_popUp.dart';
 
+///<===================Wish List Item Card=========================>///
 class WishListItemCard extends StatelessWidget {
   final String cardImage;
   final String description;
@@ -13,7 +14,8 @@ class WishListItemCard extends StatelessWidget {
     super.key,
     required this.cardImage,
     required this.description,
-    required this.price, this.isBalanceShow=true,
+    required this.price,
+    this.isBalanceShow = true,
   });
 
   @override
@@ -27,9 +29,12 @@ class WishListItemCard extends StatelessWidget {
       ),
       child: Row(
         children: [
+          ///<===================Card Image=========================>///
           Image.asset(cardImage, width: 70.w, height: 70.h),
-          SizedBox(width: 10.w),
 
+          SizedBox(width: 5.w),
+
+          ///<===================Description=========================>///
           Expanded(
             child: Text(
               description,
@@ -41,18 +46,23 @@ class WishListItemCard extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(width: 5.w),
 
+
+          ///<===================Price & Contribute Button=========================>///
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              isBalanceShow==true ?Text(
-                "\$$price",
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
+              if (isBalanceShow == true)
+                Text(
+                  "\$$price",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                  ),
                 ),
-              ): Container(),
+
               SizedBox(height: 6.h),
 
               ElevatedButton(
@@ -68,8 +78,13 @@ class WishListItemCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.r),
                   ),
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                 ),
-                child: Text("Contribute", style: TextStyle(fontSize: 12.sp)),
+                child: Text(
+                  "Contribute",
+                  style: TextStyle(fontSize: 12.sp),
+                ),
               ),
             ],
           ),

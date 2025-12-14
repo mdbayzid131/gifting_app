@@ -4,13 +4,11 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../routes/routes.dart';
-
 import '../../../core/constants/app_color.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../../data/helper/time_formater.dart';
 import '../../controllers/auth_controller.dart';
 import '../../widgets/custom_elevated_button.dart';
-import '../../widgets/custom_text_field.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
@@ -39,155 +37,164 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('')),
+      appBar: AppBar(),
 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Image.asset(ImagePaths.giftZees)],
-            ),
-            SizedBox(height: 24),
-            Image.asset(ImagePaths.otpVerify),
-            SizedBox(height: 24),
-            Text(
-              'One-Time Password Verification',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff1D1D1D),
-                height: 1.22,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+
+              SizedBox(height: 20.h),
+
+              ///================= App Logo =========================///
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    ImagePaths.giftZees,
+                    width: 218.w,
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 15),
-            Text(
-              'A verification code has been sent to\nyour registered email/phone. Enter\nbelow to proceed.',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
-                color: Color(0xff525050),
-                height: 1.22,
+
+              SizedBox(height: 24.h),
+
+              ///================= OTP Illustration =========================///
+              Image.asset(
+                ImagePaths.otpVerify,
+                height: 180.h,
               ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 24),
-            Obx(
-              ()=> Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Pinput(
-                      length: 6,
-                      controller: otpController,
-                      defaultPinTheme: PinTheme(
-                        width: 48,
-                        height: 48,
-                        textStyle: TextStyle(
-                          fontSize: 15.sp,
-                          color: const Color(0xff333333),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Color(0xffEDE8FC),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+
+              SizedBox(height: 24.h),
+
+              ///================= Title =========================///
+              Text(
+                'One-Time Password Verification',
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xff1D1D1D),
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              SizedBox(height: 15.h),
+
+              ///================= Description =========================///
+              Text(
+                'A verification code has been sent to\nyour registered email/phone. Enter\nbelow to proceed.',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(0xff525050),
+                  height: 1.4,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              SizedBox(height: 24.h),
+
+              ///================= OTP Form =========================///
+              Obx(
+                    () => Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+
+                      ///================= OTP Input Field =========================///
+                      Pinput(
+                        length: 6,
+                        controller: otpController,
+                        defaultPinTheme: _defaultPinTheme(),
+                        focusedPinTheme: _focusedPinTheme(),
+                        errorPinTheme: _errorPinTheme(),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter OTP';
+                          }
+                          return null;
+                        },
                       ),
-                      focusedPinTheme: PinTheme(
-                        width: 48,
-                        height: 48,
-                        textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          color: const Color(0xff333333),
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xffEDE8FC),
-                          border: Border.all(color: AppColors.primary, width: 1),
-                        ),
-                      ),
-                      errorPinTheme: PinTheme(
-                        width: 48,
-                        height: 48,
-                        textStyle: TextStyle(
-                          fontSize: 16.sp,
-                          color: const Color(0xff333333),
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xffEDE8FC),
-                          border: Border.all(color: Colors.red, width: 1),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter OTP';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: 10),
-                    if (_authController.enableResent.value)
-                      Column(
-                        children: [
-                          TextButton(
-                            onPressed: () async {
-                              _authController.startTimer();
-                              // _controller.isLoading(true);
-                              // final headers = {'Content-Type': 'application/json'};
-                              // final response = await ApiClient.postData(
-                              //   ApiConstant.forgetPassword,
-                              //   jsonEncode({"username": Get.arguments}), // Using Get.arguments to get username
-                              //   headers: headers,
-                              // );
-                              // if (response.statusCode != 200) {
-                              //   ApiChecker.checkApi(response);
-                              // }
-                              // _authController.isLoading(false);
-                            },
-                            child: Text('Resent OTP',style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.redAccent,
-                            ),),
-                          ),
-                        ],
-                      )
-                    else
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 50),
-                        Text(
-                          'Resend in : ${formatTime(_authController.secondsRemaining.value)}',
+
+                      SizedBox(height: 12.h),
+
+                      ///================= Resend Section =========================///
+                      _authController.enableResent.value
+                          ? TextButton(
+                        onPressed: () {
+                          _authController.startTimer();
+                        },
+                        child: Text(
+                          'Resent OTP',
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xff19B23F),
+                            color: Colors.redAccent,
                           ),
                         ),
-                      ],
-                    ),
+                      )
+                          : Text(
+                        'Resend in : ${formatTime(_authController.secondsRemaining.value)}',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xff19B23F),
+                        ),
+                      ),
 
-                    SizedBox(height: 32),
+                      SizedBox(height: 32.h),
 
-                    CustomElevatedButton(
-                      label: 'Send',
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Get.toNamed(RoutePages.newPassword);
-                        }
-                      },
-                    ),
-                  ],
+                      ///================= Submit Button =========================///
+                      CustomElevatedButton(
+                        label: 'Send',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Get.toNamed(RoutePages.newPassword);
+                          }
+                        },
+                      ),
+
+                      SizedBox(height: 20.h),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
+  ///================= PIN THEMES =========================///
+  PinTheme _defaultPinTheme() => PinTheme(
+    width: 48.w,
+    height: 48.h,
+    textStyle: TextStyle(
+      fontSize: 15.sp,
+      color: const Color(0xff333333),
+    ),
+    decoration: BoxDecoration(
+      color: const Color(0xffEDE8FC),
+      borderRadius: BorderRadius.circular(10.r),
+    ),
+  );
+
+  PinTheme _focusedPinTheme() => _defaultPinTheme().copyWith(
+    decoration: BoxDecoration(
+      color: const Color(0xffEDE8FC),
+      borderRadius: BorderRadius.circular(10.r),
+      border: Border.all(color: AppColors.primary),
+    ),
+  );
+
+  PinTheme _errorPinTheme() => _defaultPinTheme().copyWith(
+    decoration: BoxDecoration(
+      color: const Color(0xffEDE8FC),
+      borderRadius: BorderRadius.circular(10.r),
+      border: Border.all(color: Colors.red),
+    ),
+  );
 }

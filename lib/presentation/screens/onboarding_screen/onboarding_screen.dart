@@ -35,7 +35,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: SafeArea(
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
@@ -111,8 +110,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                         width: 2.w,
                                       ),
                                     ),
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.h),
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 10.h,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -150,7 +150,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 Get.toNamed(RoutePages.loginScreen);
                               }
                             },
-                            label: _currentPage < 2 ? "Get Started" : "Get Started",
+                            label: _currentPage < 2
+                                ? "Get Started"
+                                : "Get Started",
                           ),
 
                     SizedBox(height: 22.h),
@@ -158,13 +160,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () {Get.toNamed(RoutePages.loginScreen);},
+                          onPressed: () {
+                            Get.toNamed(RoutePages.loginScreen);
+                          },
                           child: Row(
                             children: [
                               Text(
                                 "Skip",
                                 style: TextStyle(
-                                    color: Color(0xff333333), fontSize: 14.sp),
+                                  color: Color(0xff333333),
+                                  fontSize: 14.sp,
+                                ),
                               ),
                               SizedBox(width: 6.w),
                               Icon(Icons.arrow_forward_ios_outlined),

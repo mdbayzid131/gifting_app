@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:gifting_app/presentation/widgets/voice_play_popup.dart';
 
 import '../../core/constants/image_paths.dart';
 import '../../data/models/NotificationItemModel.dart';
 import 'CustomAddUserPopup.dart';
 import 'CustomRejectUserPopUp.dart';
+import '../widgets/voice_play_popup.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationItem item;
@@ -16,152 +15,145 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style =
-        categoryStyles[item.category] ??
+    // get style for the notification category
+    final style = categoryStyles[item.category] ??
         NotificationStyle(
           backgroundColor: Colors.grey.shade200,
           icon: Icons.notifications,
         );
 
     return Container(
-      width: 335,
-      height: item.category == 'follow_request' ? 115.h : 100.h,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.all(10),
+      width: double.infinity, // make full width responsive
+      margin: EdgeInsets.symmetric(vertical: 8.h),
+      padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         color: style.backgroundColor,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade300,
-            blurRadius: 4,
-            offset: Offset(0, 2),
+            blurRadius: 6.r,
+            offset: Offset(0, 3.h),
           ),
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //=================== Avatar + Category Icon ===================//
           Container(
-            height: 45.h,
-            width: 45.w,
+            height: 50.h,
+            width: 50.w,
             decoration: BoxDecoration(
-              border: Border.all(color: Color(0xffFD7839), width: 1.5),
-              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: Color(0xffA0C4FF), width: 1.2.w), // soft blue border
+              borderRadius: BorderRadius.circular(50.r),
             ),
             child: Stack(
               clipBehavior: Clip.none,
               children: [
+                // Avatar Image
                 Center(
                   child: CircleAvatar(
-                    radius: 50,
+                    radius: 25.r,
                     backgroundImage: AssetImage(item.imagePath),
                   ),
                 ),
+                // Category Icon
                 Positioned(
-                  bottom: -1,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {},
-
-                    ///=======================
-                    child: Container(
-                      height: 18,
-                      width: 18,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xffFD7839),
-                          width: 1.5,
-                        ),
-                        color: const Color(0xffFD7839),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(
-                        item.category == 'voice_note'
-                            ? Icons.mic_outlined
-                            : item.category == 'approval_request'
-                            ? Icons.notifications_outlined
-                            : item.category == 'follow_request'
-                            ? Icons.person_add_alt
-                            : Icons.help_outline,
-                        size: 10,
-                        color: Colors.white,
-                      ),
+                  bottom: -2.h,
+                  right: -2.w,
+                  child: Container(
+                    height: 20.h,
+                    width: 20.w,
+                    decoration: BoxDecoration(
+                      color: item.category == 'voice_note'
+                          ? Color(0xfffbbf2c) // soft yellow
+                          : item.category == 'contribute_alert'
+                          ? Color(0xff06D6A0) // soft green
+                          : item.category == 'follow_request'
+                          ? Color(0xffEF476F) // soft red/pink
+                          : Color(0xffFFD166), // default soft yellow
+                      borderRadius: BorderRadius.circular(50.r),
+                    ),
+                    child: Icon(
+                    style.icon,
+                      size: 12.sp,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 12),
+
+          SizedBox(width: 12.w),
+
+          //=================== Message + Actions ===================//
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: item.category == 'voice_note'? GestureDetector(
-                    onTap: (){
-                      showDialog(
-                        context: context,
-                        builder: (context) => PlayVoicePopup(path:item.voicePath!, name: item.name,),
-                      );
-
-                    },
-                    child: Text(
-                      item.message,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xff333333),
+                // Message Text
+                GestureDetector(
+                  onTap: item.category == 'voice_note'
+                      ? () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => PlayVoicePopup(
+                        path: item.voicePath!,
+                        name: item.name,
                       ),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ): Text(
+                    );
+                  }
+                      : null,
+                  child: Text(
                     item.message,
                     style: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.w400,
                       color: Color(0xff333333),
+                      height: 1.4,
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 8.h),
 
+                // Follow request buttons
                 if (item.category == 'follow_request') ...[
                   Row(
                     children: [
+                      // Accept Button → Soft Blue (friendly feel)
                       ElevatedButton(
                         onPressed: () {
                           showDialog(
                             context: context,
                             barrierDismissible: false,
-                            builder: (context) => AddUserPopup(name:item.name),
+                            builder: (context) => AddUserPopup(name: item.name),
                           );
-
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffFFFFFF),
-                          foregroundColor: Color(0xffFD7839),
+                          backgroundColor: Color(0xFF4A90E2), // soft blue
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(
-                              color: Color(0xffFFAA82),
-                              width: 1,
-                            ),
+                            borderRadius: BorderRadius.circular(30.r),
+                            side: BorderSide(color: Colors.white, width: 1.w), // only rounded
                           ),
-                          minimumSize: Size(61, 30),
+                          minimumSize: Size(65.w, 32.h),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Accept",
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 4),
-                      OutlinedButton(
+                      SizedBox(width: 6.w),
+
+                      // Reject Button → Soft Red
+                      ElevatedButton(
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -170,42 +162,47 @@ class NotificationCard extends StatelessWidget {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffCC4343),
-                          foregroundColor: Color(0xffFFFFFF),
+                          backgroundColor: Color(0xFFE94E4E), // soft red
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(
-                              color: Color(0xffFFFFFF),
-                              width: 1,
-                            ),
+                            borderRadius: BorderRadius.circular(30.r),
+                            side: BorderSide(color: Colors.white, width: 1.w), // only rounded
                           ),
-                          minimumSize: Size(61, 30),
+                          minimumSize: Size(65.w, 32.h),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Reject",
                           style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 11.sp,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                       Spacer(),
+
+                      // Timestamp
                       Text(
                         item.timestamp,
-                        style: TextStyle(color: Colors.grey.shade600),
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
                     ],
                   ),
+
+
                 ] else ...[
-                  Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        item.timestamp,
-                        style: TextStyle(color: Colors.grey.shade600),
+                  // Timestamp for other categories
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      item.timestamp,
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Colors.grey.shade600,
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ],
@@ -217,6 +214,7 @@ class NotificationCard extends StatelessWidget {
   }
 }
 
+///=================== Notification Styles ===================//
 class NotificationStyle {
   final Color backgroundColor;
   final IconData icon;
@@ -225,16 +223,21 @@ class NotificationStyle {
 }
 
 Map<String, NotificationStyle> categoryStyles = {
+  // Voice note → soft yellow, attention grabbing but easy on eyes
   'voice_note': NotificationStyle(
-    backgroundColor: Color(0xffFFEC54),
+    backgroundColor: Color(0xFFFFF4C2), // soft yellow
     icon: Icons.mic,
   ),
-  'approval_request': NotificationStyle(
-    backgroundColor: Color(0xffFFFAF8),
-    icon: Icons.person_add,
+
+  // Contribute alert → soft blue, calm and noticeable
+  'contribute_alert': NotificationStyle(
+    backgroundColor: Color(0xFFD6EAF8), // soft sky blue
+    icon: Icons.notifications,
   ),
+
+  // Follow request → soft green, friendly and positive
   'follow_request': NotificationStyle(
-    backgroundColor: Color(0xffFD7839),
-    icon: Icons.check_circle_outline,
+    backgroundColor: Color(0xFFDFF2E1), // soft mint green
+    icon: Icons.person_add_alt_1,
   ),
 };
