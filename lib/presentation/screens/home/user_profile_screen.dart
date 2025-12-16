@@ -3,8 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:gifting_app/presentation/screens/home/rewarrd_fund_view.dart';
+import 'package:gifting_app/presentation/screens/home/support_fund.dart';
+import 'package:gifting_app/presentation/screens/home/total_submit.dart';
+import 'package:gifting_app/presentation/screens/home/wish_list_view.dart';
 
 import '../../../core/constants/image_paths.dart';
+import '../../../core/constants/navigator.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/VoiceRecordDialog.dart';
 import '../../widgets/custom_appbar.dart';
@@ -94,7 +99,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ///<================= TOTAL EARNED CARD =========================>///
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(RoutePages.totalSubmit);
+
+                  navigateTo(context,  TotalSubmitPage());
+
                 },
                 child: Container(
                   height: 54.h,
@@ -126,7 +133,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     title: 'Wish List',
                     image: Image.asset(ImagePaths.wishListFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                     viewOnPressed: () {
-                      Get.toNamed(RoutePages.wishListView);
+                      navigateTo(context, WishListView());
                     },
                     addOnPressed: () {
                       WishlistPopup.show(context);
@@ -136,7 +143,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     title: 'Reward Fund',
                     image: Image.asset(ImagePaths.rewardFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                     viewOnPressed: () {
-                      Get.toNamed(RoutePages.rewardFundView);
+                      navigateTo(context, RewardFundView());
                     },
                     addOnPressed: () {
                       WishlistPopup.show(context);
@@ -146,7 +153,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     title: 'Support Fund',
                     image: Image.asset(ImagePaths.dremFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                     viewOnPressed: () {
-                      Get.toNamed(RoutePages.supportFund);
+                      navigateTo(context, SupportFund());
                     },
                     addOnPressed: () {
                       WishlistPopup.show(context);

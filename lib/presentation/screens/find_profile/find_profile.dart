@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:gifting_app/presentation/screens/find_profile/other_profile_screen.dart';
 import 'package:gifting_app/presentation/widgets/custom_text_field.dart';
 
 import '../../../core/constants/image_paths.dart';
+import '../../../core/constants/navigator.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/custom_appbar.dart';
+import '../home/wish_list_view.dart';
 
 class FindProfile extends StatefulWidget {
   const FindProfile({super.key});
@@ -77,7 +80,7 @@ class _FindProfileState extends State<FindProfile> {
                       GestureDetector(
                         onTap: () {
                           // Handle profile tap
-                          Get.toNamed(RoutePages.otherProfileScreen);
+                          navigateTo(context, OtherProfileScreen());
                         },
                         child: Container(
                           width: 50,

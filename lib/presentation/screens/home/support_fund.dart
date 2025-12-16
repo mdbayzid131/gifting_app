@@ -101,7 +101,6 @@ class _SupportFundState extends State<SupportFund> {
               ImagePaths.dremFund,
               width: 46.w,
               height: 46.h,
-              fit: BoxFit.contain,
             ),
 
             SizedBox(height: 24.h),

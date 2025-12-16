@@ -6,9 +6,13 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import '../../../core/constants/image_paths.dart';
+import '../../../core/constants/navigator.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_fund_container.dart';
+import 'other_dream_and_support_fund.dart';
+import 'other_reward_fund.dart';
+import 'other_wish_list_view.dart';
 
 class OtherProfileScreen extends StatefulWidget {
   const OtherProfileScreen({super.key});
@@ -90,25 +94,25 @@ class _OtherProfileScreenState extends State<OtherProfileScreen> {
               children: [
                 CustomFundContainer(
                   title: 'Wish List',
-                  image: Image.asset(ImagePaths.wishListFund),
+                  image: Image.asset(ImagePaths.wishListFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                   viewOnPressed: () {
-                    Get.toNamed(RoutePages.otherWishListView);
+                    navigateTo(context, OtherWishListView());
                   },
                   isMyProfile: false,
                 ),
                 CustomFundContainer(
                   title: 'Reward Fund',
-                  image: Image.asset(ImagePaths.rewardFund),
+                  image: Image.asset(ImagePaths.rewardFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                   viewOnPressed: () {
-                    Get.toNamed(RoutePages.otherRewardFund);
+                    navigateTo(context, OtherRewardFund());
                   },
                   isMyProfile: false,
                 ),
                 CustomFundContainer(
                   title: 'Dream & Support Fund',
-                  image: Image.asset(ImagePaths.dremFund),
+                  image: Image.asset(ImagePaths.dremFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                   viewOnPressed: () {
-                    Get.toNamed(RoutePages.otherDreamAndSupportFund);
+                    navigateTo(context, OtherDreamAndSupportFund());
                   },
                   isMyProfile: false,
                 ),

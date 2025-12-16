@@ -1,26 +1,53 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../screens/create_user/create_user.dart';
-import '../screens/find_profile/find_profile.dart';
-import '../screens/home/home_screen.dart';
-import '../screens/setting/setting_screen.dart';
+
+class BottomNabBarController extends GetxController {
 
 
 
-class BottomNabBarController extends GetxController{
-  /// <=========== Bottom Navigation Bar ===============>///
+  // void changePage(int index) {
+  //   if (currentIndex.value == index) {
+  //     navigatorKeys[index]
+  //         .currentState
+  //         ?.popUntil((route) => route.isFirst);
+  //   } else {
+  //     currentIndex.value = index;
+  //   }
+  // }
+  //
+
+
+
+
 
   RxInt currentIndex = 0.obs;
 
-
-  RxList pages = [
-    HomeScreen(),
-    FindProfile(),
-    CreateUser(),
-    SettingScreen(),
-
-  ].obs;
+  final List<GlobalKey<NavigatorState>> navigatorKeys =
+  List.generate(4, (_) => GlobalKey<NavigatorState>());
 
   void changePage(int index) {
-    currentIndex.value = index;
+    if (currentIndex.value == index) {
+      navigatorKeys[index]
+          .currentState
+          ?.popUntil((route) => route.isFirst);
+    } else {
+      navigatorKeys[currentIndex.value]
+          .currentState
+          ?.popUntil((route) => route.isFirst);
+
+      currentIndex.value = index;
+    }
   }
+
+  Future<bool> onWillPop() async {
+    final NavigatorState currentNavigator =
+    navigatorKeys[currentIndex.value].currentState!;
+
+    if (currentNavigator.canPop()) {
+      currentNavigator.pop();
+      return false;
+    }
+    return true;
+  }
+
 }

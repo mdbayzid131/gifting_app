@@ -101,7 +101,6 @@ class _RewardFundViewState extends State<RewardFundView> {
               ImagePaths.rewardFund,
               width: 46.w,
               height: 46.h,
-              fit: BoxFit.contain,
             ),
 
             SizedBox(height: 24.h),
