@@ -52,117 +52,118 @@ class RoutePages {
   static String totalSubmit = '/TotalSubmit';
   static String editParentProfile = '/EditParentProfile';
 }
+ final Transition transition = Transition.rightToLeft;
 
 final pages = [
   GetPage(
     name: RoutePages.splashScreen,
     page: () => SplashScreen(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.onboardingScreen,
     page: () => OnboardingScreen(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.loginScreen,
     page: () => LoginScreen(),
-    transition: Transition.native,
+    transition: transition,
   ),
   GetPage(
     name: RoutePages.signUpScreen,
     page: () => SignUpScreen(),
-   transition: Transition.native,
+   transition: transition,
   ),
   GetPage(
     name: RoutePages.forgetPassword,
     page: () => ForgetPassword(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.otpVerificationScreen,
     page: () => OtpVerificationScreen(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.newPassword,
     page: () => NewPassword(),
-    transition: Transition.native,
+    transition: transition,
   ),
   GetPage(
     name: RoutePages.bottomNabBarScreen,
     page: () => BottomNabBarScreen(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.supportFQA,
     page: () => SupportFaq(),
-    transition: Transition.native,
+    transition: transition,
   ),
   GetPage(
     name: RoutePages.notificationScreen,
     page: () => NotificationScreen(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.createChildProfile,
     page: () => CreateChildProfile(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.editChildProfile,
     page: () => EditChildProfile(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.subscriptionPlan,
     page: () => SubscriptionPlan(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.userProfileScreen,
     page: () => UserProfileScreen(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.wishListView,
     page: () => WishListView(),
-     transition: Transition.native,
+     transition:transition,
   ),
   GetPage(
     name: RoutePages.rewardFundView,
     page: () => RewardFundView(),
-     transition: Transition.native,
+     transition: transition,
   ),
   GetPage(
     name: RoutePages.supportFund,
     page: () => SupportFund(),
-    transition: Transition.native,
+    transition: transition,
   ),
   GetPage(
     name: RoutePages.otherProfileScreen,
     page: () => OtherProfileScreen(),
-    transition: Transition.native,
+    transition: transition,
   ), GetPage(
     name: RoutePages.otherWishListView,
     page: () => OtherWishListView(),
-    transition: Transition.native,
+    transition: transition,
   ), GetPage(
     name: RoutePages.otherRewardFund,
     page: () => OtherRewardFund(),
-     transition: Transition.native,
+     transition: transition,
   ), GetPage(
     name: RoutePages.otherDreamAndSupportFund,
     page: () => OtherDreamAndSupportFund(),
-     transition: Transition.native,
+     transition: transition,
   ), GetPage(
     name: RoutePages.totalSubmit,
     page: () => TotalSubmitPage(),
-     transition: Transition.native,
+     transition: transition,
   ),GetPage(
     name: RoutePages.editParentProfile,
     page: () => EditParentProfile(),
-     transition: Transition.native,
+     transition: transition,
   ),
 
 ];

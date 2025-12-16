@@ -3,8 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:gifting_app/core/constants/image_paths.dart';
+import 'package:gifting_app/presentation/screens/home/user_profile_screen.dart';
 
+import '../../../core/constants/navigator.dart';
 import '../../../routes/routes.dart';
+import '../find_profile/other_profile_screen.dart';
+import 'notification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +20,40 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ///<================= DUMMY PROFILE DATA =========================>///
   final List<Map<String, dynamic>> profiles = [
+    {
+      "name": "Zoe",
+      "image": "assets/images/zoe.png",
+      "activities": [
+        {"icon": "🎨", "text": "You added art lessons to Dream/Support Fund"},
+        {
+          "icon": "📜",
+          "text":
+          "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+        },
+        {
+          "icon": "🐱",
+          "text":
+          "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+        },
+      ],
+    },
+    {
+      "name": "Zoe",
+      "image": "assets/images/zoe.png",
+      "activities": [
+        {"icon": "🎨", "text": "You added art lessons to Dream/Support Fund"},
+        {
+          "icon": "📜",
+          "text":
+          "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+        },
+        {
+          "icon": "🐱",
+          "text":
+          "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+        },
+      ],
+    },
     {
       "name": "Zoe",
       "image": "assets/images/zoe.png",
@@ -78,7 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ///<================= PROFILE AVATAR =========================>///
                       InkWell(
                         onTap: () {
-                          Get.toNamed(RoutePages.userProfileScreen);
+
+                          navigateTo(context, const UserProfileScreen());
                         },
                         child: Container(
                           width: 50.w,
@@ -120,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ///<================= NOTIFICATION ICON =========================>///
                       IconButton(
                         onPressed: () {
-                          Get.toNamed(RoutePages.notificationScreen);
+                          navigateTo(context, const NotificationScreen());
                         },
                         icon: Container(
                           width: 40.w,
@@ -173,44 +212,49 @@ class _HomeScreenState extends State<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ///<================= PROFILE HEADER =========================>///
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 57.w,
-                                      height: 57.w,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 3,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.black.withValues(
-                                              alpha: 0.2,
-                                            ),
-                                            blurRadius: 7,
-                                            offset: const Offset(0, 3),
+                                GestureDetector(
+                                  onTap: () {
+                                    navigateTo(context, OtherProfileScreen());
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 57.w,
+                                        height: 57.w,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 3,
                                           ),
-                                        ],
-                                      ),
-                                      child: ClipOval(
-                                        child: Image.asset(
-                                          ImagePaths.avatarProfile3,
-                                          fit: BoxFit.cover,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withValues(
+                                                alpha: 0.2,
+                                              ),
+                                              blurRadius: 7,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: ClipOval(
+                                          child: Image.asset(
+                                            ImagePaths.avatarProfile3,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: 14.w),
-                                    Text(
-                                      "${profile["name"]}'s Latest Activity",
-                                      style: TextStyle(
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w600,
-                                        color: const Color(0xff101828),
+                                      SizedBox(width: 14.w),
+                                      Text(
+                                        "${profile["name"]}'s Latest Activity",
+                                        style: TextStyle(
+                                          fontSize: 20.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: const Color(0xff101828),
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
 
                                 SizedBox(height: 16.h),

@@ -45,7 +45,7 @@ class _CreateUserState extends State<CreateUser> {
 
               ///<================= MAIN PROFILE AVATAR =========================>///
               Container(
-                height: 90.w,
+                height: 90.h,
                 width: 90.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -80,7 +80,7 @@ class _CreateUserState extends State<CreateUser> {
                           Get.toNamed(RoutePages.editParentProfile);
                         },
                         child: Container(
-                          height: 30.w,
+                          height: 30.h,
                           width: 30.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,

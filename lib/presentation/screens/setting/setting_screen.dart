@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -9,6 +10,7 @@ import '../../../core/constants/image_paths.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/customSettingButton.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/logout_popup.dart';
 import '../auth_screen/login_screen.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -21,70 +23,40 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
+    const Color primaryColor = Color(0xffFD7839);
     return Scaffold(
       appBar: CustomWidgets.customAppBar(title: "Setting"),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 20),
-            Center(
-              child: Container(
-                height: 90,
-                width: 90,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Color(0xffFD7839), width: 1.5),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    Center(
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(ImagePaths.settingPp),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: -1,
-                      right: 0,
-                      child: InkWell(
-                        onTap: () {},
+            SizedBox(height: 20.h),
 
-                        ///=======================
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color(0xffFD7839),
-                              width: 1.5,
-                            ),
-                            color: const Color(0xffEBE9E9),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: SvgPicture.asset(
-                            ImagePaths.cameraIcon,
-                            fit: BoxFit.scaleDown,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            ///<================= MAIN PROFILE AVATAR =========================>///
+            Container(
+              height: 90.h,
+              width: 90.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: primaryColor, width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Center(
+                child: CircleAvatar(
+                  radius: 50.r,
+                  backgroundColor: Colors.grey.shade200,
+                  backgroundImage: AssetImage(ImagePaths.settingPp),
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            Center(
-              child: Text(
-                'john doe',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xff444444),
-                ),
-              ),
-            ),
+
+            SizedBox(height: 10.h),
             SizedBox(height: 38),
             CustomSettingButton(
               label: 'Support fAQ',
@@ -103,7 +75,12 @@ class _SettingScreenState extends State<SettingScreen> {
             CustomSettingButton(
               label: 'Log out',
               imagePath: ImagePaths.logOut,
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const LogoutPopup(),
+                );
+              },
             ),
           ],
         ),
