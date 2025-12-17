@@ -100,11 +100,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Country',
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xff333333),
-                          ),
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xff333333),
+                            ),
                         ),
                       ),
                       SizedBox(height: 8.h),
@@ -135,8 +135,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hint: Text(
                             "Select your country",
                             style: TextStyle(
-                              fontSize: 12.sp,
-                              color: const Color(0xff333333),
+                              fontSize: 13.sp,
+                              color: Colors.grey.shade600,
                             ),
                           ),
                           items: _authController.countries.map((country) {

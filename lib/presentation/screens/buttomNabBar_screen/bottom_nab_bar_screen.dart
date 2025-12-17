@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../core/constants/image_paths.dart';
 import '../../../routes/navigators.dart';
 import '../../controllers/bottom_nab_bar_controller.dart';
 import '../../widgets/custom_buttom_nab_bar.dart';
@@ -35,18 +33,26 @@ class _BottomNabBarScreenState extends State<BottomNabBarScreen> {
       },
       child: Scaffold(
         body: Obx(
-              () => IndexedStack(
-            index: controller.currentIndex.value,
-            children: [
-              HomeNavigator(navigatorKey: controller.navigatorKeys[0]),
-              FindNavigator(navigatorKey: controller.navigatorKeys[1]),
-              CreateNavigator(navigatorKey: controller.navigatorKeys[2]),
-              SettingNavigator(navigatorKey: controller.navigatorKeys[3]),
-            ],
+          () => AnimatedSwitcher(
+            duration: const Duration(milliseconds: 400),
+            transitionBuilder: (child, animation) {
+              return FadeTransition(opacity: animation, child: child);
+            },
+            child: IndexedStack(
+              key: ValueKey<int>(controller.currentIndex.value),
+              index: controller.currentIndex.value,
+              children: [
+                HomeNavigator(navigatorKey: controller.navigatorKeys[0]),
+                FindNavigator(navigatorKey: controller.navigatorKeys[1]),
+                CreateNavigator(navigatorKey: controller.navigatorKeys[2]),
+                SettingNavigator(navigatorKey: controller.navigatorKeys[3]),
+              ],
+            ),
           ),
         ),
+
         bottomNavigationBar: Obx(
-              () => CustomBottomNavBar(
+          () => CustomBottomNavBar(
             currentIndex: controller.currentIndex.value,
             onTap: controller.changePage,
           ),
