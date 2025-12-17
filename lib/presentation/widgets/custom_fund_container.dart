@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-///<===================Custom Fund Container=========================>///
+// It's good practice to centralize your colors.
+// For this example, I'll define them as constants here.
+const Color _gradientStart = Color(0xffE2C1F3);
+const Color _gradientEnd = Color(0xffFFFDEB);
+const Color _borderColor = Color(0xffF2F2F2);
+const Color _textColor = Color(0xff101828);
+const Color _viewButtonColor = Color(0xffFFEC54);
+
+/// A container that displays a fund with an image, title, and action buttons.
 class CustomFundContainer extends StatelessWidget {
   final String title;
   final Widget image;
   final VoidCallback viewOnPressed;
   final VoidCallback? addOnPressed;
-  final bool? isMyProfile;
+
+  /// Determines whether the "Add" button is visible.
+  /// Defaults to `true`.
+  final bool isMyProfile;
 
   const CustomFundContainer({
     super.key,
@@ -20,79 +31,90 @@ class CustomFundContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Height changes based on whether the second button is shown.
+    final containerHeight = isMyProfile ? 240.h : 180.h;
+
     return Container(
       padding: EdgeInsets.all(10.w),
-
-      height: isMyProfile == true ? 240.h : 180.h,
+      height: containerHeight,
       width: 102.w,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color(0xffE2C1F3), Color(0xffFFFDEB)],
+          colors: [_gradientStart, _gradientEnd],
         ),
         borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(
-          color: const Color(0xffF2F2F2),
-          width: 1.w,
-        ),
+        border: Border.all(color: _borderColor, width: 1.w),
       ),
-
-      //<===================Column=========================>///
       child: Column(
         children: [
-          ///<===================Title=========================>///
+          // Title
           Text(
             title,
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w600,
-              color: const Color(0xff101828),
+              color: _textColor,
             ),
-
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-
           ),
-
           SizedBox(height: 15.h),
 
-          ///<===================Image=========================>///
+          // Image
           Expanded(child: image),
-
           SizedBox(height: 20.h),
 
-          ///<===================View Button=========================>///
-          ElevatedButton(
-            onPressed: viewOnPressed,
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(82.w, 36.h),
-              backgroundColor: const Color(0xffFFEC54),
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
+          // View Button
+          SizedBox(
+            height: 36.h,
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: viewOnPressed,
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+
+                backgroundColor: _viewButtonColor,
+                foregroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+              ),
+              child: Text(
+                "View",
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),
               ),
             ),
-            child: const Text("View"),
           ),
+          SizedBox(height: 10.h),
 
-          SizedBox(height: 4.h),
-
-          ///<===================Add Button=========================>///
-          isMyProfile == true
-              ? ElevatedButton(
-            onPressed: addOnPressed,
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(82.w, 36.h),
-              backgroundColor: const Color(0xffE2C1F3),
-              foregroundColor: Colors.black,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
+          // Add Button (conditionally shown)
+          if (isMyProfile)
+            SizedBox(
+              height: 36.h,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: addOnPressed,
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  backgroundColor: _gradientStart, // Re-using existing color
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                ),
+                child:  Text("Add",style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black,
+                ),),
               ),
             ),
-            child: const Text("Add"),
-          )
-              : Container(),
         ],
       ),
     );

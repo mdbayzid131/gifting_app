@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/image_paths.dart';
+import '../../../core/utils/app_dialog.dart';
+import '../../widgets/circular_profile_avatar.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_wishList_card.dart';
 import 'add_item_popUp.dart';
@@ -45,27 +47,8 @@ class _SupportFundState extends State<SupportFund> {
 
             ///<===================Avatar=========================>///
             Center(
-              child: Container(
-                width: 102.w,
-                height: 102.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3.w),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 5.r,
-                      blurRadius: 7.r,
-                      offset: Offset(0, 3.h),
-                    ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Image.asset(
-                    ImagePaths.avatarProfile3,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              child: CircularProfileAvatar(
+                assetImage: ImagePaths.avatarProfile2,
               ),
             ),
 
@@ -91,7 +74,6 @@ class _SupportFundState extends State<SupportFund> {
                   ImagePaths.supportFundBg,
                   height: 88.h,
                   width: 335.w,
-                  fit: BoxFit.cover,
                 ),
               ],
             ),
@@ -100,7 +82,7 @@ class _SupportFundState extends State<SupportFund> {
             Image.asset(
               ImagePaths.dremFund,
               width: 46.w,
-              height: 46.h,
+              height: 46.w,
             ),
 
             SizedBox(height: 24.h),
@@ -132,7 +114,7 @@ class _SupportFundState extends State<SupportFund> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  WishlistPopup.show(context);
+                  AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffE2C1F3),

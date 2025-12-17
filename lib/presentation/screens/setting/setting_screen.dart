@@ -10,6 +10,7 @@ import '../../../core/constants/image_paths.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/customSettingButton.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_parent_profile.dart';
 import '../../widgets/logout_popup.dart';
 import '../auth_screen/login_screen.dart';
 
@@ -33,31 +34,10 @@ class _SettingScreenState extends State<SettingScreen> {
             SizedBox(height: 20.h),
 
             ///<================= MAIN PROFILE AVATAR =========================>///
-            Container(
-              height: 90.h,
-              width: 90.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: primaryColor, width: 1.5),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: CircleAvatar(
-                  radius: 50.r,
-                  backgroundColor: Colors.grey.shade200,
-                  backgroundImage: AssetImage(ImagePaths.settingPp),
-                ),
-              ),
-            ),
+            CustomParentProfile(imagePath: '',isShowPositioned: false,),
 
             SizedBox(height: 10.h),
-            SizedBox(height: 38),
+            SizedBox(height: 38.h),
             CustomSettingButton(
               label: 'Support fAQ',
               imagePath: ImagePaths.supportfAQ,
@@ -65,13 +45,13 @@ class _SettingScreenState extends State<SettingScreen> {
                 Get.toNamed(RoutePages.supportFQA);
               },
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 12.h),
             CustomSettingButton(
               label: 'Community share This app ',
               imagePath: ImagePaths.community,
               onPressed: () {},
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 12.h),
             CustomSettingButton(
               label: 'Log out',
               imagePath: ImagePaths.logOut,

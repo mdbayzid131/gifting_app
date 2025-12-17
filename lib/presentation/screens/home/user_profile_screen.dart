@@ -10,8 +10,10 @@ import 'package:gifting_app/presentation/screens/home/wish_list_view.dart';
 
 import '../../../core/constants/image_paths.dart';
 import '../../../core/constants/navigator.dart';
+import '../../../core/utils/app_dialog.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/VoiceRecordDialog.dart';
+import '../../widgets/circular_profile_avatar.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_fund_container.dart';
 import 'add_item_popUp.dart';
@@ -59,26 +61,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
               ///<================= USER AVATAR =========================>///
               Center(
-                child: Container(
-                  width: 102.w,
-                  height: 102.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.2),
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      ImagePaths.avatarProfile3,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                child: CircularProfileAvatar(
+                  assetImage: ImagePaths.avatarProfile2,
                 ),
               ),
 
@@ -136,7 +120,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       navigateTo(context, WishListView());
                     },
                     addOnPressed: () {
-                      WishlistPopup.show(context);
+
+                      AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
+
                     },
                   ),
                   CustomFundContainer(
@@ -146,7 +132,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       navigateTo(context, RewardFundView());
                     },
                     addOnPressed: () {
-                      WishlistPopup.show(context);
+                      AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
                     },
                   ),
                   CustomFundContainer(
@@ -156,90 +142,107 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       navigateTo(context, SupportFund());
                     },
                     addOnPressed: () {
-                      WishlistPopup.show(context);
+                      AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
                     },
                   ),
                 ],
               ),
 
               SizedBox(height: 24.h),
-
-              ///<================= RECENT ACTIVITY HEADER =========================>///
               Container(
-                height: 34.h,
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xffE2C1F3),
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(10.r),
-                  ),
-                ),
-                child: Text(
-                  'Recent Activity',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-              ///<================= ACTIVITY LIST =========================>///
-              Container(
-                padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 10.h),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(10.r),
-                  ),
+                  borderRadius: BorderRadius.circular(12.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Column(
                   children: [
-                    SizedBox(height: 12.h),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: activities.length,
-                      itemBuilder: (context, index) {
-                        final item = activities[index];
 
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 10.h),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 8.w,
-                                height: 8.w,
-                                margin: EdgeInsets.only(top: 7.h),
-                                decoration: BoxDecoration(
-                                  color: getRandomColor(),
-                                  shape: BoxShape.circle,
+                    ///<================= RECENT ACTIVITY HEADER =========================>///
+                    Container(
+                      height: 44.h,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(horizontal: 14.w),
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffE2C1F3),
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(12.r),
+                        ),
+                      ),
+                      child: Text(
+                        'Recent Activity',
+                        style: TextStyle(
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+
+                    ///<================= ACTIVITY LIST =========================>///
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(14.w, 12.h, 14.w, 14.h),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: activities.length,
+                        separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                        itemBuilder: (context, index) {
+                          final item = activities[index];
+
+                          return GestureDetector(
+                            onTap: () {
+                              AppDialog.show(
+                                context: context,
+                                child: const SendVoicePopup(),
+                                animation: DialogAnimation.fade,
+                              );
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                ///<================= DOT =========================>///
+                                Container(
+                                  margin: EdgeInsets.only(top: 6.h),
+                                  width: 10.w,
+                                  height: 10.w,
+                                  decoration: BoxDecoration(
+                                    color: getRandomColor(),
+                                    shape: BoxShape.circle,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: 8.w),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    SendVoicePopup.show();
-                                  },
+
+                                SizedBox(width: 10.w),
+
+                                ///<================= TEXT =========================>///
+                                Expanded(
                                   child: Text(
                                     item,
                                     style: TextStyle(
-                                      fontSize: 12.sp,
+                                      fontSize: 13.sp,
                                       fontWeight: FontWeight.w400,
+                                      height: 1.45,
+                                      color: const Color(0xff333333),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                              ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
               ),
+
 
               SizedBox(height: 20.h),
             ],

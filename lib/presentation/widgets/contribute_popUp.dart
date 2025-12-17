@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -7,9 +8,51 @@ import '../controllers/contribute_controller.dart';
 import 'custom_elevated_button.dart';
 import 'custom_text_field.dart';
 
+class ContributePopup {
+  static Future show(BuildContext context) {
+    return showGeneralDialog(
+      context: context,
+
+      ///<================= BARRIER SETTINGS =========================>///
+      barrierDismissible: true,
+      barrierLabel: "Dismiss",
+      barrierColor: Colors.black.withOpacity(0.4),
+
+      ///<================= ANIMATION DURATION =========================>///
+      transitionDuration: const Duration(milliseconds: 300),
+
+      ///<================= PAGE BUILDER =========================>///
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return _ContributePopup();
+      },
+
+      ///<================= TRANSITION BUILDER =========================>///
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        final slideAnimation =
+            Tween<Offset>(
+              begin: const Offset(0, 1), // bottom → top
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+            );
+
+        final fadeAnimation = Tween<double>(
+          begin: 0,
+          end: 1,
+        ).animate(animation);
+
+        return SlideTransition(
+          position: slideAnimation,
+          child: FadeTransition(opacity: fadeAnimation, child: child),
+        );
+      },
+    );
+  }
+}
+
 ///<===================Contribute Popup=========================>///
-class ContributePopup extends StatelessWidget {
-  ContributePopup({super.key});
+class _ContributePopup extends StatelessWidget {
+  _ContributePopup({super.key});
 
   final ContributeController _controller = Get.find<ContributeController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -56,7 +99,7 @@ class ContributePopup extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child:  Icon(
+                          child: Icon(
                             Icons.close,
                             size: 20.sp,
                             color: Colors.black,
@@ -85,10 +128,13 @@ class ContributePopup extends StatelessWidget {
 
                     ///<===================Relation Dropdown=========================>///
                     Obx(
-                          () => DropdownButtonFormField<String>(
-                        value: _controller.selectedRelation.value.isEmpty
+                      () => DropdownButtonFormField<String>(
+                        dropdownColor: const Color(0xffFFFAF8),
+                        initialValue: _controller.selectedRelation.value.isEmpty
                             ? null
                             : _controller.selectedRelation.value,
+
+                        ///<================= DECORATION =========================>///
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color(0xffEDE8FC),
@@ -101,10 +147,14 @@ class ContributePopup extends StatelessWidget {
                             borderSide: BorderSide.none,
                           ),
                         ),
-                        icon: Icon(
+
+                        ///<================= ICON =========================>///
+                        icon: const Icon(
                           Icons.keyboard_arrow_down_outlined,
-                          color: const Color(0xff333333),
+                          color: Color(0xff333333),
                         ),
+
+                        ///<================= HINT =========================>///
                         hint: Text(
                           "Select Relation with child",
                           style: TextStyle(
@@ -113,21 +163,56 @@ class ContributePopup extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
+
+                        ///<================= SELECTED VALUE STYLE =========================>///
                         style: TextStyle(
                           color: const Color(0xff333333),
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                         ),
-                        items: _controller.relations
-                            .map((relation) => DropdownMenuItem(
-                          value: relation,
-                          child: Text(relation),
-                        ))
-                            .toList(),
-                        onChanged: (value) =>
-                        _controller.selectedRelation.value = value!,
+
+                        ///<================= DROPDOWN ITEMS =========================>///
+                        items: _controller.relations.map((relation) {
+                          return DropdownMenuItem<String>(
+                            value: relation,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  height: 26.h,
+                                  width: 26.h,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffEDE8FC),
+                                    borderRadius: BorderRadius.circular(6.r),
+                                  ),
+                                  child: Icon(
+                                    Icons.family_restroom_rounded,
+                                    size: 16.sp,
+                                    color: const Color(0xff5B4DB7),
+                                  ),
+                                ),
+                                SizedBox(width: 12.w),
+                                Text(
+                                  relation,
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: const Color(0xff333333),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+
+                        ///<================= ON CHANGE =========================>///
+                        onChanged: (value) {
+                          _controller.selectedRelation.value = value!;
+                        },
+
+                        ///<================= VALIDATOR =========================>///
                         validator: (value) =>
-                        value == null ? "Please select a relation" : null,
+                            value == null ? "Please select a relation" : null,
                       ),
                     ),
 
@@ -135,6 +220,14 @@ class ContributePopup extends StatelessWidget {
 
                     ///<===================Amount Text Field=========================>///
                     CustomTextField(
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
                       hintText: "Enter Contribution Amount in \$",
                       label: 'Amount',
                       validator: _controller.amountValidate,

@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_child_profile.dart';
+import '../../widgets/custom_parent_profile.dart';
 import '../../widgets/uplode_picture_popup.dart';
 
 class CreateUser extends StatefulWidget {
@@ -44,62 +46,67 @@ class _CreateUserState extends State<CreateUser> {
               SizedBox(height: 20.h),
 
               ///<================= MAIN PROFILE AVATAR =========================>///
-              Container(
-                height: 90.h,
-                width: 90.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: primaryColor, width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    /// PROFILE IMAGE
-                    Center(
-                      child: CircleAvatar(
-                        radius: 50.r,
-                        backgroundColor: Colors.grey.shade200,
-                        backgroundImage: AssetImage(ImagePaths.settingPp),
-                      ),
-                    ),
 
-                    /// EDIT ICON
-                    Positioned(
-                      bottom: -2,
-                      right: -2,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(50),
-                        onTap: () {
-                          Get.toNamed(RoutePages.editParentProfile);
-                        },
-                        child: Container(
-                          height: 30.h,
-                          width: 30.w,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: const Color(0xffF2F2F2),
-                            border: Border.all(color: primaryColor, width: 1.2),
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              ImagePaths.editImage,
-                              height: 17.h,
-                              width: 17.w,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              CustomParentProfile(imagePath: '',onEditTap: (){
+                Get.toNamed(RoutePages.editParentProfile);
+              },),
+
+              // Container(
+              //   height: 90.w,
+              //   width: 90.w,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     border: Border.all(color: primaryColor, width: 1.5),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.black.withOpacity(0.08),
+              //         blurRadius: 6,
+              //         offset: const Offset(0, 3),
+              //       ),
+              //     ],
+              //   ),
+              //   child: Stack(
+              //     clipBehavior: Clip.none,
+              //     children: [
+              //       /// PROFILE IMAGE
+              //       Center(
+              //         child: CircleAvatar(
+              //           radius: 50.r,
+              //           backgroundColor: Colors.grey.shade200,
+              //           backgroundImage: AssetImage(ImagePaths.settingPp),
+              //         ),
+              //       ),
+              //
+              //       /// EDIT ICON
+              //       Positioned(
+              //         bottom: -2.w,
+              //         right: -2.w,
+              //         child: InkWell(
+              //           borderRadius: BorderRadius.circular(50),
+              //           onTap: () {
+              //             Get.toNamed(RoutePages.editParentProfile);
+              //           },
+              //           child: Container(
+              //             height: 30.w,
+              //             width: 30.w,
+              //             decoration: BoxDecoration(
+              //               shape: BoxShape.circle,
+              //               color: const Color(0xffF2F2F2),
+              //               border: Border.all(color: primaryColor, width: 1.2.w),
+              //             ),
+              //             child: Center(
+              //               child: SvgPicture.asset(
+              //                 ImagePaths.editImage,
+              //                 height: 17.w,
+              //                 width: 17.w,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
 
               SizedBox(height: 10.h),
 
@@ -205,64 +212,9 @@ class _CreateUserState extends State<CreateUser> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         /// ================= PROFILE AVATAR =================
-        Container(
-          height: 60.w,
-          width: 60.w,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: primaryColor, width: 1.5),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.08),
-                blurRadius: 6,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              /// PROFILE IMAGE
-              Center(
-                child: CircleAvatar(
-                  radius: 30.r,
-                  backgroundColor: Colors.grey.shade200,
-                  backgroundImage: AssetImage(
-                    image.isEmpty ? image : ImagePaths.avatarProfile3,
-                  ),
-                ),
-              ),
-
-              /// EDIT ICON
-              Positioned(
-                bottom: -2,
-                right: -2,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(50),
-                  onTap: () {
-                    Get.toNamed(RoutePages.editChildProfile);
-                  },
-                  child: Container(
-                    height: 22.w,
-                    width: 22.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: const Color(0xffF2F2F2),
-                      border: Border.all(color: primaryColor, width: 1.2),
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        ImagePaths.editImage,
-                        height: 13.h,
-                        width: 13.w,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        CustomChildProfile(imagePath: '',onEditTap: (){
+          Get.toNamed(RoutePages.editChildProfile);
+        },),
 
         SizedBox(height: 8.h),
 

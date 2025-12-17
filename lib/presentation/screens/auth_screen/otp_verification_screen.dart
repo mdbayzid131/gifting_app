@@ -64,7 +64,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ///================= OTP Illustration =========================///
               Image.asset(
                 ImagePaths.otpVerify,
-                height: 180.h,
+                height: 124.h,
+                width: 124.w,
               ),
 
               SizedBox(height: 24.h),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:gifting_app/presentation/widgets/custom_parent_profile.dart';
 
 import '../../../core/constants/image_paths.dart';
+import '../../../core/utils/app_dialog.dart';
 import '../../../routes/routes.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -46,72 +49,14 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
                 ///<================= PROFILE IMAGE SECTION =========================>///
                 Column(
                   children: [
-                    Container(
-                      height: 90.w,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: primaryColor,
-                          width: 1.5,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            blurRadius: 6,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          /// PROFILE IMAGE
-                          Center(
-                            child: CircleAvatar(
-                              radius: 50.r,
-                              backgroundColor: Colors.grey.shade200,
-                              backgroundImage: AssetImage(
-                                ImagePaths.avatarProfile3,
-                              ),
-                            ),
-                          ),
-
-                          /// EDIT ICON
-                          Positioned(
-                            bottom: -2,
-                            right: -2,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(50),
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => UploadPicturePopup(),
-                                );
-                              },
-                              child: Container(
-                                height: 30.w,
-                                width: 30.w,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: const Color(0xffF2F2F2),
-                                  border: Border.all(
-                                    color: primaryColor,
-                                    width: 1.2,
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    color: Colors.black,
-                                    size: 17.sp,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    Center(
+                      child: CustomParentProfile(imagePath: ImagePaths.avatarProfile3,isShowImagePicker: true,onEditTap: (){
+                        AppDialog.show(
+                          context: context,
+                          child: UploadPicturePopup(),
+                          animation: DialogAnimation.fade,
+                        );
+                      },),
                     ),
 
                     SizedBox(height: 10.h),
@@ -140,6 +85,14 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
 
                 ///<================= AGE FIELD =========================>///
                 CustomTextField(
+                  keyboardType: TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp(r'^\d*\.?\d*'),
+                    ),
+                  ],
                   label: 'Age',
                   hintText: 'Enter your child age',
                   controller: ageController,

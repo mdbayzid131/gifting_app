@@ -8,6 +8,8 @@ import '../../core/constants/app_color.dart';
 import '../../routes/routes.dart';
 
 ///<===================Add Confirm Popup=========================>///
+
+
 class AddConfirmPopUp extends StatelessWidget {
   const AddConfirmPopUp({super.key});
 
@@ -78,17 +80,21 @@ class AddConfirmPopUp extends StatelessWidget {
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(
-                            minimumSize: Size(double.infinity, 48),
-                            backgroundColor: const Color(0xffFDFCFA),
+                            minimumSize:
+                            Size(double.infinity, 48.h),
+                            backgroundColor:
+                            const Color(0xffFDFCFA),
+                            elevation: 0,
+                            padding:  EdgeInsets.symmetric(
+                              vertical: 10.h,
+                            ),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.r),
+                              borderRadius:
+                              BorderRadius.circular(10.r),
                               side: BorderSide(
                                 color: AppColors.primary,
-                                width: 2.w,
+                                width: 1.5,
                               ),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              vertical: 10.h,
                             ),
                           ),
                         ),

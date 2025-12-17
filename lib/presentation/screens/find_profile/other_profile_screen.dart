@@ -7,7 +7,10 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 
 import '../../../core/constants/image_paths.dart';
 import '../../../core/constants/navigator.dart';
+import '../../../core/utils/app_dialog.dart';
 import '../../../routes/routes.dart';
+import '../../widgets/VoiceRecordDialog.dart';
+import '../../widgets/circular_profile_avatar.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_fund_container.dart';
 import 'other_dream_and_support_fund.dart';
@@ -51,36 +54,14 @@ class _OtherProfileScreenState extends State<OtherProfileScreen> {
           children: [
             const SizedBox(height: 20),
             Center(
-              child: Container(
-                width: 102.w, // avatar size
-                height: 102.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white, // outline color
-                    width: 3, // outline thickness
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: ClipOval(
-                  child: Image.asset(
-                    ImagePaths.avatarProfile3,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              child: CircularProfileAvatar(
+                assetImage: ImagePaths.avatarProfile2,
               ),
             ),
             const SizedBox(height: 24),
             Center(
               child: Text(
-                "Hello!",
+                "Jone Doe",
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w700,
@@ -109,7 +90,7 @@ class _OtherProfileScreenState extends State<OtherProfileScreen> {
                   isMyProfile: false,
                 ),
                 CustomFundContainer(
-                  title: 'Dream & Support Fund',
+                  title: 'Support Fund',
                   image: Image.asset(ImagePaths.dremFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
                   viewOnPressed: () {
                     navigateTo(context, OtherDreamAndSupportFund());
@@ -120,75 +101,85 @@ class _OtherProfileScreenState extends State<OtherProfileScreen> {
             ),
             const SizedBox(height: 24),
             Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-
-              height: 34,
-              width: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xffE2C1F3),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              ),
-
-              child: const Text(
-                'Recent Activity',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              decoration: BoxDecoration(
-                color: Color(0xffFFFFFF),
-                borderRadius: BorderRadius.vertical(
-                  bottom: Radius.circular(10),
-                ),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 12),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: activities.length,
-                    itemBuilder: (context, index) {
-                      final item = activities[index];
 
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Row(
+                  ///<================= RECENT ACTIVITY HEADER =========================>///
+                  Container(
+                    height: 44.h,
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 14.w),
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                      color: const Color(0xffE2C1F3),
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(12.r),
+                      ),
+                    ),
+                    child: Text(
+                      'Recent Activity',
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+
+                  ///<================= ACTIVITY LIST =========================>///
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(14.w, 12.h, 14.w, 14.h),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: activities.length,
+                      separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                      itemBuilder: (context, index) {
+                        final item = activities[index];
+
+                        return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Center(
-                              child: Container(
-                                width: 8,
-                                height: 8,
-                                margin: const EdgeInsets.only(top: 7),
-                                decoration: BoxDecoration(
-                                  color: getRandomColor(),
-                                  shape: BoxShape.circle,
-                                ),
+
+                            ///<================= DOT =========================>///
+                            Container(
+                              margin: EdgeInsets.only(top: 6.h),
+                              width: 10.w,
+                              height: 10.w,
+                              decoration: BoxDecoration(
+                                color: getRandomColor(),
+                                shape: BoxShape.circle,
                               ),
                             ),
-                            const SizedBox(width: 8),
+
+                            SizedBox(width: 10.w),
+
+                            ///<================= TEXT =========================>///
                             Expanded(
                               child: Text(
                                 item,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  fontSize: 13.sp,
                                   fontWeight: FontWeight.w400,
+                                  height: 1.45,
+                                  color: const Color(0xff333333),
                                 ),
                               ),
                             ),
                           ],
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

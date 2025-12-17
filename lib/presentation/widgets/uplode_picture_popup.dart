@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../core/utils/app_dialog.dart';
 import '../controllers/creat_profile_controller.dart';
 import 'avatar_profile_popup.dart';
 
@@ -82,10 +83,7 @@ class UploadPicturePopup extends StatelessWidget {
                     label: 'Choose Avatar',
                     onPressed: () {
                       Get.back();
-                      showDialog(
-                        context: context,
-                        builder: (_) => AvatarProfilePopup(),
-                      );
+                      AppDialog.show(context: context, child: AvatarProfilePopup(),animation: DialogAnimation.fade);
                     },
                   ),
                 ],
