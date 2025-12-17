@@ -206,7 +206,6 @@ class _CreateUserState extends State<CreateUser> {
 
   ///<================= PROFILE ITEM =========================>///
   Widget profileItem(String name, String image) {
-    const Color primaryColor = Color(0xffFD7839);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
