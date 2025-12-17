@@ -50,7 +50,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ///<================= Illustration Image =========================>///
               Image.asset(
                 ImagePaths.forgotPassword,
-                width: 220.w,
+                height: 189.h,
+                width: 175.w,
               ),
 
               SizedBox(height: 24.h),

@@ -9,13 +9,14 @@ class ImagePaths {
   static final String community = 'assets/logos/Community.svg';
   static final String logOut = 'assets/logos/log out.svg';
   static final String voice = 'assets/images/voice.svg';
+  static final String mice = 'assets/logos/mice.svg';
   static final String editImage = 'assets/logos/editImage.svg';
   static final String notificationIcon = 'assets/images/nottifecationIcon.svg';
   static final String selectImage = 'assets/images/select_image.svg';
 
 
   ///<======================ImageIcon =======================>
-  static final String splashImage = 'assets/images/Primary Logo 1.png';
+  static final String splashImage = 'assets/images/Primary Logo.png';
   static final String giftZees = 'assets/images/Primary Logo 2.png';
   static final String onboarding1 = 'assets/images/image 38.png';
   static final String onboarding2 = 'assets/images/image 41.png';
@@ -38,9 +39,15 @@ class ImagePaths {
   static final String rewardFund = 'assets/images/RewardListPro.png';
   static final String dremFund = 'assets/images/SupportListPro.png';
 
-  static final String wishListBg = 'assets/images/wishListFundBg.png';
-  static final String supportFundBg = 'assets/images/supportFundBg.png';
-  static final String rewardFundBg = 'assets/images/rewardFundBg.png';
+  static final String wishListBg = 'assets/images/Vector (1).png';
+  static final String supportFundBg = 'assets/images/Vector (2).png';
+  static final String rewardFundBg = 'assets/images/Vector (3).png';
+
+  // static final String fundBg = 'assets/images/fundBg.png';
+  //
+  // static final String wishListText = 'assets/images/wishList_text.svg';
+  // static final String rewardListText = 'assets/images/rewreLIst_text.svg';
+  // static final String supportFundText = 'assets/images/supportFund_text.svg';
 
 
 

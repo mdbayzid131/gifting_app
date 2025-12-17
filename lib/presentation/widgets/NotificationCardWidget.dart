@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../core/constants/image_paths.dart';
+import '../../core/utils/app_dialog.dart';
 import '../../data/models/NotificationItemModel.dart';
 import 'CustomAddUserPopup.dart';
 import 'CustomRejectUserPopUp.dart';
@@ -42,7 +43,7 @@ class NotificationCard extends StatelessWidget {
         children: [
           //=================== Avatar + Category Icon ===================//
           Container(
-            height: 50.h,
+            height: 50.w,
             width: 50.w,
             decoration: BoxDecoration(
               border: Border.all(color: Color(0xffA0C4FF), width: 1.2.w), // soft blue border
@@ -54,16 +55,16 @@ class NotificationCard extends StatelessWidget {
                 // Avatar Image
                 Center(
                   child: CircleAvatar(
-                    radius: 25.r,
+                    radius: 50.r,
                     backgroundImage: AssetImage(item.imagePath),
                   ),
                 ),
                 // Category Icon
                 Positioned(
-                  bottom: -2.h,
+                  bottom: -2.w,
                   right: -2.w,
                   child: Container(
-                    height: 20.h,
+                    height: 20.w,
                     width: 20.w,
                     decoration: BoxDecoration(
                       color: item.category == 'voice_note'
@@ -97,13 +98,7 @@ class NotificationCard extends StatelessWidget {
                 GestureDetector(
                   onTap: item.category == 'voice_note'
                       ? () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => PlayVoicePopup(
-                        path: item.voicePath!,
-                        name: item.name,
-                      ),
-                    );
+                    AppDialog.show(context: context, child:  PlayVoicePopup(path:item.voicePath.toString(), name: item.name,),animation: DialogAnimation.fade);
                   }
                       : null,
                   child: Text(
@@ -127,11 +122,7 @@ class NotificationCard extends StatelessWidget {
                       // Accept Button → Soft Blue (friendly feel)
                       ElevatedButton(
                         onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) => AddUserPopup(name: item.name),
-                          );
+                          AppDialog.show(context: context, child: AddUserPopup(name: item.name,),animation: DialogAnimation.fade);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF4A90E2), // soft blue
@@ -155,11 +146,7 @@ class NotificationCard extends StatelessWidget {
                       // Reject Button → Soft Red
                       ElevatedButton(
                         onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) => CustomRejectUserPopup(name: item.name),
-                          );
+                          AppDialog.show(context: context, child:  CustomRejectUserPopup(name: item.name,),animation: DialogAnimation.fade);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFFE94E4E), // soft red

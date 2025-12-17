@@ -16,6 +16,7 @@ class CustomWidgets{
       ),
       iconTheme: IconThemeData(
         color: Color(0xff333333),
+        size: 20.sp,
       ),
       leading: leading,
 

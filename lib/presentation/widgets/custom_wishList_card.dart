@@ -30,7 +30,7 @@ class WishListItemCard extends StatelessWidget {
       child: Row(
         children: [
           ///<===================Card Image=========================>///
-          Image.asset(cardImage, width: 70.w, height: 70.h),
+          Image.asset(cardImage, width: 70.w, height: 70.w),
 
           SizedBox(width: 5.w),
 
@@ -65,25 +65,25 @@ class WishListItemCard extends StatelessWidget {
 
               SizedBox(height: 6.h),
 
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => ContributePopup(),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffFFEC54),
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
+              SizedBox(
+                height: 36.h,
+                child: ElevatedButton(
+                  onPressed: () {
+                    ContributePopup.show(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffFFEC54),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    padding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
                   ),
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                ),
-                child: Text(
-                  "Contribute",
-                  style: TextStyle(fontSize: 12.sp),
+                  child: Text(
+                    "Contribute",
+                    style: TextStyle(fontSize: 12.sp),
+                  ),
                 ),
               ),
             ],

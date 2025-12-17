@@ -7,6 +7,7 @@ import 'package:gifting_app/presentation/screens/home/user_profile_screen.dart';
 
 import '../../../core/constants/navigator.dart';
 import '../../../routes/routes.dart';
+import '../../widgets/circular_profile_avatar.dart';
 import '../find_profile/other_profile_screen.dart';
 import 'notification_screen.dart';
 
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> profiles = [
     {
       "name": "Zoe",
-      "image": "assets/images/zoe.png",
+      "image": ImagePaths.avatarProfile4,
       "activities": [
         {"icon": "🎨", "text": "You added art lessons to Dream/Support Fund"},
         {
@@ -39,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     },
     {
       "name": "Zoe",
-      "image": "assets/images/zoe.png",
+      "image": ImagePaths.avatarProfile4,
       "activities": [
         {"icon": "🎨", "text": "You added art lessons to Dream/Support Fund"},
         {
@@ -124,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 50.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2),
+                            border: Border.all(color: Color(0xffFD7839), width: 2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.2),
@@ -135,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: ClipOval(
                             child: Image.asset(
-                              ImagePaths.avatarProfile1,
+                              ImagePaths.avatarProfile3,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -181,7 +182,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ClipOval(
                             child: SvgPicture.asset(
                               ImagePaths.notificationIcon,
-                              fit: BoxFit.scaleDown,
+                              height: 40.w,
+                              width: 40.w,
+                              fit: BoxFit.cover,
+
+
+
                             ),
                           ),
                         ),
@@ -218,31 +224,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   child: Row(
                                     children: [
-                                      Container(
-                                        width: 57.w,
-                                        height: 57.w,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 3,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black.withValues(
-                                                alpha: 0.2,
-                                              ),
-                                              blurRadius: 7,
-                                              offset: const Offset(0, 3),
-                                            ),
-                                          ],
-                                        ),
-                                        child: ClipOval(
-                                          child: Image.asset(
-                                            ImagePaths.avatarProfile3,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                      CircularProfileAvatar(
+                                        assetImage: ImagePaths.avatarProfile2,
+                                        size: 57,
                                       ),
                                       SizedBox(width: 14.w),
                                       Text(

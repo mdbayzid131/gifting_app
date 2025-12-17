@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomSettingButton extends StatelessWidget {
@@ -20,13 +21,13 @@ class CustomSettingButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         minimumSize: Size(
           double.infinity,
-          55, // Set height to 48
+          55.h, // Set height to 48
         ),
         backgroundColor: Color(0xffFFFAF8),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 10,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+        padding:  EdgeInsets.symmetric(
+          vertical: 10.h,
+          horizontal: 10.w,
         ), // Adjusted padding
         side: BorderSide(color: Color(0xffF3F3F3), width: 1),
         shadowColor: Color(0xffF3F3F3),
@@ -34,13 +35,13 @@ class CustomSettingButton extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(imagePath, fit: BoxFit.scaleDown),
-          SizedBox(width: 10),
+          SizedBox(width: 10.w),
           Text(
             label,
             style: TextStyle(
               color: Color(0xff333333),
               fontWeight: FontWeight.w500,
-              fontSize: 14,
+              fontSize: 14.sp,
               height: 1.4,
             ),
           ),

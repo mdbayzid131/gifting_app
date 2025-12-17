@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:gifting_app/presentation/widgets/custom_elevated_button.dart';
+import 'package:get/get.dart';
 
 import '../../../core/constants/app_color.dart';
 import '../../../routes/routes.dart';
-import '../auth_screen/login_screen.dart';
+import '../../widgets/custom_elevated_button.dart';
 import 'onboardingPage1.dart';
 import 'onboardingPage2.dart';
 import 'onboardingPage3.dart';
@@ -19,7 +17,10 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  ///<================= PAGE CONTROLLER =========================>///
   final PageController _pageController = PageController();
+
+  ///<================= CURRENT PAGE INDEX =========================>///
   int _currentPage = 0;
 
   @override
@@ -31,40 +32,48 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: SafeArea(
+      ///<================= BODY =========================>///
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              ///<================= PAGE VIEW =========================>///
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: PageView(
                   controller: _pageController,
                   onPageChanged: (index) {
                     setState(() => _currentPage = index);
                   },
-                  children: [
+                  children: const [
                     OnboardingPage1(),
                     OnboardingPage2(),
                     OnboardingPage3(),
                   ],
                 ),
               ),
-              Expanded(
-                flex: 1,
+
+              ///<================= BOTTOM SECTION =========================>///
+              Flexible(
+                fit: FlexFit.loose,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(height: 8.h),
+
+                    ///<================= PAGE INDICATOR =========================>///
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
                         3,
-                        (index) => AnimatedContainer(
-                          duration: Duration(milliseconds: 300),
-                          margin: EdgeInsets.symmetric(horizontal: 5.w),
-                          width: 12.w,
-                          height: 12.h,
+                            (index) => AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          margin: EdgeInsets.symmetric(horizontal: 4.w),
+                          width: 10.w,
+                          height: 10.w,
                           decoration: BoxDecoration(
+                            shape: BoxShape.circle,
                             color: _currentPage == index
                                 ? AppColors.primary
                                 : Colors.white,
@@ -72,113 +81,109 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               color: _currentPage == index
                                   ? Colors.black
                                   : AppColors.primary,
+                              width: 1,
                             ),
-                            shape: BoxShape.circle,
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.h),
+
+                    SizedBox(height: 16.h),
+
+                    ///<================= BUTTON SECTION =========================>///
                     _currentPage == 1
                         ? Row(
-                            children: [
-                              Expanded(
-                                child: CustomElevatedButton(
-                                  label: 'Back',
-                                  onPressed: () {
-                                    if (_currentPage < 2) {
-                                      _pageController.previousPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
-                                    } else {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => LoginScreen(),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(double.infinity, 48),
-                                    backgroundColor: const Color(0xffFDFCFA),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      side: BorderSide(
-                                        color: AppColors.primary,
-                                        width: 2.w,
-                                      ),
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 10.h,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 10.w),
-                              Expanded(
-                                child: CustomElevatedButton(
-                                  label: 'Next',
-                                  onPressed: () {
-                                    if (_currentPage < 2) {
-                                      _pageController.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
-                                    } else {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => LoginScreen(),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
-                          )
-                        : CustomElevatedButton(
-                            onPressed: () {
-                              if (_currentPage < 2) {
-                                _pageController.nextPage(
-                                  duration: Duration(milliseconds: 300),
-                                  curve: Curves.ease,
-                                );
-                              } else {
-                                Get.toNamed(RoutePages.loginScreen);
-                              }
-                            },
-                            label: _currentPage < 2
-                                ? "Get Started"
-                                : "Get Started",
-                          ),
-
-                    SizedBox(height: 22.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            Get.toNamed(RoutePages.loginScreen);
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                "Skip",
-                                style: TextStyle(
-                                  color: Color(0xff333333),
-                                  fontSize: 14.sp,
+                        Expanded(
+                          child: CustomElevatedButton(
+                            label: 'Back',
+                            onPressed: () {
+                              _pageController.previousPage(
+                                duration:
+                                const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              minimumSize:
+                              Size(double.infinity, 48.h),
+                              backgroundColor:
+                              const Color(0xffFDFCFA),
+                              elevation: 0,
+                              padding:  EdgeInsets.symmetric(
+                                vertical: 10.h,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(10.r),
+                                side: BorderSide(
+                                  color: AppColors.primary,
+                                  width: 1.5,
                                 ),
                               ),
-                              SizedBox(width: 6.w),
-                              Icon(Icons.arrow_forward_ios_outlined),
-                            ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10.w),
+                        Expanded(
+                          child: CustomElevatedButton(
+                            label: 'Next',
+                            onPressed: () {
+                              _pageController.nextPage(
+                                duration:
+                                const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            },
                           ),
                         ),
                       ],
+                    )
+                        : CustomElevatedButton(
+                      label: "Get Started",
+                      onPressed: () {
+                        if (_currentPage < 2) {
+                          _pageController.nextPage(
+                            duration:
+                            const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        } else {
+                          Get.toNamed(RoutePages.loginScreen);
+                        }
+                      },
                     ),
+
+                    SizedBox(height: 12.h),
+
+                    ///<================= SKIP BUTTON =========================>///
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.toNamed(RoutePages.loginScreen);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Skip",
+                              style: TextStyle(
+                                color: const Color(0xff333333),
+                                fontSize: 13.sp,
+                              ),
+                            ),
+                            SizedBox(width: 4.w),
+                            Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 14.sp,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(height: 6.h),
                   ],
                 ),
               ),

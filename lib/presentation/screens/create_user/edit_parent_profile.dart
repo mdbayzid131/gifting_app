@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/image_paths.dart';
+import '../../../core/utils/app_dialog.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_elevated_button.dart';
+import '../../widgets/custom_parent_profile.dart';
 import '../../widgets/custom_text_field.dart';
 import '../../widgets/uplode_picture_popup.dart';
 
@@ -40,60 +42,16 @@ class _EditParentProfileState extends State<EditParentProfile> {
                 ///<================= PROFILE IMAGE =========================>///
                 Column(
                   children: [
-                    Container(
-                      height: 90.w,
-                      width: 90.w,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color(0xffFD7839),
-                          width: 1.5,
-                        ),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Center(
-                            child: CircleAvatar(
-                              radius: 50.r,
-                              backgroundImage:
-                              AssetImage(ImagePaths.settingPp),
-                            ),
-                          ),
-
-                          ///<================= CAMERA BUTTON =========================>///
-                          Positioned(
-                            bottom: -2.h,
-                            right: -2.w,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(50.r),
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (_) => UploadPicturePopup(),
-                                );
-                              },
-                              child: Container(
-                                height: 30.w,
-                                width: 30.w,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xffEBE9E9),
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: const Color(0xffFD7839),
-                                    width: 1.4,
-                                  ),
-                                ),
-                                child: Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 17.sp,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    CustomParentProfile(
+                      imagePath: '',
+                      isShowImagePicker: true,
+                      onEditTap: () {
+                        AppDialog.show(
+                          context: context,
+                          child: UploadPicturePopup(),
+                          animation: DialogAnimation.fade,
+                        );
+                      },
                     ),
 
                     SizedBox(height: 12.h),

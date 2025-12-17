@@ -111,6 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       Obx(
                             () => DropdownButtonFormField<String>(
+                              dropdownColor: const Color(0xffFFFAF8),
                           initialValue:
                           _authController.selectedCountry.value.isEmpty
                               ? null
@@ -141,7 +142,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           items: _authController.countries.map((country) {
                             return DropdownMenuItem(
                               value: country,
-                              child: Text(country),
+                              child: Text(
+                                country,
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xff333333),
+                                ),
+                              ),
                             );
                           }).toList(),
                           onChanged: (value) {
