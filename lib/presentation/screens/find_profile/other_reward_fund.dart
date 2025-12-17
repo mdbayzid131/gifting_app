@@ -16,17 +16,17 @@ class OtherRewardFund extends StatefulWidget {
 class _OtherRewardFundState extends State<OtherRewardFund> {
   List<Map<String, Object>> itemList = [
     {
-      "image": ImagePaths.otpVerify,
+      "image": "assets/dummy_image/car_image.png",
       "description": "Barbie Deluxe Style Fashion Doll",
       "price": 100,
     },
     {
-      "image": ImagePaths.otpVerify,
+      "image": 'assets/dummy_image/img.png',
       "description": "Lego Star Wars Mini Pack",
       "price": 45,
     },
     {
-      "image": ImagePaths.otpVerify,
+      "image": 'assets/dummy_image/img_1.png',
       "description": "Lego Star Wars Mini Pack",
       "price": 45,
     },

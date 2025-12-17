@@ -30,7 +30,7 @@ class WishListItemCard extends StatelessWidget {
       child: Row(
         children: [
           ///<===================Card Image=========================>///
-          Image.asset(cardImage, width: 70.w, height: 70.w),
+          Image.asset(cardImage, width: 70.w, height: 70.w, fit: BoxFit.cover),
 
           SizedBox(width: 5.w),
 

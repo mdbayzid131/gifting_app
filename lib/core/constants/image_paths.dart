@@ -43,6 +43,9 @@ class ImagePaths {
   static final String supportFundBg = 'assets/images/Vector (2).png';
   static final String rewardFundBg = 'assets/images/Vector (3).png';
 
+
+  static final String carImage = 'assets/images/car_image.png';
+
   // static final String fundBg = 'assets/images/fundBg.png';
   //
   // static final String wishListText = 'assets/images/wishList_text.svg';

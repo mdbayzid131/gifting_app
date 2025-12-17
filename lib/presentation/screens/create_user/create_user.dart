@@ -51,62 +51,6 @@ class _CreateUserState extends State<CreateUser> {
                 Get.toNamed(RoutePages.editParentProfile);
               },),
 
-              // Container(
-              //   height: 90.w,
-              //   width: 90.w,
-              //   decoration: BoxDecoration(
-              //     shape: BoxShape.circle,
-              //     border: Border.all(color: primaryColor, width: 1.5),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: Colors.black.withOpacity(0.08),
-              //         blurRadius: 6,
-              //         offset: const Offset(0, 3),
-              //       ),
-              //     ],
-              //   ),
-              //   child: Stack(
-              //     clipBehavior: Clip.none,
-              //     children: [
-              //       /// PROFILE IMAGE
-              //       Center(
-              //         child: CircleAvatar(
-              //           radius: 50.r,
-              //           backgroundColor: Colors.grey.shade200,
-              //           backgroundImage: AssetImage(ImagePaths.settingPp),
-              //         ),
-              //       ),
-              //
-              //       /// EDIT ICON
-              //       Positioned(
-              //         bottom: -2.w,
-              //         right: -2.w,
-              //         child: InkWell(
-              //           borderRadius: BorderRadius.circular(50),
-              //           onTap: () {
-              //             Get.toNamed(RoutePages.editParentProfile);
-              //           },
-              //           child: Container(
-              //             height: 30.w,
-              //             width: 30.w,
-              //             decoration: BoxDecoration(
-              //               shape: BoxShape.circle,
-              //               color: const Color(0xffF2F2F2),
-              //               border: Border.all(color: primaryColor, width: 1.2.w),
-              //             ),
-              //             child: Center(
-              //               child: SvgPicture.asset(
-              //                 ImagePaths.editImage,
-              //                 height: 17.w,
-              //                 width: 17.w,
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
 
               SizedBox(height: 10.h),
 
