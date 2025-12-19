@@ -1,17 +1,64 @@
 import 'dart:async';
 
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+import 'package:dio/src/response.dart';
+import 'package:get/get.dart' hide Response;
 
-class AuthController extends GetxController{
+import '../../core/utils/app_constants.dart';
+import '../../core/utils/custom_snackbar.dart';
+import '../../data/helper/prefs_helper.dart';
+import '../../data/repo/auth_repo.dart';
+import '../../data/services/api_checker.dart';
+import '../../routes/routes.dart';
 
+class AuthController extends GetxController {
+  final AuthRepo authRepo;
+  AuthController(this.authRepo);
+
+  RxBool isLoading = RxBool(false);
+
+  /// ===================== SIGNUP =====================
+
+  Future<void> signup({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+    required String country,
+  }) async {
+    try {
+      isLoading(true);
+
+      Response response = await authRepo.signup(
+        name: name,
+        email: email,
+        password: password,
+        phone: phone,
+        country: country,
+      );
+
+      // ApiChecker response validate
+      ApiChecker.checkApi(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        String token = response.data['data']['access_token'];
+        await PrefsHelper.setString(AppConstants.bearerToken, token);
+        showCustomSnackBar("Signup successful!", isError: false);
+        Get.offAllNamed(RoutePages.bottomNabBarScreen);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        ApiChecker.handleError(e);
+      } else {
+        showCustomSnackBar("Error: $e", isError: true);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
 
 
   /// <===============================    =============================> ///
-
-
-
-
-
 
   RxInt secondsRemaining = 30.obs;
   RxBool enableResent = false.obs;
@@ -37,7 +84,6 @@ class AuthController extends GetxController{
       }
     });
   }
-
 
   // -------------------------
   // OBSERVABLES (for password)
@@ -248,7 +294,6 @@ class AuthController extends GetxController{
     "Zimbabwe",
   ];
 
-
   // ------------------------------------------------------------------
   // 🔥 COMMON TOGGLE FUNCTION (Use this anywhere)
   // ------------------------------------------------------------------
@@ -341,16 +386,12 @@ class AuthController extends GetxController{
     // TODO: call API here...
   }
 
-
-
-/// <===============================Validation =============================> ///
+  /// <===============================Validation =============================> ///
 
   String? validUser(String? value) {
     if (value == null || value.isEmpty) return "Please enter your UserName";
     return null;
   }
-
-
 
   String? validOtp(String? value) {
     if (value == null || value.length < 6) {
@@ -358,6 +399,4 @@ class AuthController extends GetxController{
     }
     return null;
   }
-
-
 }
