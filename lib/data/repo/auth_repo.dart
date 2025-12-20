@@ -43,7 +43,7 @@ class AuthRepo {
   }
 
   /// ===================== FORGOT PASSWORD =====================
-  Future<Response> forgotPassword(String email) async {
+  Future<Response> forgotPassword({required String email,}) async {
     return await apiClient.postData(
       ApiEndpoints.forgotPassword,
         {
@@ -54,7 +54,7 @@ class AuthRepo {
 
 
 /// ===================== RESEND OTP =====================
-  Future<Response> resentOtp(String email) async {
+  Future<Response> resentOtp({required String email,}) async {
     return await apiClient.postData(
         ApiEndpoints.resendVerifyEmail,
         {
@@ -139,4 +139,4 @@ class AuthRepo {
 
 
 
-}
+  }
