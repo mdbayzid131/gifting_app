@@ -13,6 +13,7 @@ import '../../routes/routes.dart';
 
 class AuthController extends GetxController {
   final AuthRepo authRepo;
+
   AuthController(this.authRepo);
 
   RxBool isLoading = RxBool(false);
@@ -58,6 +59,113 @@ class AuthController extends GetxController {
   }
 
 
+
+  /// ===================== LOGIN =====================
+
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      isLoading(true);
+
+      Response response = await authRepo.login(
+
+        email: email,
+        password: password,
+
+      );
+
+      // ApiChecker response validate
+      ApiChecker.checkApi(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        String token = response.data['data']['access_token'];
+        await PrefsHelper.setString(AppConstants.bearerToken, token);
+        showCustomSnackBar("Signup successful!", isError: false);
+        Get.offAllNamed(RoutePages.bottomNabBarScreen);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        ApiChecker.handleError(e);
+      } else {
+        showCustomSnackBar("Error: $e", isError: true);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
+
+  /// ===================== FORGOT PASSWORD =====================
+
+  Future<void> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      isLoading(true);
+
+      Response response = await authRepo.forgotPassword(
+
+        email: email,
+
+      );
+
+      // ApiChecker response validate
+      ApiChecker.checkApi(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        String token = response.data['data']['access_token'];
+        await PrefsHelper.setString(AppConstants.bearerToken, token);
+        showCustomSnackBar("Signup successful!", isError: false);
+        Get.offAllNamed(RoutePages.bottomNabBarScreen);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        ApiChecker.handleError(e);
+      } else {
+        showCustomSnackBar("Error: $e", isError: true);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
+  /// ===================== SIGNUP =====================
+
+  Future<void> resentOtp({
+
+    required String email,
+
+  }) async {
+    try {
+      isLoading(true);
+
+      Response response = await authRepo.resentOtp(
+        email: email,
+      );
+
+      // ApiChecker response validate
+      ApiChecker.checkApi(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        String token = response.data['data']['access_token'];
+        await PrefsHelper.setString(AppConstants.bearerToken, token);
+        showCustomSnackBar("Signup successful!", isError: false);
+        Get.offAllNamed(RoutePages.bottomNabBarScreen);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        ApiChecker.handleError(e);
+      } else {
+        showCustomSnackBar("Error: $e", isError: true);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
   /// <===============================    =============================> ///
 
   RxInt secondsRemaining = 30.obs;
@@ -305,10 +413,14 @@ class AuthController extends GetxController {
   // 🔥 NAME VALIDATION
   // ------------------------------------------------------------------
   String? validName(String? value) {
-    if (value == null || value.trim().isEmpty) {
+    if (value == null || value
+        .trim()
+        .isEmpty) {
       return "Enter your name";
     }
-    if (value.trim().length < 3) {
+    if (value
+        .trim()
+        .length < 3) {
       return "Name must be at least 3 characters";
     }
     return null;
@@ -318,7 +430,9 @@ class AuthController extends GetxController {
   // 🔥 PHONE VALIDATION
   // ------------------------------------------------------------------
   String? validPhone(String? value) {
-    if (value == null || value.trim().isEmpty) {
+    if (value == null || value
+        .trim()
+        .isEmpty) {
       return "Enter phone number";
     }
 
@@ -341,7 +455,9 @@ class AuthController extends GetxController {
   // 🔥 EMAIL VALIDATION
   // ------------------------------------------------------------------
   String? validEmail(String? value) {
-    if (value == null || value.trim().isEmpty) {
+    if (value == null || value
+        .trim()
+        .isEmpty) {
       return "Enter your email";
     }
 
@@ -357,10 +473,14 @@ class AuthController extends GetxController {
   // 🔥 PASSWORD VALIDATION
   // ------------------------------------------------------------------
   String? validPassword(String? value) {
-    if (value == null || value.trim().isEmpty) {
+    if (value == null || value
+        .trim()
+        .isEmpty) {
       return "Enter password";
     }
-    if (value.trim().length < 6) {
+    if (value
+        .trim()
+        .length < 6) {
       return "Password must be at least 6 characters";
     }
     return null;
