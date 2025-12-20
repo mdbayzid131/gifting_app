@@ -45,6 +45,8 @@ class ImagePaths {
 
 
   static final String carImage = 'assets/images/car_image.png';
+  static final String followIcon = 'assets/logos/following.svg';
+  static final String unFollowIcon = 'assets/logos/unfollow.svg';
 
   // static final String fundBg = 'assets/images/fundBg.png';
   //

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
-class CircularProfileAvatar extends StatelessWidget {
+import '../../core/constants/image_paths.dart';
+
+class CircularProfileAvatar extends StatefulWidget {
   /// Network image URL
   final String? imageUrl;
 
@@ -19,6 +23,7 @@ class CircularProfileAvatar extends StatelessWidget {
 
   /// Shadow enable / disable
   final bool showShadow;
+  final bool? showFollowButton;
 
   const CircularProfileAvatar({
     super.key,
@@ -28,43 +33,104 @@ class CircularProfileAvatar extends StatelessWidget {
     this.borderColor = Colors.white,
     this.borderWidth = 2,
     this.showShadow = true,
+    this.showFollowButton = false,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double avatarSize = size.w;
+  State<CircularProfileAvatar> createState() => _CircularProfileAvatarState();
+}
 
-    return Container(
-      width: avatarSize,
-      height: avatarSize,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: borderColor,
-          width: borderWidth.w,
-        ),
-        boxShadow: showShadow
-            ? [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 7.r,
-            offset: Offset(0, 3.h),
+class _CircularProfileAvatarState extends State<CircularProfileAvatar> {
+  RxBool isFollow = true.obs;
+  @override
+  Widget build(BuildContext context) {
+    final double avatarSize = widget.size.w;
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: avatarSize,
+          height: avatarSize,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: widget.borderColor,
+              width: widget.borderWidth.w,
+            ),
+            boxShadow: widget.showShadow
+                ? [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 7.r,
+                      offset: Offset(0, 3.h),
+                    ),
+                  ]
+                : [],
           ),
-        ]
-            : [],
-      ),
-      child: ClipOval(
-        child: _buildImage(avatarSize),
-      ),
+
+          child: ClipOval(child: _buildImage(avatarSize)),
+        ),
+        if (widget.showFollowButton == true)
+          Obx(
+            () => Positioned(
+              bottom: 3.w,
+              right: -35.w,
+              child: IconButton(
+                splashRadius: 20.w,
+                onPressed: () {
+                  isFollow.value = !isFollow.value;
+                },
+                icon: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
+                  width: 78.w,
+                  height: 24.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: Colors.white,
+                    border: Border.all(
+                      color: const Color(0xffFD7839),
+                      width: 1.w,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        isFollow.value
+                            ? ImagePaths.followIcon
+                            : ImagePaths.unFollowIcon,
+                        height: 20.w,
+                        width: 20.w,
+                        colorFilter: const ColorFilter.mode(
+                          Color(0xffFD7839),
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        isFollow.value ? "Unfollow" : "Follow",
+                        style: TextStyle(
+                          color: const Color(0xffFD7839),
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 
   /// IMAGE HANDLER
   Widget _buildImage(double avatarSize) {
     /// ✅ Network image priority
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
+    if (widget.imageUrl != null && widget.imageUrl!.isNotEmpty) {
       return Image.network(
-        imageUrl!,
+        widget.imageUrl!,
         fit: BoxFit.cover,
         errorBuilder: (_, __, ___) => _fallback(avatarSize),
         loadingBuilder: (context, child, loadingProgress) {
@@ -81,11 +147,8 @@ class CircularProfileAvatar extends StatelessWidget {
     }
 
     /// ✅ Asset image fallback
-    if (assetImage != null && assetImage!.isNotEmpty) {
-      return Image.asset(
-        assetImage!,
-        fit: BoxFit.cover,
-      );
+    if (widget.assetImage != null && widget.assetImage!.isNotEmpty) {
+      return Image.asset(widget.assetImage!, fit: BoxFit.cover);
     }
 
     /// ✅ Default person icon
@@ -97,11 +160,7 @@ class CircularProfileAvatar extends StatelessWidget {
     return Container(
       color: Colors.grey.shade200,
       alignment: Alignment.center,
-      child: Icon(
-        Icons.person,
-        size: avatarSize * 0.5,
-        color: Colors.grey,
-      ),
+      child: Icon(Icons.person, size: avatarSize * 0.5, color: Colors.grey),
     );
   }
 }
