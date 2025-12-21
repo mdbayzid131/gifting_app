@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:dio/src/response.dart';
 import 'package:get/get.dart' hide Response;
 
 import '../../core/utils/app_constants.dart';
