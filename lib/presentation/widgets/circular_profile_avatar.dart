@@ -74,48 +74,39 @@ class _CircularProfileAvatarState extends State<CircularProfileAvatar> {
         if (widget.showFollowButton == true)
           Obx(
             () => Positioned(
-              bottom: 3.w,
-              right: -35.w,
-              child: IconButton(
-                splashRadius: 20.w,
+              bottom:10.w,
+              right: -15.w,
+              child: ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                      minimumSize: Size(68.w,30.h),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 5.h),
+
+                      elevation: 0,
+
+                      shadowColor: Colors.transparent,
+
+                      backgroundColor: Color(0xffFFEC54),
+                      foregroundColor: Colors.black,
+                    ).copyWith(
+                      overlayColor: WidgetStateProperty.all(
+                        Colors.transparent,
+                      ),
+
+                      elevation: WidgetStateProperty.all(0),
+                    ),
+
                 onPressed: () {
                   isFollow.value = !isFollow.value;
                 },
-                icon: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
-                  width: 78.w,
-                  height: 24.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.r),
-                    color: Colors.white,
-                    border: Border.all(
-                      color: const Color(0xffFD7839),
-                      width: 1.w,
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        isFollow.value
-                            ? ImagePaths.followIcon
-                            : ImagePaths.unFollowIcon,
-                        height: 20.w,
-                        width: 20.w,
-                        colorFilter: const ColorFilter.mode(
-                          Color(0xffFD7839),
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        isFollow.value ? "Unfollow" : "Follow",
-                        style: TextStyle(
-                          color: const Color(0xffFD7839),
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
+                child: Text(
+                  isFollow.value ? "Following" : "  Follow  ",
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
