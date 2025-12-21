@@ -56,6 +56,7 @@ class _OtherProfileScreenState extends State<OtherProfileScreen> {
             Center(
               child: CircularProfileAvatar(
                 assetImage: ImagePaths.avatarProfile2,
+                showFollowButton: true,
               ),
             ),
             const SizedBox(height: 24),
