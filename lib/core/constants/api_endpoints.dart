@@ -1,7 +1,7 @@
 class ApiEndpoints {
   ///<========================base url=====================================>
 
-  static String baseUrl="http://localhost:5001/api/v1";
+  static String baseUrl="http://10.10.7.33:5002/api/v1";
 
   ///<========================auth end points=====================================>`
   static String login = "$baseUrl/auth/login";

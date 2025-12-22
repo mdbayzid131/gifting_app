@@ -138,7 +138,11 @@ class _NewPasswordState extends State<NewPassword> {
                         label: 'Create New Password',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            Get.toNamed(RoutePages.loginScreen);
+                            _authController.newPassword(
+                              newPassword: passwordController.text,
+                              confirmPassword: confirmPasswordController.text,
+                            );
+
                           }
                         },
                       ),

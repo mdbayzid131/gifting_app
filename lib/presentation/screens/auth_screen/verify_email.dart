@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
+
 import '../../../../routes/routes.dart';
 import '../../../core/constants/app_color.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../../data/helper/time_formater.dart';
 import '../../controllers/auth_controller.dart';
 import '../../widgets/custom_elevated_button.dart';
-class OtpVerificationScreen extends StatefulWidget {
+
+class VerifyEmail extends StatefulWidget {
   final String email;
-  const OtpVerificationScreen({super.key, required this.email});
+  const VerifyEmail({super.key, required this.email});
+
   @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
+  State<VerifyEmail> createState() => _VerifyEmailState();
 }
-class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
+
+class _VerifyEmailState extends State<VerifyEmail> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController otpController = TextEditingController();
   final _authController = Get.find<AuthController>();
@@ -42,28 +46,18 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
-
               SizedBox(height: 20.h),
 
               ///================= App Logo =========================///
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    ImagePaths.giftZees,
-                    width: 218.w,
-                  ),
-                ],
+                children: [Image.asset(ImagePaths.giftZees, width: 218.w)],
               ),
 
               SizedBox(height: 24.h),
 
               ///================= OTP Illustration =========================///
-              Image.asset(
-                ImagePaths.otpVerify,
-                height: 124.h,
-                width: 124.w,
-              ),
+              Image.asset(ImagePaths.otpVerify, height: 124.h, width: 124.w),
 
               SizedBox(height: 24.h),
 
@@ -96,14 +90,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
               ///================= OTP Form =========================///
               Obx(
-                    () => Form(
+                () => Form(
                   key: _formKey,
                   child: Column(
                     children: [
-
                       ///================= OTP Input Field =========================///
                       Pinput(
-                        length: 6,
+                        length: 4,
                         controller: otpController,
                         defaultPinTheme: _defaultPinTheme(),
                         focusedPinTheme: _focusedPinTheme(),
@@ -121,36 +114,37 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       ///================= Resend Section =========================///
                       _authController.enableResent.value
                           ? TextButton(
-                        onPressed: () {
-                          _authController.forgotPassword(email: widget.email);
-                          _authController.startTimer();
-                        },
-                        child: Text(
-                          'Resent OTP',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.redAccent,
-                          ),
-                        ),
-                      )
+                              onPressed: () {
+                                _authController.startTimer();
+                                _authController.resentOtp(email: widget.email.trim());
+                              },
+                              child: Text(
+                                'Resent OTP',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
+                            )
                           : Text(
-                        'Resend in : ${formatTime(_authController.secondsRemaining.value)}',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xff19B23F),
-                        ),
-                      ),
+                              'Resend in : ${formatTime(_authController.secondsRemaining.value)}',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xff19B23F),
+                              ),
+                            ),
 
                       SizedBox(height: 32.h),
 
                       ///================= Submit Button =========================///
                       CustomElevatedButton(
+                        isLoading: _authController.isLoading.value,
                         label: 'Send',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _authController.verifyEmailForForgotPassword(email: widget.email, oneTimeCode: int.parse(otpController.text));
+                            _authController.verifyEmail(email: widget.email.trim(), oneTimeCode: int.parse(otpController.text));
                           }
                         },
                       ),
@@ -171,10 +165,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   PinTheme _defaultPinTheme() => PinTheme(
     width: 48.w,
     height: 48.h,
-    textStyle: TextStyle(
-      fontSize: 15.sp,
-      color: const Color(0xff333333),
-    ),
+    textStyle: TextStyle(fontSize: 15.sp, color: const Color(0xff333333)),
     decoration: BoxDecoration(
       color: const Color(0xffEDE8FC),
       borderRadius: BorderRadius.circular(10.r),

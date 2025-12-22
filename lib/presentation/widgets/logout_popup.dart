@@ -1,12 +1,18 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:gifting_app/presentation/widgets/custom_elevated_button.dart';
 
 import '../../core/constants/app_color.dart';
+import '../../routes/routes.dart';
+import '../controllers/auth_controller.dart';
 
 class LogoutPopup extends StatelessWidget {
-  const LogoutPopup({super.key});
+   LogoutPopup({super.key});
+final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +105,8 @@ class LogoutPopup extends StatelessWidget {
                       Expanded(
                         child: CustomElevatedButton(
                           onPressed: () {
-                            Navigator.pop(context);
 
-                            /// TODO: Call logout logic here
-                            /// authController.logout();
+                            authController.fakeLogout();
                           },
                            label: 'Logout',
 

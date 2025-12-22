@@ -1,6 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:gifting_app/presentation/screens/auth_screen/login_screen.dart';
+import 'package:gifting_app/presentation/screens/auth_screen/verify_email.dart';
 
 import '../presentation/screens/auth_screen/forget_password.dart';
 import '../presentation/screens/auth_screen/new_password.dart';
@@ -32,7 +33,8 @@ class RoutePages {
   static String loginScreen = '/loginScreen';
   static String signUpScreen = '/SignUpScreen';
   static String forgetPassword = '/ForgetPassword';
-  static String otpVerificationScreen = '/OtpVerificationScreen';
+  // static String otpVerificationScreen = '/OtpVerificationScreen';
+/*  static String verifyEmail = '/VerifyEmail';*/
   static String newPassword = '/NewPassword';
   static String bottomNabBarScreen = '/BottomNabBarScreen';
 
@@ -80,11 +82,11 @@ final pages = [
     page: () => ForgetPassword(),
      transition: transition,
   ),
-  GetPage(
-    name: RoutePages.otpVerificationScreen,
-    page: () => OtpVerificationScreen(),
-     transition: transition,
-  ),
+  // GetPage(
+  //   name: RoutePages.otpVerificationScreen,
+  //   page: () => OtpVerificationScreen(),
+  //    transition: transition,
+  // ),
   GetPage(
     name: RoutePages.newPassword,
     page: () => NewPassword(),

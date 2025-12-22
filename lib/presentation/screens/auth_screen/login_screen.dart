@@ -33,18 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               SizedBox(height: 80.h),
 
               ///================= App Logo =========================///
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    ImagePaths.giftZees,
-                    width: 218.w,
-                  ),
-                ],
+                children: [Image.asset(ImagePaths.giftZees, width: 218.w)],
               ),
 
               SizedBox(height: 24.h),
@@ -66,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-
                     ///================= Email Field =========================///
                     CustomTextField(
                       validator: _authController.validEmail,
@@ -79,14 +72,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     ///================= Password Field =========================///
                     Obx(
-                          () => CustomTextField(
+                      () => CustomTextField(
                         validator: _authController.validPassword,
-                        obscureText:
-                        _authController.isPasswordVisible.value,
+                        obscureText: _authController.isPasswordVisible.value,
                         suffixIcon: IconButton(
                           onPressed: () {
                             _authController.isPasswordVisible.value =
-                            !_authController.isPasswordVisible.value;
+                                !_authController.isPasswordVisible.value;
                           },
                           icon: Icon(
                             _authController.isPasswordVisible.value
@@ -113,8 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
-                          tapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
                         child: Text(
                           "Forgot Password?",
@@ -130,14 +121,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 24.h),
 
                     ///================= Login Button =========================///
-                    CustomElevatedButton(
-                      label: 'Login',
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Get.offAllNamed(
-                              RoutePages.bottomNabBarScreen);
-                        }
-                      },
+                    Obx(()=>
+                       CustomElevatedButton(
+                        isLoading: _authController.isLoading.value,
+
+                        label: 'Login',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _authController.login(
+                              email: emailController.text.trim(),
+                              password: passwordController.text, context: context,
+                            );
+                          }
+                        },
+                      ),
                     ),
 
                     SizedBox(height: 16.h),
@@ -159,8 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Get.toNamed(RoutePages.signUpScreen);
                           },
                           child: Padding(
-                            padding:
-                            EdgeInsets.symmetric(horizontal: 4.w),
+                            padding: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Text(
                               "Sign Up",
                               style: TextStyle(
