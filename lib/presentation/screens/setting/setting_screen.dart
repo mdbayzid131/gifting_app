@@ -58,7 +58,7 @@ class _SettingScreenState extends State<SettingScreen> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => const LogoutPopup(),
+                  builder: (context) => LogoutPopup(),
                 );
               },
             ),
