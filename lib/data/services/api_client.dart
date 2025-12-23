@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:gifting_app/core/constants/api_endpoints.dart';
 import '../../core/utils/app_constants.dart';
+import '../../core/utils/custom_snackbar.dart';
+import '../../presentation/controllers/auth_controller.dart';
+import '../../routes/routes.dart';
 import '../helper/prefs_helper.dart';
+import '../repo/auth_repo.dart';
 
- class ApiClient extends GetxService {
+class ApiClient extends GetxService {
   static late Dio dio;
   static String bearerToken = "";
 
@@ -14,47 +18,94 @@ import '../helper/prefs_helper.dart';
       "Sorry! Something went wrong, please try again";
   static const int timeoutInSeconds = 30;
 
-  static void init() {
-    dio = Dio(BaseOptions(
-      baseUrl: ApiEndpoints.baseUrl,
-      connectTimeout: const Duration(seconds: timeoutInSeconds),
-      receiveTimeout: const Duration(seconds: timeoutInSeconds),
-      headers: {'Content-Type': 'application/json'},
-    ));
 
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
-        if (bearerToken.isNotEmpty) {
-          options.headers['Authorization'] = 'Bearer $bearerToken';
-        }
-        debugPrint("====> API Request: ${options.method} ${options.uri}");
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        debugPrint("====> API Response: [${response.statusCode}] ${response.data}");
-        return handler.next(response);
-      },
-      onError: (DioException e, handler) {
-        debugPrint("====> API Error: ${e.message}");
-        return handler.next(e);
-      },
-    ));
+
+  Future<void> fakeLogout() async {
+    try {
+      // Clear tokens from PrefsHelper
+      await PrefsHelper.setString(AppConstants.bearerToken, "");
+      await PrefsHelper.setString(AppConstants.refreshToken, "");
+
+      // Optional: Clear other user-related data if needed
+      // await PrefsHelper.clearAll();
+
+      // Show success message
+
+      // Navigate to login screen
+
+    } catch (e) {
+      showCustomSnackBar(" failed: $e", isError: true);
+    }
+  }
+  void handleTokenExpired() {
+    fakeLogout();
+
+    showCustomSnackBar("Session expired. Please login again.", isError: true);
+
+    Get.offAllNamed(RoutePages.loginScreen);
+  }
+
+  void init() {
+    dio = Dio(
+      BaseOptions(
+        baseUrl: ApiEndpoints.baseUrl,
+        connectTimeout: const Duration(seconds: timeoutInSeconds),
+        receiveTimeout: const Duration(seconds: timeoutInSeconds),
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          bearerToken = await PrefsHelper.getString(AppConstants.bearerToken);
+          if (bearerToken.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $bearerToken';
+          }
+          debugPrint("====> API Request: ${options.method} ${options.uri}");
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          debugPrint(
+            "====> API Response: [${response.statusCode}] ${response.data}",
+          );
+          return handler.next(response);
+        },
+        onError: (DioException e, handler) {
+          if (e.response?.statusCode == 401) {
+            // Token expired
+            handleTokenExpired();
+          }
+          debugPrint("====> API Error: ${e.message}");
+          return handler.next(e);
+        },
+      ),
+    );
   }
 
   /// GET
-   Future<Response> getData(String uri,
-      {Map<String, dynamic>? query, CancelToken? cancelToken,}) async {
+  Future<Response> getData(
+    String uri, {
+    Map<String, dynamic>? query,
+    CancelToken? cancelToken,
+  }) async {
     try {
-      return await dio.get(uri, queryParameters: query, cancelToken: cancelToken);
+      return await dio.get(
+        uri,
+        queryParameters: query,
+        cancelToken: cancelToken,
+      );
     } on DioException catch (e) {
       return _handleError(e);
     }
   }
 
   /// POST
-   Future<Response> postData(String uri, dynamic body,
-      {CancelToken? cancelToken}) async {
+  Future<Response> postData(
+    String uri,
+    dynamic body, {
+    CancelToken? cancelToken,
+  }) async {
     try {
       return await dio.post(uri, data: body, cancelToken: cancelToken);
     } on DioException catch (e) {
@@ -63,8 +114,11 @@ import '../helper/prefs_helper.dart';
   }
 
   /// PUT
-   Future<Response> putData(String uri, dynamic body,
-      {CancelToken? cancelToken}) async {
+  Future<Response> putData(
+    String uri,
+    dynamic body, {
+    CancelToken? cancelToken,
+  }) async {
     try {
       return await dio.put(uri, data: body, cancelToken: cancelToken);
     } on DioException catch (e) {
@@ -73,8 +127,11 @@ import '../helper/prefs_helper.dart';
   }
 
   /// PATCH (missing before)
-   Future<Response> patchData(String uri, dynamic body,
-      {CancelToken? cancelToken}) async {
+  Future<Response> patchData(
+    String uri,
+    dynamic body, {
+    CancelToken? cancelToken,
+  }) async {
     try {
       return await dio.patch(uri, data: body, cancelToken: cancelToken);
     } on DioException catch (e) {
@@ -83,8 +140,11 @@ import '../helper/prefs_helper.dart';
   }
 
   /// DELETE
-   Future<Response> deleteData(String uri,
-      {dynamic body, CancelToken? cancelToken}) async {
+  Future<Response> deleteData(
+    String uri, {
+    dynamic body,
+    CancelToken? cancelToken,
+  }) async {
     try {
       return await dio.delete(uri, data: body, cancelToken: cancelToken);
     } on DioException catch (e) {
@@ -93,64 +153,84 @@ import '../helper/prefs_helper.dart';
   }
 
   /// Multipart POST with progress
-   Future<Response> postMultipartData(
-      String uri, Map<String, dynamic> body,
-      {required List<MultipartBody> multipartBody,
-        Function(int, int)? onSendProgress,
-        CancelToken? cancelToken}) async {
+  Future<Response> postMultipartData(
+    String uri,
+    Map<String, dynamic> body, {
+    required List<MultipartBody> multipartBody,
+    Function(int, int)? onSendProgress,
+    CancelToken? cancelToken,
+  }) async {
     try {
       FormData formData = FormData.fromMap(body);
       for (MultipartBody element in multipartBody) {
-        formData.files.add(MapEntry(
-          element.key,
-          await MultipartFile.fromFile(element.file.path),
-        ));
+        formData.files.add(
+          MapEntry(
+            element.key,
+            await MultipartFile.fromFile(element.file.path),
+          ),
+        );
       }
-      return await dio.post(uri,
-          data: formData,
-          onSendProgress: onSendProgress,
-          cancelToken: cancelToken);
+      return await dio.post(
+        uri,
+        data: formData,
+        onSendProgress: onSendProgress,
+        cancelToken: cancelToken,
+      );
     } on DioException catch (e) {
       return _handleError(e);
     }
   }
 
   /// Multipart PUT with progress
-   Future<Response> putMultipartData(
-      String uri, Map<String, dynamic> body,
-      {required List<MultipartBody> multipartBody,
-        Function(int, int)? onSendProgress,
-        CancelToken? cancelToken}) async {
+  Future<Response> putMultipartData(
+    String uri,
+    Map<String, dynamic> body, {
+    required List<MultipartBody> multipartBody,
+    Function(int, int)? onSendProgress,
+    CancelToken? cancelToken,
+  }) async {
     try {
       FormData formData = FormData.fromMap(body);
       for (MultipartBody element in multipartBody) {
-        formData.files.add(MapEntry(
-          element.key,
-          await MultipartFile.fromFile(element.file.path),
-        ));
+        formData.files.add(
+          MapEntry(
+            element.key,
+            await MultipartFile.fromFile(element.file.path),
+          ),
+        );
       }
-      return await dio.put(uri,
-          data: formData,
-          onSendProgress: onSendProgress,
-          cancelToken: cancelToken);
+      return await dio.put(
+        uri,
+        data: formData,
+        onSendProgress: onSendProgress,
+        cancelToken: cancelToken,
+      );
     } on DioException catch (e) {
       return _handleError(e);
     }
   }
 
   /// File Download
-   Future<Response> downloadFile(String url, String savePath,
-      {Function(int, int)? onReceiveProgress, CancelToken? cancelToken}) async {
+  Future<Response> downloadFile(
+    String url,
+    String savePath, {
+    Function(int, int)? onReceiveProgress,
+    CancelToken? cancelToken,
+  }) async {
     try {
-      return await dio.download(url, savePath,
-          onReceiveProgress: onReceiveProgress, cancelToken: cancelToken);
+      return await dio.download(
+        url,
+        savePath,
+        onReceiveProgress: onReceiveProgress,
+        cancelToken: cancelToken,
+      );
     } on DioException catch (e) {
       return _handleError(e);
     }
   }
 
   /// Error handler
-   Response _handleError(DioException e) {
+  Response _handleError(DioException e) {
     String message = noInternetMessage;
     if (e.type == DioExceptionType.connectionTimeout) {
       message = "Connection timed out";

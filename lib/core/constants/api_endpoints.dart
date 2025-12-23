@@ -16,24 +16,16 @@ class ApiEndpoints {
   static String changePassword = "$baseUrl/auth/change-password";
 
 
+  static String getProfile = "$baseUrl/user/profile";
+  static String updateProfile = "$baseUrl/user/profile";
 
-  // static String otoVerify(String userName)=>"/auth/vefiry_for_forget/$userName/";
-  // static String resetPassword="/auth/reset_password/";
-  //
-  // static String termsAndServicesEndPoints="/auth/terms/";
-  // static String privacyPolicyEndPoints="/auth/privacy-policy/";
-  // static String aboutUsEndPoints="/auth/about-us/";
-  //
-  // static String productDataEndPoint = "/shoping/products/";
-  // static String brandDataEndPoint = "/shoping/brands/";
-  // static String productReviewDataEndPoint( int productId) => "/shoping/products/reviews/$productId/";
-  //
-  //
-  // static String userInfoEndPoint = "/auth/profile/";
-  //
-  //
-  //
-  // static String singleProduct="/shoping/products/8";
-  // static String wisherListEndPoints(int productId)=>"/shoping/wisher/$productId/";
+  static String getChildrenProfile = "$baseUrl/children";
+  static String updateChildProfile({required String childId}) => "$baseUrl/children/$childId";
+
+  static String createChildProfile = "$baseUrl/children";
+
+
+
+
 
 }

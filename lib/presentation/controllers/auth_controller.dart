@@ -192,8 +192,7 @@ class AuthController extends GetxController {
       // ApiChecker response validate
       ApiChecker.checkApi(response);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-      }
+      if (response.statusCode == 200 || response.statusCode == 201) {}
     } catch (e) {
       if (e is DioException) {
         ApiChecker.handleError(e);
@@ -666,6 +665,13 @@ class AuthController extends GetxController {
     }
 
     return null; // ✅ Valid password
+  }
+
+  String? validDOB(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Date of Birth is required";
+    }
+    return null;
   }
 
   // ------------------------------------------------------------------

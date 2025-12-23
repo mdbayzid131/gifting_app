@@ -7,14 +7,15 @@ import 'package:get/get.dart';
 import '../controllers/creat_profile_controller.dart';
 import '../controllers/homepgeController.dart';
 
-class AvatarProfilePopup extends StatelessWidget {
-  AvatarProfilePopup({super.key});
+class ChildAvatarProfilePopup extends StatelessWidget {
+  final String childId;
+  ChildAvatarProfilePopup({super.key, required this.childId});
 
   ///<================= CONTROLLER =========================>///
   final CreateProfileController controller =
-      Get.find<CreateProfileController>();
+  Get.find<CreateProfileController>();
   final HomePageController _homePageController =
-      Get.find<HomePageController>();
+  Get.find<HomePageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,7 @@ class AvatarProfilePopup extends StatelessWidget {
 
                           onTap: () async {
                             Navigator.pop(context);
-                            await _homePageController.uploadAvatar(avatarPath);
+                            await _homePageController.childrenUploadAvatar(childId:childId, assetPath: avatarPath );
                           },
 
                           child: Container(

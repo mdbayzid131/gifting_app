@@ -45,6 +45,7 @@ dependencies:
   flutter_arc_text: ^0.6.0
   dio: ^5.9.0
   shared_preferences: ^2.5.4
+  intl:
 
 
 dev_dependencies:

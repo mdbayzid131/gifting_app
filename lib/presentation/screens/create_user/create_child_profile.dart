@@ -53,7 +53,7 @@ class _CreateChildProfileState extends State<CreateChildProfile> {
                       child: CustomParentProfile(imagePath: ImagePaths.avatarProfile3,isShowImagePicker: true,onEditTap: (){
                         AppDialog.show(
                           context: context,
-                          child: UploadPicturePopup(),
+                          child: CustomUploadPicturePopup(galleryUpload: () {  }, choseAvatar: () {  },),
                           animation: DialogAnimation.fade,
                         );
                       },),

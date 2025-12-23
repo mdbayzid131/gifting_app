@@ -41,7 +41,7 @@ class RoutePages {
   static String supportFQA = '/SupportFQA';
   static String notificationScreen = '/NotificationScreen';
   static String createChildProfile = '/CreateChildProfile';
-  static String editChildProfile = '/EditChildProfile';
+  // static String editChildProfile = '/EditChildProfile';
   static String subscriptionPlan = '/SubscriptionPlan';
   static String userProfileScreen = '/UserProfileScreen';
   static String wishListView = '/WishListView';
@@ -112,11 +112,11 @@ final pages = [
     page: () => CreateChildProfile(),
      transition: transition,
   ),
-  GetPage(
-    name: RoutePages.editChildProfile,
-    page: () => EditChildProfile(),
-     transition: transition,
-  ),
+  // GetPage(
+  //   name: RoutePages.editChildProfile,
+  //   page: () => EditChildProfile(childId: '',),
+  //    transition: transition,
+  // ),
   GetPage(
     name: RoutePages.subscriptionPlan,
     page: () => SubscriptionPlan(),
