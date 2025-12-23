@@ -28,7 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
     String token = await PrefsHelper.getString(AppConstants.bearerToken);
     if (token.isNotEmpty) {
       Get.offAllNamed(RoutePages.bottomNabBarScreen);
-    } else {
+    }
+    else {
       Get.offAllNamed(RoutePages.onboardingScreen);
     }
   }

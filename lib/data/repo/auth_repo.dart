@@ -122,13 +122,5 @@ class AuthRepo {
     });
   }
 
-  /// ===================== GET PROFILE =====================
-  Future<Response> getProfile() async {
-    return await apiClient.getData("auth/profile");
-  }
 
-  /// ===================== UPDATE PROFILE =====================
-  Future<Response> updateProfile(Map<String, dynamic> body) async {
-    return await apiClient.putData("auth/profile/update", body);
-  }
 }

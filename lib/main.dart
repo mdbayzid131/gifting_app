@@ -12,7 +12,7 @@ import 'data/services/api_client.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ApiClient.init();
+  ApiClient().init();
 
   runApp(MyApp());
 }
