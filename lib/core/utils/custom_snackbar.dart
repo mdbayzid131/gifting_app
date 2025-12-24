@@ -1,23 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void showCustomSnackBar(
-    String? message, {
-      bool isError = true,
-      bool getXSnackBar = true,
-    }) {
+  String? message, {
+  bool isError = true,
+  bool getXSnackBar = true,
+      Duration? duration,
+
+}) {
   if (message != null && message.isNotEmpty) {
     if (getXSnackBar) {
       Get.showSnackbar(
         GetSnackBar(
-          backgroundColor: isError ? Colors.red.shade400 : Colors.green,
-          message: message,
-          duration: const Duration(seconds: 3),
+          messageText: Text(
+            message,
+            style: TextStyle(
+              fontSize: 14.sp, // responsive font size
+              fontWeight: FontWeight.w500,
+              color: isError ? Colors.red.shade900 : Colors.green.shade900,
+            ),
+          ),
+          duration: duration ?? Duration(seconds: 3),
           snackStyle: SnackStyle.FLOATING,
-          margin: const EdgeInsets.all(10),
-          borderRadius: 8,
+          margin: EdgeInsets.all(10.w), // responsive margin
+          borderRadius: 8.r, // responsive radius
           isDismissible: true,
           dismissDirection: DismissDirection.horizontal,
+          backgroundColor: isError
+              ? Colors.red.shade100
+              : Colors.green.shade100,
+          snackPosition: SnackPosition.BOTTOM,
         ),
       );
     } else {
@@ -26,19 +39,24 @@ void showCustomSnackBar(
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             dismissDirection: DismissDirection.horizontal,
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            duration: const Duration(seconds: 3),
-            backgroundColor: isError ? Colors.red.shade400 : Colors.green,
+            margin: EdgeInsets.symmetric(
+              horizontal: 10.w,
+              vertical: 10.h,
+            ), // responsive margin
+            duration: duration ?? Duration(seconds: 3),
+            backgroundColor: isError
+                ? Colors.red.shade100
+                : Colors.green.shade100,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r), // responsive radius
             ),
             content: Text(
               message,
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: 14.sp, // responsive font size
                 fontWeight: FontWeight.w500,
-                color: Colors.white,
+                color: isError ? Colors.red.shade900 : Colors.green.shade900,
               ),
             ),
           ),

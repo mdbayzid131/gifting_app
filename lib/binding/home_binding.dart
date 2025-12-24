@@ -8,6 +8,7 @@ import '../presentation/controllers/bottom_nab_bar_controller.dart';
 import '../presentation/controllers/contribute_controller.dart';
 import '../presentation/controllers/creat_profile_controller.dart';
 import '../presentation/controllers/homepgeController.dart';
+import '../presentation/controllers/internet_controller.dart';
 import '../presentation/controllers/settingController.dart';
 
 class HomeBinding extends Bindings {
@@ -22,8 +23,10 @@ class HomeBinding extends Bindings {
 
     Get.put(BottomNabBarController());
     Get.put(SettingController());
-     Get.lazyPut<HomePageController>(() => HomePageController(Get.find<UserProfileManageRepo>()));
+     Get.put(HomePageController(Get.find<UserProfileManageRepo>()), permanent: true);
      Get.put(CreateProfileController());
     Get.put(ContributeController());
+    Get.put(NetworkController(), permanent: true);
+
   }
 }

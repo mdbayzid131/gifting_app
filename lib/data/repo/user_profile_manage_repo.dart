@@ -16,9 +16,10 @@ class UserProfileManageRepo {
   Future<Response> getChildrenProfile() async {
     return await apiClient.getData(ApiEndpoints.getChildrenProfile);
   }
+
   /// ===================== CREATE Child PROFILE =====================
   Future<Response> createChildrenProfile(Map<String, dynamic> body) async {
-    return await apiClient.postData(ApiEndpoints.getChildrenProfile,body);
+    return await apiClient.postData(ApiEndpoints.getChildrenProfile, body);
   }
 
   /// ===================== UPDATE PROFILE =====================
@@ -32,12 +33,31 @@ class UserProfileManageRepo {
   }
 
   /// ===================== UPDATE PROFILE =====================
-  Future<Response> updateChildProfile(String childId,Map<String, dynamic> body) async {
-    return await apiClient.patchData(ApiEndpoints.updateChildProfile(childId: childId), body);
+  Future<Response> updateChildProfile(
+    String childId,
+    Map<String, dynamic> body,
+  ) async {
+    return await apiClient.patchData(
+      ApiEndpoints.updateChildProfile(childId: childId),
+      body,
+    );
   }
 
   /// ===================== UPDATE PROFILE image =====================
-  Future<Response> updateChildProfileImage(String childId,dynamic body) async {
-     return await apiClient.patchData(ApiEndpoints.updateChildProfile(childId: childId), body);
+  Future<Response> updateChildProfileImage(String childId, dynamic body) async {
+    return await apiClient.patchData(
+      ApiEndpoints.updateChildProfile(childId: childId),
+      body,
+    );
+  }
+
+  /// ===================== Create child PROFILE  =====================
+  Future<Response> createChildProfile(dynamic body) async {
+    return await apiClient.postData(ApiEndpoints.createChildProfile, body);
+  }
+
+  /// ===================== create child  PROFILE image =====================
+  Future<Response> createChildProfileImage(dynamic body) async {
+    return await apiClient.postData(ApiEndpoints.createChildProfile, body);
   }
 }

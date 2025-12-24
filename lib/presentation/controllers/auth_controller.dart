@@ -53,12 +53,17 @@ class AuthController extends GetxController {
           "Signup successful!, Verify your email",
           isError: false,
         );
+      }else{
+        showCustomSnackBar(
+          "Server is not responding",
+          isError: true,
+        );
       }
     } catch (e) {
       if (e is DioException) {
         ApiChecker.handleError(e);
       } else {
-        showCustomSnackBar("Error: $e", isError: true);
+        showCustomSnackBar("Failed to connect to server ", isError: true);
       }
     } finally {
       isLoading(false);
