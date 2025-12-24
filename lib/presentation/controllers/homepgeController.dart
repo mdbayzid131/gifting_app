@@ -20,11 +20,9 @@ class HomePageController extends GetxController {
 
   HomePageController(this.userProfileManageRepo);
 
-  @override
-  void onInit() {
-    super.onInit();
-    getProfile();
-    getChildrenProfile();
+  Future<void> loadData() async {
+    await getProfile();
+    await getChildrenProfile();
   }
 
   RxBool isLoading = RxBool(false);
@@ -49,42 +47,14 @@ class HomePageController extends GetxController {
         print(profile.value?.name);
         print(profile.value?.email);
         print(profile.value?.profilePicture);
+      } else {
+        showCustomSnackBar("Server is not responding", isError: true);
       }
     } catch (e) {
       if (e is DioException) {
         ApiChecker.handleError(e);
       } else {
-        showCustomSnackBar("Error: $e", isError: true);
-      }
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  Future<void> updateProfile({
-    required String name,
-    required BuildContext context,
-  }) async {
-    try {
-      isLoading(true);
-
-      Response<dynamic> response = await userProfileManageRepo.updateProfile({
-        "name": name,
-      });
-      ApiChecker.checkApi(response);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        showCustomSnackBar("Profile updated successfully", isError: false);
-        await getProfile();
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
-      }
-    } catch (e) {
-      if (e is DioException) {
-        ApiChecker.handleError(e);
-      } else {
-        showCustomSnackBar("Error: $e", isError: true);
+        showCustomSnackBar("Failed to connect to server ", isError: true);
       }
     } finally {
       isLoading(false);
@@ -106,6 +76,41 @@ class HomePageController extends GetxController {
         final childrenResponse = ChildrenResponse.fromJson(response.data);
 
         childData.assignAll(childrenResponse.data);
+      } else {
+        showCustomSnackBar("Server is not responding", isError: true);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        ApiChecker.handleError(e);
+      } else {
+        showCustomSnackBar("Failed to connect to server ", isError: true);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  ///=====================================================================
+  /// ===================== profile update =====================
+  ///=====================================================================
+  Future<void> updateProfile({
+    required String name,
+    required BuildContext context,
+  }) async {
+    try {
+      isLoading(true);
+
+      Response<dynamic> response = await userProfileManageRepo.updateProfile({
+        "name": name,
+      });
+      ApiChecker.checkApi(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Profile updated successfully", isError: false);
+        await getProfile();
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
       }
     } catch (e) {
       if (e is DioException) {
@@ -167,8 +172,9 @@ class HomePageController extends GetxController {
     }
   }
 
-  /// ===================== children profile photo update =====================
-
+  ///=====================================================================
+  /// ===================== children profile update =====================
+  ///=====================================================================
 
   Future<void> updateChildrenProfile({
     required String childId,
@@ -179,11 +185,8 @@ class HomePageController extends GetxController {
     try {
       isLoading(true);
 
-      Response<dynamic> response = await userProfileManageRepo.updateChildProfile(childId,{
-        "name": name,
-        "dateOfBirth": dob,
-
-      });
+      Response<dynamic> response = await userProfileManageRepo
+          .updateChildProfile(childId, {"name": name, "dateOfBirth": dob});
       ApiChecker.checkApi(response);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -204,7 +207,6 @@ class HomePageController extends GetxController {
       isLoading(false);
     }
   }
-
 
   Future<void> childrenPickImageFromGallery({
     required String childId,
@@ -260,6 +262,42 @@ class HomePageController extends GetxController {
     }
   }
 
+  ///=====================================================================
+  /// ===================== children profile create =====================
+  ///=====================================================================
+
+  // Future<void> createChildrenProfile({
+  //   required BuildContext context,
+  //   required String name,
+  //   required String dob,
+  // }) async {
+  //   try {
+  //     isLoading(true);
+  //
+  //     Response<dynamic> response = await userProfileManageRepo
+  //         .createChildProfile({"name": name, "dateOfBirth": dob});
+  //     ApiChecker.checkApi(response);
+  //
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       showCustomSnackBar("Profile updated successfully", isError: false);
+  //       await uploadProfileImage();
+  //       await getChildrenProfile();
+  //
+  //       if (context.mounted) {
+  //         Navigator.pop(context);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     if (e is DioException) {
+  //       ApiChecker.handleError(e);
+  //     } else {
+  //       showCustomSnackBar("Error: $e", isError: true);
+  //     }
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
+
   List<NotificationItem> notifications = [
     NotificationItem(
       id: '1',
@@ -289,4 +327,163 @@ class HomePageController extends GetxController {
       name: 'khaled',
     ),
   ];
+/*//===========================================================
+  Future<XFile?> createChildePickImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    return image;
+  }
+
+  Future<void> createChildrenProfileImage() async {
+    XFile? selectedImage = await createChildePickImageFromGallery();
+
+    if (selectedImage != null) {
+      FormData formData = FormData.fromMap({
+        "profileImage": await MultipartFile.fromFile(selectedImage.path),
+      });
+
+      Response response = await userProfileManageRepo.createChildProfileImage(
+        formData,
+      );
+
+      ApiChecker.checkApi(response);
+      if (response.statusCode == 200) {
+        showCustomSnackBar("Profile updated successfully", isError: false);
+        await getChildrenProfile();
+      }
+    }
+  }
+//===================================================================
+
+  Future<List<int>> createChildrenPickImageFromAvatar({
+    required String assetPath,
+  }) async {
+    ByteData byteData = await rootBundle.load(assetPath);
+    List<int> imageData = byteData.buffer.asUint8List();
+    return imageData;
+  }
+
+  Future<void> createChildrenUploadAvatar({required String assetPath}) async {
+    List<int> imageData = await createChildrenPickImageFromAvatar(
+      assetPath: assetPath,
+    );
+
+    FormData formData = FormData.fromMap({
+      "profileImage": MultipartFile.fromBytes(
+        imageData,
+        filename: assetPath.split("/").last,
+      ),
+    });
+
+    Response response = await userProfileManageRepo.createChildProfileImage(
+      formData,
+    );
+
+    if (response.statusCode == 200) {
+      showCustomSnackBar("Avatar updated successfully", isError: false);
+      await getChildrenProfile();
+    }
+  }*/
+
+
+
+  ///
+///
+///
+
+
+
+
+  /// Selected image source
+  Rx<ImageSourceType?> selectedImageSource = Rx<ImageSourceType?>(null);
+
+  /// Gallery picked image
+  Rx<XFile?> selectedGalleryImage = Rx<XFile?>(null);
+
+  /// Avatar picked image (asset path)
+  Rx<String?> selectedAvatarPath = Rx<String?>(null);
+
+
+
+  Future<void> childCreatePickImageFromGallery() async {
+    final picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      selectedGalleryImage.value = image;
+      selectedAvatarPath.value = null; // clear avatar
+      selectedImageSource.value = ImageSourceType.gallery;
+    }
+  }
+
+
+  void selectAvatar({required String assetPath}) {
+    selectedAvatarPath.value = assetPath;
+    selectedGalleryImage.value = null; // clear gallery
+    selectedImageSource.value = ImageSourceType.avatar;
+  }
+
+  Future<void> childrenCreateChildrenProfile({
+    required BuildContext context,
+    required String name,
+    required String dob,
+  }) async {
+    try {
+      isLoading(true);
+
+      final Map<String, dynamic> data = {
+        "name": name,
+        "dateOfBirth": dob,
+      };
+
+      /// ---------- IMAGE HANDLE ----------
+      if (selectedImageSource.value == ImageSourceType.gallery &&
+          selectedGalleryImage.value != null) {
+
+        data["profileImage"] = await MultipartFile.fromFile(
+          selectedGalleryImage.value!.path,
+        );
+
+      } else if (selectedImageSource.value == ImageSourceType.avatar &&
+          selectedAvatarPath.value != null) {
+
+        final bytes = await rootBundle.load(selectedAvatarPath.value!);
+        data["profileImage"] = MultipartFile.fromBytes(
+          bytes.buffer.asUint8List(),
+          filename: selectedAvatarPath.value!.split("/").last,
+        );
+      }
+
+      final formData = FormData.fromMap(data);
+
+      final response =
+      await userProfileManageRepo.createChildProfile(formData);
+
+      ApiChecker.checkApi(response);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Child profile created successfully", isError: false);
+
+        await getChildrenProfile();
+
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
+      }
+    } catch (e) {
+      if (e is DioException) {
+        ApiChecker.handleError(e);
+      } else {
+        showCustomSnackBar("Something went wrong", isError: true);
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+
+
+
+
 }
+enum ImageSourceType { gallery, avatar }
