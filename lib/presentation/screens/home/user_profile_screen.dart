@@ -17,6 +17,7 @@ import '../../widgets/circular_profile_avatar.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_fund_container.dart';
 import 'add_item_popUp.dart';
+import 'followers_list_page.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -69,13 +70,44 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               SizedBox(height: 24.h),
 
               ///<================= GREETING TEXT =========================>///
-              Text(
-                "Hello!",
-                style: TextStyle(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xffFD7839),
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    "Hello!",
+                    style: TextStyle(
+                      fontSize: 32.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xffFD7839),
+                    ),
+                  ),
+                  SizedBox(width: 42.w),
+                  GestureDetector(
+                    onTap: (){
+                      navigateTo(context, FollowersPage());
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 5.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffCFF1F6),
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: Text(
+                        'Followers',
+                        style: TextStyle(
+                          color: const Color(0xff4E6E85),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+
+
+                ],
               ),
 
               SizedBox(height: 24.h),
@@ -83,9 +115,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ///<================= TOTAL EARNED CARD =========================>///
               GestureDetector(
                 onTap: () {
-
-                  navigateTo(context,  TotalSubmitPage());
-
+                  navigateTo(context, TotalSubmitPage());
                 },
                 child: Container(
                   height: 54.h,
@@ -115,34 +145,59 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 children: [
                   CustomFundContainer(
                     title: 'Wish List',
-                    image: Image.asset(ImagePaths.wishListFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
+                    image: Image.asset(
+                      ImagePaths.wishListFund,
+                      height: 82.h,
+                      width: 82.w,
+                      fit: BoxFit.contain,
+                    ),
                     viewOnPressed: () {
                       navigateTo(context, WishListView());
                     },
                     addOnPressed: () {
-
-                      AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
-
+                      AppDialog.show(
+                        context: context,
+                        child: const PopupBody(),
+                        animation: DialogAnimation.fade,
+                      );
                     },
                   ),
                   CustomFundContainer(
                     title: 'Reward Fund',
-                    image: Image.asset(ImagePaths.rewardFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
+                    image: Image.asset(
+                      ImagePaths.rewardFund,
+                      height: 82.h,
+                      width: 82.w,
+                      fit: BoxFit.contain,
+                    ),
                     viewOnPressed: () {
                       navigateTo(context, RewardFundView());
                     },
                     addOnPressed: () {
-                      AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
+                      AppDialog.show(
+                        context: context,
+                        child: const PopupBody(),
+                        animation: DialogAnimation.fade,
+                      );
                     },
                   ),
                   CustomFundContainer(
                     title: 'Support Fund',
-                    image: Image.asset(ImagePaths.dremFund,height: 82.h,width: 82.w,fit: BoxFit.contain,),
+                    image: Image.asset(
+                      ImagePaths.dremFund,
+                      height: 82.h,
+                      width: 82.w,
+                      fit: BoxFit.contain,
+                    ),
                     viewOnPressed: () {
                       navigateTo(context, SupportFund());
                     },
                     addOnPressed: () {
-                      AppDialog.show(context: context, child: const PopupBody(),animation: DialogAnimation.fade);
+                      AppDialog.show(
+                        context: context,
+                        child: const PopupBody(),
+                        animation: DialogAnimation.fade,
+                      );
                     },
                   ),
                 ],
@@ -163,7 +218,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 ),
                 child: Column(
                   children: [
-
                     ///<================= RECENT ACTIVITY HEADER =========================>///
                     Container(
                       height: 44.h,
@@ -207,7 +261,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 ///<================= DOT =========================>///
                                 Container(
                                   margin: EdgeInsets.only(top: 6.h),
@@ -242,7 +295,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ],
                 ),
               ),
-
 
               SizedBox(height: 20.h),
             ],

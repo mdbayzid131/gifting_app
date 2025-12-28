@@ -74,39 +74,28 @@ class _CircularProfileAvatarState extends State<CircularProfileAvatar> {
         if (widget.showFollowButton == true)
           Obx(
             () => Positioned(
-              bottom:10.w,
+              bottom: 5.w,
               right: -15.w,
-              child: ElevatedButton(
-                style:
-                    ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.r),
-                      ),
-                      minimumSize: Size(68.w,30.h),
-                      padding: EdgeInsets.symmetric(horizontal: 5.w,vertical: 5.h),
-
-                      elevation: 0,
-
-                      shadowColor: Colors.transparent,
-
-                      backgroundColor: Color(0xffFFEC54),
-                      foregroundColor: Colors.black,
-                    ).copyWith(
-                      overlayColor: WidgetStateProperty.all(
-                        Colors.transparent,
-                      ),
-
-                      elevation: WidgetStateProperty.all(0),
-                    ),
-
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   isFollow.value = !isFollow.value;
                 },
-                child: Text(
-                  isFollow.value ? "Following" : "  Follow  ",
-                  style: TextStyle(
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
+                child: Container(
+                  width: 77.w,
+                  height: 25.h,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffCFF1F6),
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Center(
+                    child: Text(
+                      isFollow.value ? "Following" : "  Follow  ",
+                      style: TextStyle(
+                        color: const Color(0xff4A6B83),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                 ),
               ),
