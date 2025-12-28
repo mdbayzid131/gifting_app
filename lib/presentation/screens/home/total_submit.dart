@@ -1,54 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../widgets/common_table_widget.dart';
 import '../../widgets/custom_appbar.dart';
 
-class TotalSubmitPage extends StatelessWidget {
-  TotalSubmitPage({super.key});
+class TotalSubmitPage extends StatefulWidget {
+  const TotalSubmitPage({super.key});
 
-  final List<Map<String, Object>> itemList = [
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'dream'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'Reward'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'wishlist'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'dream'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'Reward'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'Reward'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'Reward'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'Reward'},
-    {'relation': 'Father', 'name': 'Jhon', 'item': 'Bear', 'type': 'Reward'},
-  ];
+  @override
+  State<TotalSubmitPage> createState() => _TotalSubmitPageState();
+}
+
+class _TotalSubmitPageState extends State<TotalSubmitPage>
+    with TickerProviderStateMixin {
+  late TabController mainTabController;
+  late TabController subTabController;
+
+  @override
+  void initState() {
+    super.initState();
+    mainTabController = TabController(length: 2, vsync: this);
+    subTabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    mainTabController.dispose();
+    subTabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFFF7F2),
-      appBar: CustomWidgets.customAppBar(title: "Total Submit"),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
+      appBar: CustomWidgets.customAppBar(title: 'Total Submit'),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: Column(
           children: [
-            _tableHeader(),
-            ListView.builder(
-              itemCount: itemList.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final Map<String, Object> item = itemList[index];
-                final typeStr = item["type"].toString().toLowerCase();
+            SizedBox(height: 12.h),
 
-                return _tableRow(
-                  relation: "${item["relation"]}",
-                  name: "${item["name"]}",
-                  item: "${item["item"]}",
-                  type: "${item["type"]}",
-                  amount: "${item["relation"]}", // as before, behavior unchanged
-                  typeColor: typeStr == "reward"
-                      ? Colors.blue
-                      : typeStr == "wishlist"
-                      ? Colors.purple
-                      : Colors.green,
-                );
-              },
+            // Main tab bar
+            Container(
+              height: 40.h,
+              width: 221.w,
+              padding: EdgeInsets.all(4.w),
+              decoration: BoxDecoration(
+                color: const Color(0xffD6ECF0),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: TabBar(
+                indicatorSize: TabBarIndicatorSize.tab,
+                controller: mainTabController,
+                indicator: BoxDecoration(
+                  color: const Color(0xffE2C1F3),
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                dividerColor: Colors.transparent,
+                labelColor: const Color(0xff474545),
+                unselectedLabelColor: const Color(0xff474545),
+                tabs: const [
+                  Tab(text: 'All Item'),
+                  Tab(text: 'Transaction'),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 16.h),
+
+            // Full screen tab content
+            Expanded(
+              child: TabBarView(
+                controller: mainTabController,
+                children: [totalSubmitTable(), _transactionContent()],
+              ),
             ),
           ],
         ),
@@ -56,119 +81,208 @@ class TotalSubmitPage extends StatelessWidget {
     );
   }
 
-  /// 🔶 Table Header
-  Widget _tableHeader() {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
-      decoration: BoxDecoration(
-        color: const Color(0xffFD7839),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12.r),
-          topRight: Radius.circular(12.r),
-        ),
-      ),
-      child: Row(
-        children: const [
-          _HeaderText("Relation"),
-          _HeaderText("Name"),
-          _HeaderText("Item Name"),
-          _HeaderText("Fund type"),
-          _HeaderText("Amount"),
-        ],
-      ),
-    );
-  }
-
-  /// 🔹 Table Row
-  Widget _tableRow({
-    required String relation,
-    required String name,
-    required String item,
-    required String type,
-    required String amount,
-    required Color typeColor,
-  }) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 8.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
-      ),
-      child: Row(
-        children: [
-          _CellText(relation),
-          _CellText(name),
-          _CellText(item),
-          _fundType(type, typeColor),
-          _CellText(amount),
-        ],
-      ),
-    );
-  }
-
-  /// 🟡 Fund Type Chip
-  Widget _fundType(String text, Color color) {
-    return Expanded(
-      child: Center(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+  // Transaction tab content
+  Widget _transactionContent() {
+    return Column(
+      children: [
+        Container(
+          height: 44.h,
+          padding: EdgeInsets.all(4.w),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20.r),
+            color: const Color(0xffE6E6E6),
+            borderRadius: BorderRadius.circular(24.r),
           ),
-          child: Text(
-            text,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: color,
-              fontSize: 11.sp,
-              fontWeight: FontWeight.w500,
+          child: TabBar(
+            indicatorSize: TabBarIndicatorSize.tab,
+            controller: subTabController,
+            indicator: BoxDecoration(
+              color: const Color(0xff5C6CFF),
+              borderRadius: BorderRadius.circular(20.r),
             ),
+            dividerColor: Colors.transparent,
+            labelColor: Colors.white,
+            unselectedLabelColor: const Color(0xff333333),
+            tabs: const [
+              Tab(text: 'Reward Fund'),
+              Tab(text: 'Support Fund'),
+              Tab(text: 'Wishlist Fund'),
+            ],
           ),
         ),
-      ),
+
+        SizedBox(height: 14.h),
+
+        Expanded(
+          child: TabBarView(
+            controller: subTabController,
+            children: [
+              rewardFundTable(),
+              supportFundTable(),
+              wishlistFundTable(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
 
-/// 🔸 Header Text Widget
-class _HeaderText extends StatelessWidget {
-  final String text;
-  const _HeaderText(this.text);
+Widget totalSubmitTable() {
+  // Dummy data
+  final items = List.generate(
+    20,
+    (index) => {
+      "relation": "Father",
+      "name": "Jhon",
+      "item": "Bear",
+      "type": "Dream",
+      "amount": "\$25.00",
+    },
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Text(
-          text,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
+  // Fund type color handler
+  Color typeColor(String type) {
+    if (type == "Reward") return Colors.cyan;
+    if (type == "Wishlist") return Colors.purple;
+    return Colors.amber;
+  }
+
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12.r),
+    ),
+    child: Column(
+      children: [
+        // Table header
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 12.h),
+          decoration: const BoxDecoration(
+            color: Color(0xFFFF7A2F),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+          ),
+          child: const Row(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'Relation',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text('Name', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'Item Name',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'Fund type',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: Text('Amount', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-    );
-  }
+
+        // Scrollable table body
+        Expanded(
+          child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return Container(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey.shade200),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(child: Center(child: Text(item['relation']!))),
+                    Expanded(child: Center(child: Text(item['name']!))),
+                    Expanded(child: Center(child: Text(item['item']!))),
+                    Expanded(
+                      child: Center(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10.w,
+                            vertical: 4.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: typeColor(item['type']!).withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20.r),
+                          ),
+                          child: Text(
+                            item['type']!,
+                            style: TextStyle(
+                              color: typeColor(item['type']!),
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(child: Center(child: Text(item['amount']!))),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
-/// 🔹 Cell Text Widget
-class _CellText extends StatelessWidget {
-  final String text;
-  const _CellText(this.text);
+Widget rewardFundTable() {
+  final items = List.generate(
+    15,
+    (index) => {"item": "Toy", "amount": "\$30.00"},
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Text(
-          text,
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 12, color: Color(0xff101828)),
-        ),
-      ),
-    );
-  }
+  return commonTable(items: items, fundLabel: "Reward", fundColor: Colors.cyan);
+}
+
+Widget supportFundTable() {
+  final items = List.generate(
+    12,
+    (index) => {"item": "Book", "amount": "\$40.00"},
+  );
+
+  return commonTable(
+    items: items,
+    fundLabel: "Support",
+    fundColor: Colors.green,
+  );
+}
+
+Widget wishlistFundTable() {
+  final items = List.generate(
+    18,
+    (index) => {"item": "Dress", "amount": "\$55.00"},
+  );
+
+  return commonTable(
+    items: items,
+    fundLabel: "Wishlist",
+    fundColor: Colors.purple,
+  );
 }
