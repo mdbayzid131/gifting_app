@@ -33,18 +33,25 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+<<<<<<< HEAD
 
+=======
+>>>>>>> api-integration
               SizedBox(height: 80.h),
 
               ///================= App Logo =========================///
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+<<<<<<< HEAD
                 children: [
                   Image.asset(
                     ImagePaths.giftZees,
                     width: 218.w,
                   ),
                 ],
+=======
+                children: [Image.asset(ImagePaths.giftZees, width: 218.w)],
+>>>>>>> api-integration
               ),
 
               SizedBox(height: 24.h),
@@ -66,7 +73,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
+<<<<<<< HEAD
 
+=======
+>>>>>>> api-integration
                     ///================= Email Field =========================///
                     CustomTextField(
                       validator: _authController.validEmail,
@@ -79,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     ///================= Password Field =========================///
                     Obx(
+<<<<<<< HEAD
                           () => CustomTextField(
                         validator: _authController.validPassword,
                         obscureText:
@@ -87,6 +98,15 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             _authController.isPasswordVisible.value =
                             !_authController.isPasswordVisible.value;
+=======
+                      () => CustomTextField(
+                        validator: _authController.validPassword,
+                        obscureText: _authController.isPasswordVisible.value,
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            _authController.isPasswordVisible.value =
+                                !_authController.isPasswordVisible.value;
+>>>>>>> api-integration
                           },
                           icon: Icon(
                             _authController.isPasswordVisible.value
@@ -113,8 +133,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         style: TextButton.styleFrom(
                           padding: EdgeInsets.zero,
+<<<<<<< HEAD
                           tapTargetSize:
                           MaterialTapTargetSize.shrinkWrap,
+=======
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+>>>>>>> api-integration
                         ),
                         child: Text(
                           "Forgot Password?",
@@ -130,6 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 24.h),
 
                     ///================= Login Button =========================///
+<<<<<<< HEAD
                     CustomElevatedButton(
                       label: 'Login',
                       onPressed: () {
@@ -138,6 +163,22 @@ class _LoginScreenState extends State<LoginScreen> {
                               RoutePages.bottomNabBarScreen);
                         }
                       },
+=======
+                    Obx(()=>
+                       CustomElevatedButton(
+                        isLoading: _authController.isLoading.value,
+
+                        label: 'Login',
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _authController.login(
+                              email: emailController.text.trim(),
+                              password: passwordController.text, context: context,
+                            );
+                          }
+                        },
+                      ),
+>>>>>>> api-integration
                     ),
 
                     SizedBox(height: 16.h),
@@ -159,8 +200,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             Get.toNamed(RoutePages.signUpScreen);
                           },
                           child: Padding(
+<<<<<<< HEAD
                             padding:
                             EdgeInsets.symmetric(horizontal: 4.w),
+=======
+                            padding: EdgeInsets.symmetric(horizontal: 4.w),
+>>>>>>> api-integration
                             child: Text(
                               "Sign Up",
                               style: TextStyle(

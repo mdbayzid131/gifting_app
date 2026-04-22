@@ -7,13 +7,26 @@ class CustomElevatedButton extends StatelessWidget {
   final String label;
   final void Function()? onPressed;
   final ButtonStyle? style;
+<<<<<<< HEAD
 
 
   const CustomElevatedButton({super.key, required this.label, required this.onPressed, this.style});
+=======
+  final bool isLoading; // <-- নতুন property
+
+  const CustomElevatedButton({
+    super.key,
+    required this.label,
+    required this.onPressed,
+    this.style,
+    this.isLoading = false, // default false
+  });
+>>>>>>> api-integration
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+<<<<<<< HEAD
       onPressed: onPressed,
       style: style ?? ElevatedButton.styleFrom(
         minimumSize: Size(
@@ -27,6 +40,33 @@ class CustomElevatedButton extends StatelessWidget {
         ), // Adjusted padding
       ),
       child: Text(
+=======
+      onPressed: isLoading ? null : onPressed, // loading হলে disable করো
+      style: style ??
+          ElevatedButton.styleFrom(
+            minimumSize: Size(
+              double.infinity,
+              48.h,
+            ),
+            backgroundColor: AppColors.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            padding: EdgeInsets.symmetric(
+              vertical: 10.h,
+            ),
+          ),
+      child: isLoading
+          ? SizedBox(
+        height: 24.h,
+        width: 24.h,
+        child: CircularProgressIndicator(
+          strokeWidth: 2.5,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+        ),
+      )
+          : Text(
+>>>>>>> api-integration
         label,
         style: TextStyle(
           color: Colors.black,

@@ -1,6 +1,10 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:gifting_app/presentation/screens/auth_screen/login_screen.dart';
+<<<<<<< HEAD
+=======
+import 'package:gifting_app/presentation/screens/auth_screen/verify_email.dart';
+>>>>>>> api-integration
 
 import '../presentation/screens/auth_screen/forget_password.dart';
 import '../presentation/screens/auth_screen/new_password.dart';
@@ -32,14 +36,23 @@ class RoutePages {
   static String loginScreen = '/loginScreen';
   static String signUpScreen = '/SignUpScreen';
   static String forgetPassword = '/ForgetPassword';
+<<<<<<< HEAD
   static String otpVerificationScreen = '/OtpVerificationScreen';
+=======
+  // static String otpVerificationScreen = '/OtpVerificationScreen';
+/*  static String verifyEmail = '/VerifyEmail';*/
+>>>>>>> api-integration
   static String newPassword = '/NewPassword';
   static String bottomNabBarScreen = '/BottomNabBarScreen';
 
   static String supportFQA = '/SupportFQA';
   static String notificationScreen = '/NotificationScreen';
   static String createChildProfile = '/CreateChildProfile';
+<<<<<<< HEAD
   static String editChildProfile = '/EditChildProfile';
+=======
+  // static String editChildProfile = '/EditChildProfile';
+>>>>>>> api-integration
   static String subscriptionPlan = '/SubscriptionPlan';
   static String userProfileScreen = '/UserProfileScreen';
   static String wishListView = '/WishListView';
@@ -80,11 +93,19 @@ final pages = [
     page: () => ForgetPassword(),
      transition: transition,
   ),
+<<<<<<< HEAD
   GetPage(
     name: RoutePages.otpVerificationScreen,
     page: () => OtpVerificationScreen(),
      transition: transition,
   ),
+=======
+  // GetPage(
+  //   name: RoutePages.otpVerificationScreen,
+  //   page: () => OtpVerificationScreen(),
+  //    transition: transition,
+  // ),
+>>>>>>> api-integration
   GetPage(
     name: RoutePages.newPassword,
     page: () => NewPassword(),
@@ -110,11 +131,19 @@ final pages = [
     page: () => CreateChildProfile(),
      transition: transition,
   ),
+<<<<<<< HEAD
   GetPage(
     name: RoutePages.editChildProfile,
     page: () => EditChildProfile(),
      transition: transition,
   ),
+=======
+  // GetPage(
+  //   name: RoutePages.editChildProfile,
+  //   page: () => EditChildProfile(childId: '',),
+  //    transition: transition,
+  // ),
+>>>>>>> api-integration
   GetPage(
     name: RoutePages.subscriptionPlan,
     page: () => SubscriptionPlan(),

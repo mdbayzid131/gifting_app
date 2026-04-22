@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+<<<<<<< HEAD
+=======
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+>>>>>>> api-integration
 import 'package:gifting_app/core/constants/image_paths.dart';
 import 'package:gifting_app/presentation/screens/home/user_profile_screen.dart';
 
 import '../../../core/constants/navigator.dart';
+<<<<<<< HEAD
 import '../../../routes/routes.dart';
+=======
+import '../../controllers/homepgeController.dart';
+>>>>>>> api-integration
 import '../../widgets/circular_profile_avatar.dart';
 import '../find_profile/other_profile_screen.dart';
 import 'notification_screen.dart';
@@ -29,12 +38,20 @@ class _HomeScreenState extends State<HomeScreen> {
         {
           "icon": "📜",
           "text":
+<<<<<<< HEAD
           "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+=======
+              "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+>>>>>>> api-integration
         },
         {
           "icon": "🐱",
           "text":
+<<<<<<< HEAD
           "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+=======
+              "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+>>>>>>> api-integration
         },
       ],
     },
@@ -46,12 +63,20 @@ class _HomeScreenState extends State<HomeScreen> {
         {
           "icon": "📜",
           "text":
+<<<<<<< HEAD
           "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+=======
+              "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+>>>>>>> api-integration
         },
         {
           "icon": "🐱",
           "text":
+<<<<<<< HEAD
           "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+=======
+              "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+>>>>>>> api-integration
         },
       ],
     },
@@ -63,12 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
         {
           "icon": "📜",
           "text":
+<<<<<<< HEAD
           "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+=======
+              "Mum & Dad gave you \$10 for your good grades in your Reward Fund",
+>>>>>>> api-integration
         },
         {
           "icon": "🐱",
           "text":
+<<<<<<< HEAD
           "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+=======
+              "Auntie Cherese bought you your Hello Kitty toy from your Wishlist Fund",
+>>>>>>> api-integration
         },
       ],
     },
@@ -80,11 +113,19 @@ class _HomeScreenState extends State<HomeScreen> {
         {
           "icon": "🧹",
           "text":
+<<<<<<< HEAD
           "Mum & Dad gave you \$10 for cleaning your room in your Reward Fund",
+=======
+              "Mum & Dad gave you \$10 for cleaning your room in your Reward Fund",
+>>>>>>> api-integration
         },
       ],
     },
   ];
+<<<<<<< HEAD
+=======
+  final homePageController = Get.find<HomePageController>();
+>>>>>>> api-integration
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +158,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ///<================= PROFILE AVATAR =========================>///
                       InkWell(
                         onTap: () {
+<<<<<<< HEAD
 
+=======
+>>>>>>> api-integration
                           navigateTo(context, const UserProfileScreen());
                         },
                         child: Container(
@@ -125,7 +169,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 50.w,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
+<<<<<<< HEAD
                             border: Border.all(color: Color(0xffFD7839), width: 2),
+=======
+                            border: Border.all(
+                              color: Color(0xffFD7839),
+                              width: 2,
+                            ),
+>>>>>>> api-integration
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: 0.2),
@@ -185,9 +236,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 40.w,
                               width: 40.w,
                               fit: BoxFit.cover,
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> api-integration
                             ),
                           ),
                         ),
@@ -198,6 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 ///<================= BODY SCROLL AREA =========================>///
                 Expanded(
+<<<<<<< HEAD
                   child: SingleChildScrollView(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     physics: const BouncingScrollPhysics(),
@@ -295,6 +350,126 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                       ],
+=======
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      await homePageController.loadData();
+                    },
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      physics: const BouncingScrollPhysics(),
+                      child: Obx(() {
+                        if (homePageController.isLoading.value) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height,
+                            child: Center(child: CircularProgressIndicator()),
+                          );
+                        }
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20.h),
+
+                            ///<================= ACTIVITY LIST =========================>///
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: profiles.length,
+                              itemBuilder: (context, index) {
+                                final profile = profiles[index];
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ///<================= PROFILE HEADER =========================>///
+                                    GestureDetector(
+                                      onTap: () {
+                                        navigateTo(
+                                          context,
+                                          OtherProfileScreen(),
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          CircularProfileAvatar(
+                                            assetImage:
+                                                ImagePaths.avatarProfile2,
+                                            size: 57,
+                                          ),
+                                          SizedBox(width: 14.w),
+                                          Text(
+                                            "${profile["name"]}'s Latest Activity",
+                                            style: TextStyle(
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w600,
+                                              color: const Color(0xff101828),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
+                                    SizedBox(height: 16.h),
+
+                                    ///<================= ACTIVITY CARD =========================>///
+                                    Container(
+                                      padding: EdgeInsets.all(20.w),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFBEACB),
+                                        borderRadius: BorderRadius.circular(
+                                          20.r,
+                                        ),
+                                      ),
+                                      child: ListView.builder(
+                                        shrinkWrap: true,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: profile["activities"].length,
+                                        itemBuilder: (context, i) {
+                                          final act = profile["activities"][i];
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                              bottom: 18.h,
+                                            ),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  act["icon"],
+                                                  style: TextStyle(
+                                                    fontSize: 26.sp,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 16.w),
+                                                Expanded(
+                                                  child: Text(
+                                                    act["text"],
+                                                    style: TextStyle(
+                                                      fontSize: 16.sp,
+                                                      height: 1.3,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+
+                                    SizedBox(height: 20.h),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      }),
+>>>>>>> api-integration
                     ),
                   ),
                 ),

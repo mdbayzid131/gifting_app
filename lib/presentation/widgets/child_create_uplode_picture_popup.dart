@@ -6,30 +6,16 @@ import 'package:get/get.dart';
 
 import '../../core/utils/app_dialog.dart';
 import '../controllers/creat_profile_controller.dart';
-<<<<<<< HEAD
-import 'avatar_profile_popup.dart';
-
-class UploadPicturePopup extends StatelessWidget {
-  UploadPicturePopup({super.key});
-
-  ///<================= CONTROLLER =========================>///
-  final CreateProfileController controller =
-  Get.find<CreateProfileController>();
-=======
 import '../controllers/homepgeController.dart';
 import 'avatar_profile_popup.dart';
+import 'creat_child_avatar_profile_popup.dart';
 
-class CustomUploadPicturePopup extends StatelessWidget {
-  final void Function() galleryUpload;
-  final void Function() choseAvatar;
-  CustomUploadPicturePopup({super.key, required this.galleryUpload, required this.choseAvatar});
+class ChildCreateUplodePicturePopup extends StatelessWidget {
+  ChildCreateUplodePicturePopup({super.key, });
 
   ///<================= CONTROLLER =========================>///
-  final CreateProfileController _controller =
-  Get.find<CreateProfileController>();
-  final HomePageController _homePageController =
-  Get.find<HomePageController>();
->>>>>>> api-integration
+
+  final HomePageController _homePageController = Get.find<HomePageController>();
 
   @override
   Widget build(BuildContext context) {
@@ -86,14 +72,7 @@ class CustomUploadPicturePopup extends StatelessWidget {
                   ///<================= GALLERY BUTTON =========================>///
                   buildActionButton(
                     label: 'Upload from Gallery',
-<<<<<<< HEAD
-                    onPressed: () {
-                      Get.back();
-                      controller.pickFromGallery();
-                    },
-=======
-                    onPressed: galleryUpload,
->>>>>>> api-integration
+                    onPressed: _homePageController.childCreatePickImageFromGallery,
                   ),
 
                   SizedBox(height: 12.h),
@@ -101,15 +80,12 @@ class CustomUploadPicturePopup extends StatelessWidget {
                   ///<================= AVATAR BUTTON =========================>///
                   buildActionButton(
                     label: 'Choose Avatar',
-<<<<<<< HEAD
-                    onPressed: () {
+                    onPressed: (){
                       Get.back();
-                      AppDialog.show(context: context, child: AvatarProfilePopup(),animation: DialogAnimation.fade);
-                    },
-=======
-                    onPressed: choseAvatar,
+                      AppDialog.show(context: context, child: CreatChildAvatarProfilePopup(),animation: DialogAnimation.fade);
 
->>>>>>> api-integration
+                    },
+
                   ),
                 ],
               ),
