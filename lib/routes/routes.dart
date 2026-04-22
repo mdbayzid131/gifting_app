@@ -1,5 +1,4 @@
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:get/get.dart';
 import 'package:gifting_app/presentation/screens/auth_screen/login_screen.dart';
 import 'package:gifting_app/presentation/screens/auth_screen/verify_email.dart';
 
@@ -33,15 +32,15 @@ class RoutePages {
   static String loginScreen = '/loginScreen';
   static String signUpScreen = '/SignUpScreen';
   static String forgetPassword = '/ForgetPassword';
-  // static String otpVerificationScreen = '/OtpVerificationScreen';
-/*  static String verifyEmail = '/VerifyEmail';*/
+  static String otpVerificationScreen = '/OtpVerificationScreen';
+  static String verifyEmail = '/VerifyEmail';
   static String newPassword = '/NewPassword';
   static String bottomNabBarScreen = '/BottomNabBarScreen';
 
   static String supportFQA = '/SupportFQA';
   static String notificationScreen = '/NotificationScreen';
   static String createChildProfile = '/CreateChildProfile';
-  // static String editChildProfile = '/EditChildProfile';
+  static String editChildProfile = '/EditChildProfile';
   static String subscriptionPlan = '/SubscriptionPlan';
   static String userProfileScreen = '/UserProfileScreen';
   static String wishListView = '/WishListView';
@@ -82,11 +81,16 @@ final pages = [
     page: () => ForgetPassword(),
      transition: transition,
   ),
-  // GetPage(
-  //   name: RoutePages.otpVerificationScreen,
-  //   page: () => OtpVerificationScreen(),
-  //    transition: transition,
-  // ),
+  GetPage(
+    name: RoutePages.otpVerificationScreen,
+    page: () => OtpVerificationScreen(email: Get.arguments ?? ""),
+     transition: transition,
+  ),
+  GetPage(
+    name: RoutePages.verifyEmail,
+    page: () => VerifyEmail(email: Get.arguments ?? ""),
+    transition: transition,
+  ),
   GetPage(
     name: RoutePages.newPassword,
     page: () => NewPassword(),
@@ -112,11 +116,15 @@ final pages = [
     page: () => CreateChildProfile(),
      transition: transition,
   ),
-  // GetPage(
-  //   name: RoutePages.editChildProfile,
-  //   page: () => EditChildProfile(childId: '',),
-  //    transition: transition,
-  // ),
+  GetPage(
+    name: RoutePages.editChildProfile,
+    page: () => EditChildProfile(
+      childId: Get.arguments['childId'] ?? "",
+      name: Get.arguments['name'] ?? "",
+      image: Get.arguments['image'] ?? "",
+    ),
+    transition: transition,
+  ),
   GetPage(
     name: RoutePages.subscriptionPlan,
     page: () => SubscriptionPlan(),
