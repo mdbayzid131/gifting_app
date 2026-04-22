@@ -1,21 +1,5 @@
 import 'dart:async';
 
-<<<<<<< HEAD
-import 'package:get/get.dart';
-
-class AuthController extends GetxController{
-
-
-
-  /// <===============================    =============================> ///
-
-
-
-
-
-
-  RxInt secondsRemaining = 30.obs;
-=======
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
@@ -358,28 +342,19 @@ class AuthController extends GetxController {
   /// <===============================    =============================> ///
 
   RxInt secondsRemaining = 180.obs;
->>>>>>> api-integration
   RxBool enableResent = false.obs;
 
   Timer? timer;
 
   void dispostTimer() {
     timer?.cancel();
-<<<<<<< HEAD
-    secondsRemaining.value = 30;
-=======
     secondsRemaining.value = 180;
->>>>>>> api-integration
     enableResent.value = false;
   }
 
   void startTimer() {
     timer?.cancel();
-<<<<<<< HEAD
-    secondsRemaining.value = 30;
-=======
     secondsRemaining.value = 180;
->>>>>>> api-integration
     enableResent.value = false;
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (secondsRemaining.value > 0) {
@@ -391,10 +366,6 @@ class AuthController extends GetxController {
     });
   }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> api-integration
   // -------------------------
   // OBSERVABLES (for password)
   // -------------------------
@@ -604,10 +575,6 @@ class AuthController extends GetxController {
     "Zimbabwe",
   ];
 
-<<<<<<< HEAD
-
-=======
->>>>>>> api-integration
   // ------------------------------------------------------------------
   // 🔥 COMMON TOGGLE FUNCTION (Use this anywhere)
   // ------------------------------------------------------------------
@@ -674,10 +641,6 @@ class AuthController extends GetxController {
     if (value == null || value.trim().isEmpty) {
       return "Enter password";
     }
-<<<<<<< HEAD
-    if (value.trim().length < 6) {
-      return "Password must be at least 6 characters";
-=======
 
     String password = value.trim();
 
@@ -712,7 +675,6 @@ class AuthController extends GetxController {
   String? validDOB(String? value) {
     if (value == null || value.isEmpty) {
       return "Date of Birth is required";
->>>>>>> api-integration
     }
     return null;
   }
@@ -720,11 +682,7 @@ class AuthController extends GetxController {
   // ------------------------------------------------------------------
   // SIGNUP FUNCTION (You can replace API here)
   // ------------------------------------------------------------------
-<<<<<<< HEAD
-  Future<void> signUp({
-=======
   Future<void> signUp1({
->>>>>>> api-integration
     required String name,
     required String email,
     required String phone,
@@ -741,24 +699,12 @@ class AuthController extends GetxController {
     // TODO: call API here...
   }
 
-<<<<<<< HEAD
-
-
-/// <===============================Validation =============================> ///
-=======
   /// <===============================Validation =============================> ///
->>>>>>> api-integration
 
   String? validUser(String? value) {
     if (value == null || value.isEmpty) return "Please enter your UserName";
     return null;
   }
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> api-integration
   String? validOtp(String? value) {
     if (value == null || value.length < 6) {
       return 'OTP must be 6 characters';
@@ -766,10 +712,6 @@ class AuthController extends GetxController {
     return null;
   }
 
-<<<<<<< HEAD
-
-}
-=======
   Future<void> fakeLogout() async {
     try {
       // Clear tokens from PrefsHelper
@@ -789,4 +731,3 @@ class AuthController extends GetxController {
     }
   }
 }
->>>>>>> api-integration

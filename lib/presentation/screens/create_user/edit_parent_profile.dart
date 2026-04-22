@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-<<<<<<< HEAD
-
-import '../../../core/constants/image_paths.dart';
-import '../../../core/utils/app_dialog.dart';
-=======
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -16,7 +11,6 @@ import '../../../data/models/user_profile_model.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/homepgeController.dart';
 import '../../widgets/avatar_profile_popup.dart';
->>>>>>> api-integration
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_parent_profile.dart';
@@ -36,11 +30,8 @@ class _EditParentProfileState extends State<EditParentProfile> {
 
   ///<================= FORM KEY =========================>///
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-<<<<<<< HEAD
-=======
   final HomePageController homePageController = Get.find<HomePageController>();
   final AuthController authController = Get.find<AuthController>();
->>>>>>> api-integration
 
   @override
   Widget build(BuildContext context) {
@@ -53,66 +44,6 @@ class _EditParentProfileState extends State<EditParentProfile> {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Form(
             key: _formKey,
-<<<<<<< HEAD
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(height: 24.h),
-
-                ///<================= PROFILE IMAGE =========================>///
-                Column(
-                  children: [
-                    CustomParentProfile(
-                      imagePath: '',
-                      isShowImagePicker: true,
-                      onEditTap: () {
-                        AppDialog.show(
-                          context: context,
-                          child: UploadPicturePopup(),
-                          animation: DialogAnimation.fade,
-                        );
-                      },
-                    ),
-
-                    SizedBox(height: 12.h),
-
-                    ///<================= USER NAME =========================>///
-                    Text(
-                      'Jhon Doe',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xff444444),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 32.h),
-
-                ///<================= NAME FIELD =========================>///
-                CustomTextField(
-                  hintText: 'Update your name',
-                  label: 'Name',
-                  controller: nameController,
-                ),
-
-                SizedBox(height: 40.h),
-
-                ///<================= SAVE BUTTON =========================>///
-                CustomElevatedButton(
-                  label: "Save Changes",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-
-                SizedBox(height: 20.h),
-              ],
-            ),
-=======
             child: Obx(() {
               final UserProfileModel? prentData =
                   homePageController.profile.value;
@@ -192,7 +123,6 @@ class _EditParentProfileState extends State<EditParentProfile> {
                 ],
               );
             }),
->>>>>>> api-integration
           ),
         ),
       ),

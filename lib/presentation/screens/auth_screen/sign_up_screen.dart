@@ -22,11 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController countryController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
-<<<<<<< HEAD
-  TextEditingController();
-=======
       TextEditingController();
->>>>>>> api-integration
 
   ///<================= GETX AUTH CONTROLLER =========================>///
   final AuthController _authController = Get.find<AuthController>();
@@ -104,35 +100,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Country',
-<<<<<<< HEAD
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xff333333),
-                            ),
-=======
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: const Color(0xff333333),
                           ),
->>>>>>> api-integration
                         ),
                       ),
                       SizedBox(height: 8.h),
 
                       Obx(
-<<<<<<< HEAD
-                            () => DropdownButtonFormField<String>(
-                              dropdownColor: const Color(0xffFFFAF8),
-                          initialValue:
-                          _authController.selectedCountry.value.isEmpty
-=======
                         () => DropdownButtonFormField<String>(
                           dropdownColor: const Color(0xffFFFAF8),
                           initialValue:
                               _authController.selectedCountry.value.isEmpty
->>>>>>> api-integration
                               ? null
                               : _authController.selectedCountry.value,
                           decoration: InputDecoration(
@@ -175,11 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             _authController.selectedCountry.value = value!;
                           },
                           validator: (value) =>
-<<<<<<< HEAD
-                          value == null ? "Please select a country" : null,
-=======
                               value == null ? "Please select a country" : null,
->>>>>>> api-integration
                         ),
                       ),
 
@@ -187,21 +164,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       ///<================= PASSWORD FIELD =========================>///
                       Obx(
-<<<<<<< HEAD
-                            () => CustomTextField(
-=======
                         () => CustomTextField(
->>>>>>> api-integration
                           validator: _authController.validPassword,
                           controller: newPasswordController,
                           label: 'Password',
                           hintText: 'Enter your password',
                           obscureText:
-<<<<<<< HEAD
-                          _authController.isNewPasswordVisible.value,
-=======
                               _authController.isNewPasswordVisible.value,
->>>>>>> api-integration
                           suffixIcon: IconButton(
                             onPressed: () {
                               _authController.toggle(
@@ -223,21 +192,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       ///<================= CONFIRM PASSWORD FIELD =========================>///
                       Obx(
-<<<<<<< HEAD
-                            () => CustomTextField(
-=======
                         () => CustomTextField(
->>>>>>> api-integration
                           validator: _authController.validPassword,
                           controller: confirmPasswordController,
                           label: 'Confirm Password',
                           hintText: 'Re-enter your password',
                           obscureText:
-<<<<<<< HEAD
-                          _authController.isConfirmPasswordVisible.value,
-=======
                               _authController.isConfirmPasswordVisible.value,
->>>>>>> api-integration
                           suffixIcon: IconButton(
                             onPressed: () {
                               _authController.toggle(
@@ -258,20 +219,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(height: 24.h),
 
                       ///<================= SIGN UP BUTTON =========================>///
-<<<<<<< HEAD
-                      CustomElevatedButton(
-                        label: 'Sign Up',
-                        onPressed: () {
-                          if (!_formKey.currentState!.validate()) return;
-
-                          if (newPasswordController.text.trim() !=
-                              confirmPasswordController.text.trim()) {
-                            return;
-                          }
-
-                          // API CALL HERE
-                        },
-=======
                       Obx(
                         ()=> CustomElevatedButton(
                           isLoading: _authController.isLoading.value,
@@ -293,7 +240,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             );
                           },
                         ),
->>>>>>> api-integration
                       ),
 
                       SizedBox(height: 12.h),

@@ -57,8 +57,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.19.1"
-<<<<<<< HEAD
-=======
+
   connectivity_plus:
     dependency: "direct main"
     description:
@@ -75,7 +74,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
->>>>>>> api-integration
+
   cross_file:
     dependency: transitive
     description:
@@ -100,8 +99,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-<<<<<<< HEAD
-=======
   dbus:
     dependency: transitive
     description:
@@ -126,7 +123,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
->>>>>>> api-integration
+
   fake_async:
     dependency: transitive
     description:
@@ -143,8 +140,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-<<<<<<< HEAD
-=======
+
   file:
     dependency: transitive
     description:
@@ -153,7 +149,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
->>>>>>> api-integration
   file_selector_linux:
     dependency: transitive
     description:
@@ -345,8 +340,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.2"
-<<<<<<< HEAD
-=======
   internet_connection_checker_plus:
     dependency: "direct main"
     description:
@@ -363,7 +356,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.20.2"
->>>>>>> api-integration
   just_audio:
     dependency: "direct main"
     description:
@@ -452,8 +444,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-<<<<<<< HEAD
-=======
   nm:
     dependency: transitive
     description:
@@ -462,7 +452,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.0"
->>>>>>> api-integration
   path:
     dependency: transitive
     description:
@@ -631,8 +620,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
-<<<<<<< HEAD
-=======
   shared_preferences:
     dependency: "direct main"
     description:
@@ -689,7 +676,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
->>>>>>> api-integration
   sky_engine:
     dependency: transitive
     description: flutter

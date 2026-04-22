@@ -2,33 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
-<<<<<<< HEAD
-
-=======
->>>>>>> api-integration
 import '../../../../routes/routes.dart';
 import '../../../core/constants/app_color.dart';
 import '../../../core/constants/image_paths.dart';
 import '../../../data/helper/time_formater.dart';
 import '../../controllers/auth_controller.dart';
 import '../../widgets/custom_elevated_button.dart';
-<<<<<<< HEAD
-
-class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({super.key});
-
-  @override
-  State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
-}
-
-=======
 class OtpVerificationScreen extends StatefulWidget {
   final String email;
   const OtpVerificationScreen({super.key, required this.email});
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
->>>>>>> api-integration
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController otpController = TextEditingController();
@@ -137,10 +122,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       _authController.enableResent.value
                           ? TextButton(
                         onPressed: () {
-<<<<<<< HEAD
-=======
                           _authController.forgotPassword(email: widget.email);
->>>>>>> api-integration
                           _authController.startTimer();
                         },
                         child: Text(
@@ -168,11 +150,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         label: 'Send',
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-<<<<<<< HEAD
-                            Get.toNamed(RoutePages.newPassword);
-=======
                             _authController.verifyEmailForForgotPassword(email: widget.email, oneTimeCode: int.parse(otpController.text));
->>>>>>> api-integration
                           }
                         },
                       ),

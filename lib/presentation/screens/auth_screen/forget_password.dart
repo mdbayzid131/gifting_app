@@ -3,10 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-<<<<<<< HEAD
-=======
 import 'package:get/get_state_manager/get_state_manager.dart';
->>>>>>> api-integration
 
 import '../../../../routes/routes.dart';
 import '../../../core/constants/image_paths.dart';
@@ -41,16 +38,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               ///<================= App Logo =========================>///
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-<<<<<<< HEAD
-                children: [
-                  Image.asset(
-                    ImagePaths.giftZees,
-                    width: 218.w,
-                  ),
-                ],
-=======
                 children: [Image.asset(ImagePaths.giftZees, width: 218.w)],
->>>>>>> api-integration
               ),
 
               SizedBox(height: 24.h),
@@ -108,17 +96,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     SizedBox(height: 32.h),
 
                     ///<================= Submit Button =========================>///
-<<<<<<< HEAD
-                    CustomElevatedButton(
-                      label: 'Send',
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Get.toNamed(
-                            RoutePages.otpVerificationScreen,
-                          );
-                        }
-                      },
-=======
                     Obx(
                       () => CustomElevatedButton(
                         isLoading: _authController.isLoading.value,
@@ -131,7 +108,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           }
                         },
                       ),
->>>>>>> api-integration
                     ),
                   ],
                 ),

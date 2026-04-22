@@ -5,23 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../controllers/creat_profile_controller.dart';
-<<<<<<< HEAD
-=======
 import '../controllers/homepgeController.dart';
->>>>>>> api-integration
 
 class AvatarProfilePopup extends StatelessWidget {
   AvatarProfilePopup({super.key});
 
   ///<================= CONTROLLER =========================>///
   final CreateProfileController controller =
-<<<<<<< HEAD
-  Get.find<CreateProfileController>();
-=======
       Get.find<CreateProfileController>();
   final HomePageController _homePageController =
       Get.find<HomePageController>();
->>>>>>> api-integration
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +23,7 @@ class AvatarProfilePopup extends StatelessWidget {
         ///<================= BLUR BACKGROUND =========================>///
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-<<<<<<< HEAD
-          child: Container(
-            color: Colors.black.withOpacity(0.45),
-          ),
-=======
           child: Container(color: Colors.black.withOpacity(0.45)),
->>>>>>> api-integration
         ),
 
         ///<================= POPUP CARD =========================>///
@@ -96,16 +83,6 @@ class AvatarProfilePopup extends StatelessWidget {
                       ),
                       itemCount: controller.avatarList.length,
                       itemBuilder: (context, index) {
-<<<<<<< HEAD
-                        final avatar = controller.avatarList[index];
-
-                        return InkWell(
-                          borderRadius: BorderRadius.circular(50.r),
-                          onTap: () {
-                            controller.selectedAvatar.value = avatar;
-                            Get.back();
-                          },
-=======
                         final avatarPath = controller.avatarList[index];
 
                         return InkWell(
@@ -116,7 +93,6 @@ class AvatarProfilePopup extends StatelessWidget {
                             await _homePageController.uploadAvatar(avatarPath);
                           },
 
->>>>>>> api-integration
                           child: Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -126,11 +102,7 @@ class AvatarProfilePopup extends StatelessWidget {
                               ),
                             ),
                             child: CircleAvatar(
-<<<<<<< HEAD
-                              backgroundImage: AssetImage(avatar),
-=======
                               backgroundImage: AssetImage(avatarPath),
->>>>>>> api-integration
                               backgroundColor: Colors.grey.shade200,
                             ),
                           ),

@@ -6,16 +6,6 @@ import 'package:get/get.dart';
 
 import '../../core/utils/app_dialog.dart';
 import '../controllers/creat_profile_controller.dart';
-<<<<<<< HEAD
-import 'avatar_profile_popup.dart';
-
-class UploadPicturePopup extends StatelessWidget {
-  UploadPicturePopup({super.key});
-
-  ///<================= CONTROLLER =========================>///
-  final CreateProfileController controller =
-  Get.find<CreateProfileController>();
-=======
 import '../controllers/homepgeController.dart';
 import 'avatar_profile_popup.dart';
 
@@ -29,7 +19,6 @@ class CustomUploadPicturePopup extends StatelessWidget {
   Get.find<CreateProfileController>();
   final HomePageController _homePageController =
   Get.find<HomePageController>();
->>>>>>> api-integration
 
   @override
   Widget build(BuildContext context) {
@@ -86,14 +75,7 @@ class CustomUploadPicturePopup extends StatelessWidget {
                   ///<================= GALLERY BUTTON =========================>///
                   buildActionButton(
                     label: 'Upload from Gallery',
-<<<<<<< HEAD
-                    onPressed: () {
-                      Get.back();
-                      controller.pickFromGallery();
-                    },
-=======
                     onPressed: galleryUpload,
->>>>>>> api-integration
                   ),
 
                   SizedBox(height: 12.h),
@@ -101,15 +83,8 @@ class CustomUploadPicturePopup extends StatelessWidget {
                   ///<================= AVATAR BUTTON =========================>///
                   buildActionButton(
                     label: 'Choose Avatar',
-<<<<<<< HEAD
-                    onPressed: () {
-                      Get.back();
-                      AppDialog.show(context: context, child: AvatarProfilePopup(),animation: DialogAnimation.fade);
-                    },
-=======
                     onPressed: choseAvatar,
 
->>>>>>> api-integration
                   ),
                 ],
               ),
